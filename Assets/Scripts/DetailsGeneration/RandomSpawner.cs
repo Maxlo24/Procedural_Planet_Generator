@@ -14,11 +14,6 @@ public class RandomSpawner : MonoBehaviour
     [SerializeField] private bool _randomize = true;
 
     [Header("Scale")]
-    [Range(0.25f, 4)]
-    [SerializeField] private float _minScale = 0.5f;
-    [Range(0.25f, 4)]
-    [SerializeField] private float _maxScale = 1.5f;
-    [Header("Scale direction")]
     [SerializeField] private Vector3 _scaleRandomness = Vector3.one;
 
 
@@ -35,9 +30,7 @@ public class RandomSpawner : MonoBehaviour
 
     public void Spawn()
     {
-
-
-
+        
         generationManager = GameObject.FindGameObjectWithTag("GenerationManager").GetComponent<GenerationManager>();
 
         selectionList = generationManager.GetDetailsList(_detailsType, _detailsSize);
@@ -47,14 +40,13 @@ public class RandomSpawner : MonoBehaviour
         int randomIndex = Random.Range(0, selectionList.Length);
         GameObject randomObject = selectionList[randomIndex];
         GameObject spawnedObject = Instantiate(randomObject, transform.position, transform.rotation);
-        spawnedObject.transform.parent = transform;
 
         if (_randomize)
         {
             spawnedObject.transform.localScale = new Vector3(
-                spawnedObject.transform.localScale.x + Random.Range(_minScale, _maxScale) * _scaleRandomness.x,
-                spawnedObject.transform.localScale.y + Random.Range(_minScale, _maxScale) * _scaleRandomness.y,
-                spawnedObject.transform.localScale.z + Random.Range(_minScale, _maxScale) * _scaleRandomness.z
+                spawnedObject.transform.localScale.x * Random.Range(1 / (1 + _scaleRandomness.x), (1 + _scaleRandomness.x)),
+                spawnedObject.transform.localScale.y * Random.Range(1 / (1 + _scaleRandomness.y), (1 + _scaleRandomness.y)),
+                spawnedObject.transform.localScale.z * Random.Range(1 / (1 + _scaleRandomness.z), (1 + _scaleRandomness.z))
             );
 
             spawnedObject.transform.Rotate(new Vector3(
@@ -63,6 +55,9 @@ public class RandomSpawner : MonoBehaviour
                 Random.Range(-_randomRotation, _randomRotation) * 180 * _rotationRandomness.z
             ));
         }
+
+        spawnedObject.transform.parent = transform;
+        spawnedObject.GetComponent<DetailEntity>().ActivateSpawner();
     }
     private void OnDrawGizmos()
     {

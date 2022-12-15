@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grass: {fileID: 0}
   flower: {fileID: 0}
-  stone: {fileID: 0}
+  stone: {fileID: 11400000, guid: d0789518de130bb4184bb52815b5cff0, type: 2}
   bush: {fileID: 0}
   tree: {fileID: 0}
   rock: {fileID: 11400000, guid: 2062f3c078396c54e89c1e72b895f2aa, type: 2}

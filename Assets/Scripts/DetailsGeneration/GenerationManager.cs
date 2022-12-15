@@ -14,23 +14,19 @@ public class GenerationManager : MonoBehaviour
 
     void Start()
     {
-        spawnRoot.ActivateSpawner();
+        //spawnRoot.ActivateSpawner();
     }
     void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GameObject[] details = GameObject.FindGameObjectsWithTag("Details");
-            foreach (var detail in details)
-            {
-                Destroy(detail);
-            }
+            Clear();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            spawnRoot.ActivateSpawner();
+            Generate();
         }
 
     }
@@ -51,6 +47,22 @@ public class GenerationManager : MonoBehaviour
         }
 
         return detailsList.ToArray();
+    }
+
+    public void Generate()
+    {
+        Clear();
+        spawnRoot.ActivateSpawner();
+        
+    }
+
+    public void Clear()
+    {
+        GameObject[] details = GameObject.FindGameObjectsWithTag("Details");
+        foreach (var detail in details)
+        {
+            DestroyImmediate(detail);
+        }
     }
 
 
