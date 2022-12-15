@@ -44,8 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07700b9ed3cf6bf41977430d0ba762d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detailsType: 0
+  _detailsType: 00000000
   _detailsSize: 0
+  _randomize: 1
+  _minScale: 0.5
+  _maxScale: 2
+  _scaleRandomness: {x: 1, y: 1, z: 1}
+  _randomRotation: 1
+  _rotationRandomness: {x: 0, y: 1, z: 0}
   selectionList:
   - {fileID: 7123555510897839133, guid: c5edc95e8708fe44380c6077a232f8ba, type: 3}
   - {fileID: 8422247475978942363, guid: f3d5bc9180374f448b261d64b469f1b7, type: 3}

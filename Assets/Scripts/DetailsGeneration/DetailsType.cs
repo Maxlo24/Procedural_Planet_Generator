@@ -9,7 +9,7 @@ namespace Assets.Scripts.DetailsGeneration
         Bush,
         Tree,
         Rock,
-        rampe,
+        Rampe,
         Special,
     }
 
@@ -18,6 +18,6 @@ namespace Assets.Scripts.DetailsGeneration
         None,
         Small,
         Medium,
-        Big,
+        Large,
     }
 }
