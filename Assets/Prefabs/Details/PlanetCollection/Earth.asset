@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4efafa97cb395b499517af8dd0cc33b, type: 3}
+  m_Name: Earth
+  m_EditorClassIdentifier: 
+  vegetation: {fileID: 0}
+  stone: {fileID: 11400000, guid: d0789518de130bb4184bb52815b5cff0, type: 2}
+  rock: {fileID: 11400000, guid: 2062f3c078396c54e89c1e72b895f2aa, type: 2}
+  rampe: {fileID: 11400000, guid: e8093192b9fe8aa49b63e50be0b10416, type: 2}
+  special: {fileID: 11400000, guid: 3d4c79783d1a9b04aaff7761d3e2c576, type: 2}
