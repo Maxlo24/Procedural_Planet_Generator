@@ -1,0 +1,78 @@
+#pragma kernel CSMain
+
+// include hlsl file
+CGPROGRAM
+#include "HLSLSupport.cginc"
+ENDCG
+#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/PerlinNoise.cginc"
+#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/BasicNoise.cginc"
+#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Lib/DistancesShader.cginc"
+
+struct Octave {
+    float frequency;
+    float amplitude;
+};
+
+RWTexture2D<float> height;
+int resolution;
+
+RWStructuredBuffer<Octave> octaves;
+int octaveCount = 0;
+
+float redistribution = 1;
+float islandRatio = 0;
+
+float xOffset;
+float yOffset;
+float elevationOffset;
+float scale;
+float scaleElevation;
+
+bool octaveDependentAmplitude;
+
+bool terraces;
+float terracesHeight;
+
+int distanceType = 0;
+
+int noiseType = 0;
+
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    float x = float(id.x) / float(resolution);
+    float y = float(id.y) / float(resolution);
+
+   float h = 0.0;
+   float sumPersistency = 0;
+
+    if (octaveCount == 0) {
+        h = PerlinNoise(float3((x + xOffset) * scale, (y + yOffset) * scale, 0));
+    }
+    else {
+        for (int i = 0; i < octaveCount; i++) {
+            float amplitude = octaves[i].amplitude;
+            float frequency = octaves[i].frequency;
+            float sumElevation = 1;
+            if (octaveDependentAmplitude && h != 0)
+            {
+                sumElevation = h;
+            }
+            sumPersistency += amplitude;
+            h += sumElevation * amplitude * (1 + noise(float3(frequency * (x + xOffset) * scale, frequency * (y + yOffset) * scale, 0), noiseType)) * 0.5;
+        }
+    }
+	h = h / sumPersistency;
+	h = pow(h, redistribution);
+    float nx = x * 2 - 1;
+    float ny = y * 2 - 1;
+    h = h * (1 - islandRatio) + islandRatio * (h + (1 - Distance(nx, ny, distanceType))) / 2;
+
+    if (terraces)
+    {
+        h = floor(h * terracesHeight) / terracesHeight;
+    }
+    h = scaleElevation * (h + elevationOffset);
+    
+	height[id.xy] = h;
+}

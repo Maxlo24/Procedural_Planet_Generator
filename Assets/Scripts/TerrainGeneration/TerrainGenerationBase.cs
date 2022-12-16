@@ -1,0 +1,98 @@
+using System.IO;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class TerrainGenerationBase : MonoBehaviour
+{
+    [field: SerializeField] public Terrain Terrain { get; private set; }
+    [field: SerializeField] public Perlin Perlin { get; private set; }
+    [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
+    [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
+    [field: SerializeField] public RawImage RawImage { get; private set; }
+    [field: SerializeField] public Button Button { get; private set; }
+
+    int indexOfKernel;
+    
+    private void Start()
+    {
+        Button.onClick.AddListener(RedrawTerrain);
+        
+        indexOfKernel = ComputeShader.FindKernel("CSMain");
+        
+        RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
+        RenderTexture.enableRandomWrite = true;
+        RenderTexture.Create();
+
+        SendDatas();
+
+        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
+
+        RenderTexture.active = RenderTexture;
+        RawImage.texture = RenderTexture;
+        RenderTexture.active = null;
+    }
+
+    private void Update()
+    {
+        if (RenderTexture == null)
+        {
+            RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
+            RenderTexture.enableRandomWrite = true;
+            RenderTexture.Create();
+        }
+
+        SendDatas();
+        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
+
+        //Graphics.Blit(RenderTexture, RenderTexture);
+        
+        RenderTexture.active = RenderTexture;
+        RawImage.texture = RenderTexture;
+        // if E is down save the texture
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ImageLib.SavePNG(RenderTexture, "Assets/", "Terrain");
+        }
+        RenderTexture.active = null;
+
+        // if A is down redraw the terrain
+        if (Input.GetKey(KeyCode.A))
+        {
+            RedrawTerrain();
+        }
+    }
+
+    private void SendDatas()
+    {
+        ComputeShader.SetTexture(0, "height", RenderTexture);
+
+        ComputeShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
+        ComputeShader.SetInt("octaveCount", Perlin.OctaveNumber);
+        ComputeShader.SetFloat("xOffset", Perlin.XOffset);
+        ComputeShader.SetFloat("yOffset", Perlin.YOffset);
+        ComputeShader.SetFloat("elevationOffset", Perlin.ElevationOffset);
+        ComputeShader.SetFloat("scale", Perlin.Scale);
+        ComputeShader.SetFloat("scaleElevation", Perlin.ScaleElevation);
+        ComputeShader.SetFloat("redistribution", Perlin.Redistribution);
+        ComputeShader.SetFloat("islandRatio", Perlin.IslandRatio);
+        ComputeShader.SetBool("octaveDependentAmplitude", Perlin.OctaveDependentAmplitude);
+        ComputeShader.SetBool("terraces", Perlin.Terraces);
+        ComputeShader.SetFloat("terracesHeight", Perlin.TerracesHeight);
+        ComputeShader.SetInt("distanceType", (int) Perlin.DistanceType);
+        ComputeShader.SetInt("noiseType", (int)Perlin.NoiseType);
+
+        // Create buffer to send Perlin.octaves to compute shader in RWStructuredBuffer
+        ComputeBuffer octaveBuffer = new ComputeBuffer(Perlin.Octaves.Count, 8);
+        octaveBuffer.SetData(Perlin.Octaves);
+        ComputeShader.SetBuffer(0, "octaves", octaveBuffer);
+    }
+
+    private void RedrawTerrain()
+    {
+        RenderTexture.active = RenderTexture;
+        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
+            Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
+        RenderTexture.active = null;
+    }
+
+}
