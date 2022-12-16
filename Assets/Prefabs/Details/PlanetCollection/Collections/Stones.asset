@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   small:
   - {fileID: 6754585919666184947, guid: 2811cc2be93a24041ad12d2e2bc6b44a, type: 3}
-  medium: []
+  medium:
+  - {fileID: 3520545463642202419, guid: ed48ca1705acd41419da64d717d94948, type: 3}
+  - {fileID: 8499309519013906186, guid: d7d5a980a3935db43b7d1450aec54622, type: 3}
   large: []

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4934986858151088597}
   - component: {fileID: 7176608255769175327}
   - component: {fileID: -4319072020208934701}
+  - component: {fileID: 3101962298162828769}
   m_Layer: 6
   m_Name: Special_rock_1
   m_TagString: Details
@@ -54,7 +55,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8689857518449345738}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -101,6 +102,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9e7a931e5020f4fa82f0303b0a792c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &3101962298162828769
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8689857518449345738}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4579454407841743219, guid: 1cb2da443db072940b73ff3b49ac13d6, type: 3}
 --- !u!1001 &2543492588251723782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,6 +127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RandomSpawn (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
@@ -198,6 +218,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomSpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
@@ -283,6 +308,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomSpawn (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
@@ -367,6 +397,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RandomSpawn (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}

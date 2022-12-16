@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3122960415082204353}
   - component: {fileID: 914807669033023499}
   - component: {fileID: 2991605385417305067}
+  - component: {fileID: -3610137409443180912}
   m_Layer: 6
   m_Name: Medium_rocks_2
   m_TagString: Details
@@ -103,6 +104,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9e7a931e5020f4fa82f0303b0a792c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &-3610137409443180912
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707691960445934046}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7705315421624170635, guid: 7fa1ec7e4510fc8428b4295c6e266bac, type: 3}
 --- !u!1001 &2080864089025508972
 PrefabInstance:
   m_ObjectHideFlags: 0

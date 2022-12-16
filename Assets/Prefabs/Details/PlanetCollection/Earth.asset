@@ -15,5 +15,5 @@ MonoBehaviour:
   vegetation: {fileID: 0}
   stone: {fileID: 11400000, guid: d0789518de130bb4184bb52815b5cff0, type: 2}
   rock: {fileID: 11400000, guid: 2062f3c078396c54e89c1e72b895f2aa, type: 2}
-  rampe: {fileID: 0}
+  rampe: {fileID: 11400000, guid: e8093192b9fe8aa49b63e50be0b10416, type: 2}
   special: {fileID: 11400000, guid: 3d4c79783d1a9b04aaff7761d3e2c576, type: 2}

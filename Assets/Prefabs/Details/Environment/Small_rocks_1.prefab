@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6791420298431879426}
   - component: {fileID: 8780629003237600712}
   - component: {fileID: 4212864595793202888}
+  - component: {fileID: -835873245506977972}
   m_Layer: 6
   m_Name: Small_rocks_1
   m_TagString: Details
@@ -100,6 +101,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9e7a931e5020f4fa82f0303b0a792c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &-835873245506977972
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7123555510897839133}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 389598468134261245, guid: 6acc0219d6ca30b4caf61d075a6e0a48, type: 3}
 --- !u!1001 &891073860043381263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120,7 +135,7 @@ PrefabInstance:
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
@@ -210,7 +225,7 @@ PrefabInstance:
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
