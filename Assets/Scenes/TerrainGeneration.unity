@@ -579,7 +579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &840158064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,7 +593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Terrain>k__BackingField: {fileID: 840158066}
-  <Perlin>k__BackingField: {fileID: 0}
+  <Perlin>k__BackingField: {fileID: 840158068}
   <ComputeShader>k__BackingField: {fileID: 7200000, guid: 0348e2e3f9b679241814ad0b71f4315f,
     type: 3}
   <RenderTexture>k__BackingField: {fileID: 8400000, guid: b4110f4335a07c54591a126c111cd9e1,
@@ -1205,7 +1205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2003222750
 MonoBehaviour:
   m_ObjectHideFlags: 0
