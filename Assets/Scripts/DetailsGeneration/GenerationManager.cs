@@ -35,12 +35,12 @@ public class GenerationManager : MonoBehaviour
     {
         List<GameObject> detailsList = new List<GameObject>();
 
-        foreach (var type in detailsType)
+        foreach (DetailsType type in detailsType)
         {
 
             GameObject[] collectionObjects = detailsCollectionGroup.GetCollectionOfType(type).GetCollectionOfSize(detailsSize);
 
-            foreach (var obj in collectionObjects)
+            foreach (GameObject obj in collectionObjects)
             {
                 detailsList.Add(obj);
             }

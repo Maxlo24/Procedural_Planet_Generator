@@ -3,11 +3,8 @@ namespace Assets.Scripts.DetailsGeneration
     public enum DetailsType
     {
         None,
-        Grass,
-        Flower,
+        Vegetation,
         Stone,
-        Bush,
-        Tree,
         Rock,
         Rampe,
         Special,

@@ -28,18 +28,60 @@ public class RandomSpawner : MonoBehaviour
     private GameObject[] selectionList;
     private GenerationManager generationManager;
 
+
+    private void Update()
+    {
+        Debug.DrawRay(transform.position + new Vector3(0, 5, 0), Vector3.down * 10, Color.red);
+    }
+
+
     public void Spawn()
     {
         
         generationManager = GameObject.FindGameObjectWithTag("GenerationManager").GetComponent<GenerationManager>();
 
+        if (_detailsType.Length == 0)
+        {
+            Debug.LogError("No details type");
+            return;
+        }
+        else if (_detailsType[0] == DetailsType.None)
+        {
+            Debug.LogError("No details type selected");
+            return;
+        }
+
+        if (_detailsSize == DetailsSize.None)
+        {
+            Debug.LogError("No details size selected");
+            return;
+        }
+
+
         selectionList = generationManager.GetDetailsList(_detailsType, _detailsSize);
+
+        if (selectionList.Length == 0)
+        {
+            Debug.LogError("No corresponding details in collection");
+            return;
+        }
+
+
+        Vector3 spawnPosition = transform.position;
+
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(spawnPosition + new Vector3(0, 5, 0), Vector3.down, out hit, 10))
+        {
+            spawnPosition = hit.point;
+        }
 
 
 
         int randomIndex = Random.Range(0, selectionList.Length);
         GameObject randomObject = selectionList[randomIndex];
-        GameObject spawnedObject = Instantiate(randomObject, transform.position, transform.rotation);
+        GameObject spawnedObject = Instantiate(randomObject, spawnPosition, transform.rotation);
 
         if (_randomize)
         {
@@ -59,6 +101,10 @@ public class RandomSpawner : MonoBehaviour
         spawnedObject.transform.parent = transform;
         spawnedObject.GetComponent<DetailEntity>().ActivateSpawner();
     }
+
+
+
+    
     private void OnDrawGizmos()
     {
 
@@ -68,17 +114,36 @@ public class RandomSpawner : MonoBehaviour
         {
             radius = 0.5f;
         }
-        else if (_detailsSize == DetailsSize.Medium)
-        {
-            radius = 1f;
-        }
         else if (_detailsSize == DetailsSize.Large)
         {
             radius = 2f;
         }
 
-        Gizmos.color = Color.red;
+
+        switch (_detailsType[0])
+        {
+            case DetailsType.Vegetation:
+                Gizmos.color = Color.green;
+                break;
+            case DetailsType.Rock:
+                Gizmos.color = Color.black;
+                break;
+            case DetailsType.Stone:
+                Gizmos.color = Color.gray;
+                radius /= 2;
+                break;
+            case DetailsType.Rampe:
+                Gizmos.color = Color.red;
+                break;
+            case DetailsType.Special:
+                Gizmos.color = Color.blue;
+                break;
+
+
+        }
+        
         Gizmos.DrawSphere(transform.position, radius);
+
     }
 
 }

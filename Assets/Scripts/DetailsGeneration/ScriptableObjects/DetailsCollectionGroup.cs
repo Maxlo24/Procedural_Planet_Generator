@@ -7,20 +7,11 @@ using Assets.Scripts.DetailsGeneration;
 [CreateAssetMenu(fileName = "NewDetailsCollectionGroup", menuName = "Scriptable objects/DetailsCollectionGroup", order = 0)]
 public class DetailsCollectionGroup : ScriptableObject
 {
-    [Header("Grass")]
-    public DetailsCollection grass;
-
-    [Header("Flower")]
-    public DetailsCollection flower;
+    [Header("Vegetation")]
+    public DetailsCollection vegetation;
 
     [Header("Stone")]
     public DetailsCollection stone;
-
-    [Header("Bush")]
-    public DetailsCollection bush;
-
-    [Header("Tree")]
-    public DetailsCollection tree;
 
     [Header("Rock")]
     public DetailsCollection rock;
@@ -36,16 +27,10 @@ public class DetailsCollectionGroup : ScriptableObject
     {
         switch (dt)
         {
-            case DetailsType.Grass:
-                return grass;
-            case DetailsType.Flower:
-                return flower;
+            case DetailsType.Vegetation:
+                return vegetation;
             case DetailsType.Stone:
                 return stone;
-            case DetailsType.Bush:
-                return bush;
-            case DetailsType.Tree:
-                return tree;
             case DetailsType.Rock:
                 return rock;
             case DetailsType.Rampe:

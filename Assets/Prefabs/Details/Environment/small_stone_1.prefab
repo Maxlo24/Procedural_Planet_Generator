@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7014663331922425836}
   - component: {fileID: 5097477105501946662}
   - component: {fileID: 5206364635940029034}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: small_stone_1
   m_TagString: Details
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8212226473263337188, guid: 3e2235134793b6345b18afaa67b123f1, type: 3}
+  - {fileID: 2100000, guid: 435d16c4ca141fc4b8e20f33610b2300, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

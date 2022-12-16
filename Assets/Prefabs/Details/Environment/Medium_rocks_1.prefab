@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8765511480830820493}
   - component: {fileID: 6791899971036083271}
   - component: {fileID: 1534467941678591406}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Medium_rocks_1
   m_TagString: Details
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8212226473263337188, guid: 2658f3735053c2d458844110747a051e, type: 3}
+  - {fileID: 2100000, guid: 435d16c4ca141fc4b8e20f33610b2300, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,6 +113,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomSpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
@@ -121,7 +126,7 @@ PrefabInstance:
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsType.Array.data[0]
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6495858892304945345, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
@@ -198,6 +203,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomSpawn (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
@@ -206,7 +216,7 @@ PrefabInstance:
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsType.Array.data[0]
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6495858892304945345, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
@@ -283,6 +293,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomSpawn (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
@@ -291,7 +306,7 @@ PrefabInstance:
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsType.Array.data[0]
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6495858892304945345, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
@@ -368,6 +383,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomSpawn (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
@@ -376,7 +396,7 @@ PrefabInstance:
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsType.Array.data[0]
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6495858892304945345, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
@@ -453,6 +473,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomSpawn (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3796232177443983360, guid: f1c013c3532eb4046ae1c4720b731ebc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsSize
@@ -461,7 +486,7 @@ PrefabInstance:
     - target: {fileID: 4135232537182371817, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}
       propertyPath: _detailsType.Array.data[0]
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6495858892304945345, guid: f1c013c3532eb4046ae1c4720b731ebc,
         type: 3}

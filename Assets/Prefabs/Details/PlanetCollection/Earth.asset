@@ -12,11 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4efafa97cb395b499517af8dd0cc33b, type: 3}
   m_Name: Earth
   m_EditorClassIdentifier: 
-  grass: {fileID: 0}
-  flower: {fileID: 0}
+  vegetation: {fileID: 0}
   stone: {fileID: 11400000, guid: d0789518de130bb4184bb52815b5cff0, type: 2}
-  bush: {fileID: 0}
-  tree: {fileID: 0}
   rock: {fileID: 11400000, guid: 2062f3c078396c54e89c1e72b895f2aa, type: 2}
   rampe: {fileID: 0}
-  special: {fileID: 0}
+  special: {fileID: 11400000, guid: 3d4c79783d1a9b04aaff7761d3e2c576, type: 2}
