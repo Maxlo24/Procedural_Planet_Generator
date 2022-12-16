@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4204707929254927503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4204707929254927536}
+  - component: {fileID: 4204707929254927539}
+  - component: {fileID: 4204707929254927538}
+  - component: {fileID: 4204707929254927501}
+  - component: {fileID: 4204707929254927500}
+  m_Layer: 0
+  m_Name: TerrainCPU
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &4204707929254927536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204707929254927503}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!218 &4204707929254927539
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204707929254927503}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: 67b35b4dd457a634196ef2f731f504a5, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_StaticShadowCaster: 0
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 2100000, guid: 435d16c4ca141fc4b8e20f33610b2300, type: 2}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0256
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+--- !u!154 &4204707929254927538
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204707929254927503}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 67b35b4dd457a634196ef2f731f504a5, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!114 &4204707929254927501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204707929254927503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DistanceType>k__BackingField: 0
+  <NoiseType>k__BackingField: 0
+  <OctaveNumber>k__BackingField: 10
+  <Redistribution>k__BackingField: 8
+  <IslandRatio>k__BackingField: 0
+  <Scale>k__BackingField: 4
+  <ScaleElevation>k__BackingField: 1
+  <XOffset>k__BackingField: 3
+  <YOffset>k__BackingField: 0
+  <ElevationOffset>k__BackingField: 0
+  <OctaveDependentAmplitude>k__BackingField: 0
+  <Terraces>k__BackingField: 0
+  <TerracesHeight>k__BackingField: 12
+  <Octaves>k__BackingField:
+  - frequency: 1
+    amplitude: 1
+  - frequency: 2
+    amplitude: 0.5
+  - frequency: 4
+    amplitude: 0.25
+  - frequency: 8
+    amplitude: 0.125
+  - frequency: 16
+    amplitude: 0.0625
+  - frequency: 32
+    amplitude: 0.03125
+  - frequency: 64
+    amplitude: 0.015625
+  - frequency: 128
+    amplitude: 0.0078125
+  - frequency: 256
+    amplitude: 0.00390625
+  - frequency: 512
+    amplitude: 0.001953125
+  - frequency: 1024
+    amplitude: 0.0009765625
+  - frequency: 2048
+    amplitude: 0.00048828125
+  - frequency: 4096
+    amplitude: 0.00024414062
+--- !u!114 &4204707929254927500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204707929254927503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da99c32e1f6d52f4d92acbfb63bc914c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Terrain>k__BackingField: {fileID: 4204707929254927539}
+  <Perlin>k__BackingField: {fileID: 4204707929254927501}
+  <RenderTexture>k__BackingField: {fileID: 0}
+  <RawImage>k__BackingField: {fileID: 0}
+  <Button>k__BackingField: {fileID: 0}
