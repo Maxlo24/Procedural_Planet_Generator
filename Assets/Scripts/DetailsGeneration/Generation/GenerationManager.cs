@@ -19,11 +19,11 @@ public class GenerationManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Clear();
-            Generate();
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    Clear();
+        //    Generate();
+        //}
 
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
