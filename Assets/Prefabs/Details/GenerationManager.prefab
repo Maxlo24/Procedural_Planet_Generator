@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2219545251708762418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2219545251708762428}
+  - component: {fileID: 2219545251708762429}
+  - component: {fileID: 2219545251708762431}
+  - component: {fileID: 2219545251708762430}
+  - component: {fileID: 2219545251708762425}
+  m_Layer: 0
+  m_Name: GenerationManager
+  m_TagString: GenerationManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2219545251708762428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219545251708762418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2219545251708762429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219545251708762418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 290a5ce74f4e0af44a23ba6061d7bcc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnRoot: {fileID: 0}
+  manualSpawn: 0
+  detailsCollectionGroup: {fileID: 11400000, guid: 5b7cf8b19688ca343bd1507dab8ff3e5,
+    type: 2}
+--- !u!114 &2219545251708762431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219545251708762418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6459f3c6305e3340bdbf8a182d4d1f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optimize: 1
+  optimisationFactor: 75
+  optimisationIntensity: 0
+--- !u!114 &2219545251708762430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219545251708762418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a02b2070b78e04dab21555636b9385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: {fileID: 0}
+  slopeAngleRange: {x: 0, y: 45}
+  altitudeRange: {x: -20, y: 100}
+  grassDensity: 50
+  nbrPerPatch: 2
+--- !u!114 &2219545251708762425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219545251708762418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e970c8956761cd4ba2c725a0f369a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: {fileID: 0}
+  spawnRoot: {fileID: 0}
+  _detailsType: 02000000
+  _detailsSize: 1
+  slopeAngleRange: {x: 0, y: 25}
+  altitudeRange: {x: -20, y: 100}
+  rocksDensity: 50
+  _scaleRandomness: {x: 2, y: 2, z: 2}
+  _rotationRandomness: {x: 0, y: 1, z: 0}
