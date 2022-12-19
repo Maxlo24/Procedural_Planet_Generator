@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7014663331922425836}
   - component: {fileID: 5097477105501946662}
   - component: {fileID: 5206364635940029034}
+  - component: {fileID: -4069095405106415292}
   m_Layer: 6
   m_Name: small_stone_1
   m_TagString: Details
@@ -97,3 +98,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visibleRadius: 60
+--- !u!64 &-4069095405106415292
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6754585919666184947}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7196802604745430461, guid: 3e2235134793b6345b18afaa67b123f1, type: 3}
