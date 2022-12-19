@@ -15,11 +15,11 @@ public class Perlin : MonoBehaviour
     [field: SerializeField] public DistanceType DistanceType { get; private set; }
     [field: SerializeField] public NoiseType NoiseType { get; private set; }
     
-    [field: SerializeField] public int OctaveNumber { get; private set; } = 8;                  // Number of octaves
-    [field: SerializeField] public float Redistribution { get; private set; } = 1f;
-    [field: SerializeField] public float IslandRatio { get; private set; } = 0f;
-    [field: SerializeField] public float Scale { get; private set; } = 1f;
-    [field: SerializeField] public float ScaleElevation { get; private set; } = 1f;
+    [field: SerializeField, Range(0,20)] public int OctaveNumber { get; private set; } = 8;                  // Number of octaves
+    [field: SerializeField, Range(0, 20)] public float Redistribution { get; private set; } = 1f;
+    [field: SerializeField, Range(-2, 2)] public float IslandRatio { get; private set; } = 0f;
+    [field: SerializeField, Range(0, 20)] public float Scale { get; private set; } = 1f;
+    [field: SerializeField, Range(0, 4)] public float ScaleElevation { get; private set; } = 1f;
     [field: SerializeField] public float XOffset { get; private set; } = 0f;
     [field: SerializeField] public float YOffset { get; private set; } = 0f;
     [field: SerializeField] public float ElevationOffset { get; private set; } = 0f;
