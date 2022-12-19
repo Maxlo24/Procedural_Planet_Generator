@@ -2,7 +2,7 @@ using sc.terrain.vegetationspawner;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
+
 
 public class GrassGenerator : MonoBehaviour
 {
@@ -12,13 +12,12 @@ public class GrassGenerator : MonoBehaviour
     [HideInInspector] public Vector2 slopeAngleRange = new Vector2(0f, 60f);
     [HideInInspector] public Vector2 altitudeRange = new Vector2(0f, 100f);
 
-
     [Range(0,100)]
     [SerializeField] private int grassDensity = 50;
     [Range(1, 5)]
     [SerializeField] private int nbrPerPatch = 1;
 
-    [SerializeField] private int count = 0;
+    private int count = 0;
 
     private void LoadTerrain()
     {

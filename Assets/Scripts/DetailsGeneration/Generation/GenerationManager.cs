@@ -86,6 +86,9 @@ public class GenerationManager : MonoBehaviour
 
             MeshCollider collider = detail.GetComponent<MeshCollider>();
 
+            if (collider == null) continue;
+
+
 
             Bounds bbox = collider.bounds;
 
@@ -141,7 +144,16 @@ public class GenerationManager : MonoBehaviour
 
     }
 
-    
+
+    public void GenerateRocks()
+    {
+       GetComponent<RocksGenerator>().SpawnRocks();
+
+    }
+
+
+
+
     public Vector3[] GetBoundingBoxBottomCorners(Bounds bbox)
     {
 
