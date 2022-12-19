@@ -7,6 +7,8 @@ TagManager:
   - DetailSpawner
   - Details
   - GenerationManager
+  - CinemachineTarget
+  - Terrain
   layers:
   - Default
   - TransparentFX
