@@ -8,6 +8,7 @@ public class GPUTerrainInspector : Editor
     {
         base.OnInspectorGUI();
         var terrain = (TerrainGenerationBase)target;
+        GUILayout.Label("Warning : Live Update need to be unchecked to erode the terrain");
         if (GUILayout.Button("Generate Terrain"))
         {
             terrain.GenerateTerrain();

@@ -282,7 +282,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 1545666719}
+  m_Texture: {fileID: 1322537165}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -297,74 +297,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320535916}
   m_CullTransparentMesh: 1
---- !u!1 &730914362
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 730914365}
-  - component: {fileID: 730914364}
-  - component: {fileID: 730914363}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &730914363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730914362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &730914364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730914362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &730914365
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730914362}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &840158063
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,8 +335,9 @@ MonoBehaviour:
   <ComputeShader>k__BackingField: {fileID: 7200000, guid: 0348e2e3f9b679241814ad0b71f4315f,
     type: 3}
   <TerrainErosion>k__BackingField: {fileID: 840158069}
-  <RenderTexture>k__BackingField: {fileID: 1545666719}
+  <RenderTexture>k__BackingField: {fileID: 1322537165}
   <RawImage>k__BackingField: {fileID: 320535918}
+  <LiveUpdate>k__BackingField: 0
 --- !u!154 &840158065
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -479,14 +412,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DistanceType>k__BackingField: 0
   <NoiseType>k__BackingField: 1
-  <OctaveNumber>k__BackingField: 5
-  <Redistribution>k__BackingField: 1.48
-  <IslandRatio>k__BackingField: 0
+  <OctaveNumber>k__BackingField: 9
+  <Redistribution>k__BackingField: 0.41
+  <IslandRatio>k__BackingField: -0.28
   <Scale>k__BackingField: 3.08
-  <ScaleElevation>k__BackingField: 0.24
+  <ScaleElevation>k__BackingField: 0.18
   <XOffset>k__BackingField: 4.78
   <YOffset>k__BackingField: 1
-  <ElevationOffset>k__BackingField: 0
+  <ElevationOffset>k__BackingField: -0.45
   <OctaveDependentAmplitude>k__BackingField: 1
   <Terraces>k__BackingField: 0
   <TerracesHeight>k__BackingField: 0
@@ -523,6 +456,7 @@ MonoBehaviour:
     type: 3}
   <Scale>k__BackingField: 12
   <Seed>k__BackingField: 0
+  <BorderSize>k__BackingField: 5
   <IterationNumber>k__BackingField: 71680
   <DropletLifeTime>k__BackingField: 300
   <Acceleration>k__BackingField: 100
@@ -531,7 +465,7 @@ MonoBehaviour:
   <InitialVelocity>k__BackingField: 3
   <InitialWater>k__BackingField: 0.01
   <SedimentCapacityFactor>k__BackingField: 24
-  <DebositRatio>k__BackingField: 0.1
+  <DepositRatio>k__BackingField: 0.1
   <ErosionRatio>k__BackingField: 0.3
   <EvaporationRatio>k__BackingField: 0.02
   <Gravity>k__BackingField: 100
@@ -662,7 +596,6 @@ GameObject:
   - component: {fileID: 1103252492}
   - component: {fileID: 1103252491}
   - component: {fileID: 1103252494}
-  - component: {fileID: 1103252496}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -728,8 +661,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103252490}
-  m_LocalRotation: {x: -0.0043182257, y: -0.9616215, z: 0.2739173, w: -0.015321314}
-  m_LocalPosition: {x: 17.668045, y: 22.106964, z: 52.15901}
+  m_LocalRotation: {x: -0.20096263, y: 0.52646434, z: -0.12965609, w: -0.8158668}
+  m_LocalPosition: {x: 630.0763, y: 314.73608, z: 81.59955}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -769,37 +702,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &1103252496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103252490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e820188eefc1267408afac59ca9b7e7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doFocus: 0
-  focusLimit: 100
-  minFocusDistance: 5
-  firstUndoKey: 306
-  secondUndoKey: 122
-  moveSpeed: 4
-  rotationSpeed: 10
-  zoomSpeed: 30
-  mouseY: Mouse Y
-  mouseX: Mouse X
-  zoomAxis: Mouse ScrollWheel
-  forwardKey: 122
-  backKey: 115
-  leftKey: 113
-  rightKey: 100
-  flatMoveKey: 304
-  anchoredMoveKey: 325
-  anchoredRotateKey: 324
---- !u!84 &1545666719
+--- !u!84 &1322537165
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1102,6 +1005,7 @@ MonoBehaviour:
     type: 3}
   <Scale>k__BackingField: 10
   <Seed>k__BackingField: 0
+  <BorderSize>k__BackingField: 5
   <IterationNumber>k__BackingField: 71680
   <DropletLifeTime>k__BackingField: 300
   <Acceleration>k__BackingField: 100
@@ -1110,7 +1014,7 @@ MonoBehaviour:
   <InitialVelocity>k__BackingField: 3
   <InitialWater>k__BackingField: 0.01
   <SedimentCapacityFactor>k__BackingField: 24
-  <DebositRatio>k__BackingField: 0.1
+  <DepositRatio>k__BackingField: 0.1
   <ErosionRatio>k__BackingField: 0.3
   <EvaporationRatio>k__BackingField: 0.02
   <Gravity>k__BackingField: 100

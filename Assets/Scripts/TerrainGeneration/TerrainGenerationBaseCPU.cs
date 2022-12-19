@@ -27,16 +27,7 @@ public class TerrainGenerationBaseCPU : MonoBehaviour
 
     private void Update()
     {
-        // if E is down save the texture
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ImageLib.SavePNG(mesh, "Assets/", "Terrain");
-        }
-       
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            RedrawTerrainCPU();
-        }
+        ImageLib.SavePNG(mesh, "Assets/", "Terrain");
     }
 
     private void RedrawTerrainCPU()

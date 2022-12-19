@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+[ExecuteInEditMode]
 public class TerrainGenerationBase : MonoBehaviour
 {
     [field: SerializeField] public Terrain Terrain { get; private set; }
@@ -12,12 +13,14 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
     [field: SerializeField] public RawImage RawImage { get; private set; }
 
+    [field: SerializeField] public bool LiveUpdate { get; private set; }
+
     int indexOfKernel;
     
     private void Start()
     {
         indexOfKernel = ComputeShader.FindKernel("CSMain");
-        
+
         RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
         RenderTexture.enableRandomWrite = true;
         RenderTexture.Create();
@@ -42,23 +45,16 @@ public class TerrainGenerationBase : MonoBehaviour
 
         SendDatas();
         ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
-
-        //Graphics.Blit(RenderTexture, RenderTexture);
-        
-        RenderTexture.active = RenderTexture;
-        RawImage.texture = RenderTexture;
-        // if E is down save the texture
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ImageLib.SavePNG(RenderTexture, "Assets/", "Terrain");
-        }
-        RenderTexture.active = null;
-
-        // if A is down redraw the terrain
-        if (Input.GetKey(KeyCode.A))
+        if (LiveUpdate)
         {
             RedrawTerrain();
         }
+        RenderTexture.active = RenderTexture;
+        RawImage.texture = RenderTexture;
+
+        //ImageLib.SavePNG(RenderTexture, "Assets/", "Terrain");
+
+        RenderTexture.active = null;
     }
 
     private void SendDatas()
@@ -77,7 +73,7 @@ public class TerrainGenerationBase : MonoBehaviour
         ComputeShader.SetBool("octaveDependentAmplitude", Perlin.OctaveDependentAmplitude);
         ComputeShader.SetBool("terraces", Perlin.Terraces);
         ComputeShader.SetFloat("terracesHeight", Perlin.TerracesHeight);
-        ComputeShader.SetInt("distanceType", (int) Perlin.DistanceType);
+        ComputeShader.SetInt("distanceType", (int)Perlin.DistanceType);
         ComputeShader.SetInt("noiseType", (int)Perlin.NoiseType);
 
         // Create buffer to send Perlin.octaves to compute shader in RWStructuredBuffer
