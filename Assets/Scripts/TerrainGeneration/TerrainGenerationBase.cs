@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,16 +8,14 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public Terrain Terrain { get; private set; }
     [field: SerializeField] public Perlin Perlin { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
+    [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
     [field: SerializeField] public RawImage RawImage { get; private set; }
-    [field: SerializeField] public Button Button { get; private set; }
 
     int indexOfKernel;
     
     private void Start()
     {
-        Button.onClick.AddListener(RedrawTerrain);
-        
         indexOfKernel = ComputeShader.FindKernel("CSMain");
         
         RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
@@ -93,6 +92,31 @@ public class TerrainGenerationBase : MonoBehaviour
         Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
             Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
         RenderTexture.active = null;
+    }
+
+    public void GenerateTerrain()
+    {
+        indexOfKernel = ComputeShader.FindKernel("CSMain");
+        
+        RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
+        RenderTexture.enableRandomWrite = true;
+        RenderTexture.Create();
+
+        SendDatas();
+        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
+        RenderTexture.active = RenderTexture;
+        RawImage.texture = RenderTexture;
+        RenderTexture.active = null;
+        RedrawTerrain();
+    }
+
+    public void ErodeTerrain()
+    {
+        
+        float[,] mesh = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
+        mesh = this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
+        TerrainErosion.Erode(mesh);
+        this.Terrain.terrainData.SetHeights(0, 0, mesh);
     }
 
 }
