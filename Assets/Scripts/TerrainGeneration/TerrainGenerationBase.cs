@@ -10,8 +10,12 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public Perlin Perlin { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
+    [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
     [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
     [field: SerializeField] public RawImage RawImage { get; private set; }
+
+    [field: SerializeField] public String TerrainNameToSave { get; private set; } = "Terrain";
+    [field: SerializeField] public String TerrainNameToAdd { get; private set; } = "Terrain";
 
     [field: SerializeField] public bool LiveUpdate { get; private set; }
 
@@ -51,9 +55,6 @@ public class TerrainGenerationBase : MonoBehaviour
         }
         RenderTexture.active = RenderTexture;
         RawImage.texture = RenderTexture;
-
-        //ImageLib.SavePNG(RenderTexture, "Assets/", "Terrain");
-
         RenderTexture.active = null;
     }
 
@@ -113,6 +114,26 @@ public class TerrainGenerationBase : MonoBehaviour
         mesh = this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
         TerrainErosion.Erode(mesh);
         this.Terrain.terrainData.SetHeights(0, 0, mesh);
+        this.Terrain.terrainData.SyncHeightmap();
+        
+    }
+
+    public void Save()
+    {
+        float[,] mesh = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
+        mesh = this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
+        ImageLib.SaveRaw(mesh, "Assets/Scripts/TerrainGeneration/HeightMaps/", TerrainNameToSave);
+    }
+
+    public void Add()
+    {
+        float[,] mesh = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
+        mesh = this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
+
+        float[,] terrainToAdd = ImageLib.LoadRawAsHeightmap("Assets/Scripts/TerrainGeneration/HeightMaps/" + TerrainNameToAdd + ".raw");
+
+        mesh = HeightMapsAddition.AddHeightMaps(mesh, terrainToAdd);
+        Terrain.terrainData.SetHeights(0, 0, mesh);
     }
 
 }
