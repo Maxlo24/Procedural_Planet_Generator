@@ -16,5 +16,13 @@ public class CPUTerrainInspector : Editor
         {
             terrain.ErodeTerrain();
         }
+        if (GUILayout.Button("Save Heightmap"))
+        {
+            terrain.Save();
+        }
+        if (GUILayout.Button("Add Heightmap Test"))
+        {
+            terrain.Add();
+        }
     }
 }

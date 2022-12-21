@@ -8,7 +8,7 @@ public class GPUTerrainInspector : Editor
     {
         base.OnInspectorGUI();
         var terrain = (TerrainGenerationBase)target;
-        GUILayout.Label("Warning : Live Update need to be unchecked to erode the terrain");
+        GUILayout.Label("Warning : Live Update need to be unchecked to erode the terrain or add a new terrain");
         if (GUILayout.Button("Generate Terrain"))
         {
             terrain.GenerateTerrain();
@@ -16,6 +16,14 @@ public class GPUTerrainInspector : Editor
         if (GUILayout.Button("Erode Terrain"))
         {
             terrain.ErodeTerrain();
+        }
+        if (GUILayout.Button("Save Heightmap"))
+        {
+            terrain.Save();
+        }
+        if (GUILayout.Button("Add Heightmap Test"))
+        {
+            terrain.Add();
         }
     }
 }
