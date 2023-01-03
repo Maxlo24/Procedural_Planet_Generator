@@ -4,20 +4,21 @@
 CGPROGRAM
 #include "HLSLSupport.cginc"
 ENDCG
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/PerlinNoise.cginc"
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/BasicNoise.cginc"
+
 #include "Assets/Scripts/TerrainGeneration/ComputeShaders/Lib/DistancesShader.cginc"
+#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/LibUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseLib.hlsl"
 
 struct Octave {
-    float frequency;
-    float amplitude;
+	float frequency;
+	float amplitude;
 };
 
 RWTexture2D<float> height;
 int resolution;
 
 RWStructuredBuffer<Octave> octaves;
-int octaveCount = 0;
+int octaveCount = 1;
 
 float redistribution = 1;
 float islandRatio = 0;
@@ -28,6 +29,7 @@ float elevationOffset;
 float scale;
 float scaleElevation;
 
+bool ridge;
 bool octaveDependentAmplitude;
 
 bool terraces;
@@ -40,39 +42,49 @@ int noiseType = 0;
 [numthreads(32, 32, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-    float x = float(id.x) / float(resolution);
-    float y = float(id.y) / float(resolution);
+	float x = float(id.x) / float(resolution);
+	float y = float(id.y) / float(resolution);
 
-   float h = 0.0;
-   float sumPersistency = 0;
+	float h = 0.0;
+	float amplitude = 2.0;
+	float sumPersistency = 0.0;
 
-    if (octaveCount == 0) {
-        h = PerlinNoise(float3((x + xOffset) * scale, (y + yOffset) * scale, 0));
-    }
-    else {
-        for (int i = 0; i < octaveCount; i++) {
-            float amplitude = octaves[i].amplitude;
-            float frequency = octaves[i].frequency;
-            float sumElevation = 1;
-            if (octaveDependentAmplitude && h != 0)
-            {
-                sumElevation = h;
-            }
-            sumPersistency += amplitude;
-            h += sumElevation * amplitude * (1 + noise(float3(frequency * (x + xOffset) * scale, frequency * (y + yOffset) * scale, 0), noiseType)) * 0.5;
-        }
-    }
+	for (int i = 0; i < octaveCount; i++)
+	{
+		float sumElevation = 1.0;
+		
+		if (octaveDependentAmplitude && h != 0)
+		{
+			sumElevation = h;
+		}
+		
+		float amplitude = octaves[i].amplitude;
+		float frequency = octaves[i].frequency;
+		
+		sumPersistency += amplitude;
+		float h_I = noise((float2(x, y) + float2(xOffset, yOffset)) * frequency * scale, noiseType);
+		if (ridge)
+		{
+			h_I = Ridge(h_I);
+		}
+		h += sumElevation * amplitude * h_I;
+	}
+
 	h = h / sumPersistency;
-	h = pow(h, redistribution);
-    float nx = x * 2 - 1;
-    float ny = y * 2 - 1;
-    h = h * (1 - islandRatio) + islandRatio * (h + (1 - Distance(nx, ny, distanceType))) / 2;
 
-    if (terraces)
-    {
-        h = floor(h * terracesHeight) / terracesHeight;
-    }
-    h = scaleElevation * (h + elevationOffset);
-    
+	h = Remap(h, float2(-1.0, 1.0), float2(0.0, 1.0));
+
+	
+	h = pow(h, redistribution);
+	float nx = x * 2 - 1;
+	float ny = y * 2 - 1;
+	h = h * (1 - islandRatio) + islandRatio * (h + (1 - Distance(nx, ny, distanceType))) / 2;
+
+	if (terraces)
+	{
+		h = floor(h * terracesHeight) / terracesHeight;
+	}
+	h = scaleElevation * (h + elevationOffset);
+
 	height[id.xy] = h;
 }
