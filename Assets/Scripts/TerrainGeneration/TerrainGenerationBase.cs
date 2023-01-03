@@ -71,6 +71,7 @@ public class TerrainGenerationBase : MonoBehaviour
         ComputeShader.SetFloat("scaleElevation", Perlin.ScaleElevation);
         ComputeShader.SetFloat("redistribution", Perlin.Redistribution);
         ComputeShader.SetFloat("islandRatio", Perlin.IslandRatio);
+        ComputeShader.SetBool("ridge", Perlin.Ridge);
         ComputeShader.SetBool("octaveDependentAmplitude", Perlin.OctaveDependentAmplitude);
         ComputeShader.SetBool("terraces", Perlin.Terraces);
         ComputeShader.SetFloat("terracesHeight", Perlin.TerracesHeight);
