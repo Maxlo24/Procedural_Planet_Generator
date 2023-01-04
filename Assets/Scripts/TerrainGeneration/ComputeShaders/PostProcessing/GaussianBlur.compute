@@ -1,0 +1,62 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#define PI 3.1415926538
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWStructuredBuffer<float> heights;
+int sizeX, sizeY;
+
+int kernelRadius = 1;
+float blurWeight;
+
+
+// function to calculate the blurWeight for the Gaussian blur filter
+float Gaussian(int x, int y, float sigma)
+{
+    float g = 1.0f / (2.0f * PI * sigma * sigma);
+    g *= exp(-(x * x + y * y) / (2.0f * sigma * sigma));
+    return g;
+}
+
+[numthreads(512,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    // calculate the current x and y position of the thread
+    int x = id.x;
+    int y = id.y;
+    
+	int index = x * sizeY + y;
+
+    // make sure that the thread is within the bounds of the heightmap
+    if (x >= sizeX || y >= sizeY)
+        return;
+
+    // get the current height value
+    float currentHeight = heights[index];
+
+    // initialize the sum of the neighboring heights to the current height
+    float sum = currentHeight * blurWeight;
+    float count = blurWeight;
+
+    // add the heights of the neighboring pixels to the sum, using a Gaussian blur filter
+    for (int i = -kernelRadius; i <= kernelRadius; i++)
+    {
+        for (int j = -kernelRadius; j <= kernelRadius; j++)
+        {
+            if (x + i >= 0 && x + i < sizeX && y + j >= 0 && y + j < sizeY)
+            {
+                float w = Gaussian(i, j, 1.0f);
+                sum += heights[(x + i) * sizeY + y + j] * w;
+                count += w;
+            }
+        }
+    }
+
+    // smooth the height by taking the average of the current height and the sum of the neighboring heights
+    float smoothHeight = sum / count;
+
+    // set the height of the current pixel to the smoothed height
+    heights[index] = smoothHeight;
+}

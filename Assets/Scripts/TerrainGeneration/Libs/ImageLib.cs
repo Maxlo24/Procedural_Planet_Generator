@@ -90,6 +90,11 @@ public class ImageLib : MonoBehaviour
         return rawHeights;
     }
 
+    public static float[,] LoadRawAsErosionMap(string path)
+    {
+        return LoadRawAsHeightmap(path);
+    }
+
     public static float[,] ConvertRenderTextureToFloatArray(RenderTexture rt)
     {
         Texture2D tex = new Texture2D(rt.width, rt.height);

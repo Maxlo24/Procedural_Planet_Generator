@@ -10,6 +10,7 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public Perlin Perlin { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
+    [field: SerializeField] public TerrainPostProcessing TerrainPostProcessing { get; private set; }
     [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
     [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
     [field: SerializeField] public RawImage RawImage { get; private set; }
@@ -18,6 +19,8 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public String TerrainNameToAdd { get; private set; } = "Terrain";
 
     [field: SerializeField] public bool LiveUpdate { get; private set; }
+
+    private float[,] heightsCopy;
 
     int indexOfKernel;
     
@@ -53,9 +56,9 @@ public class TerrainGenerationBase : MonoBehaviour
         {
             RedrawTerrain();
         }
-        RenderTexture.active = RenderTexture;
-        RawImage.texture = RenderTexture;
-        RenderTexture.active = null;
+        //RenderTexture.active = RenderTexture;
+        //RawImage.texture = RenderTexture;
+        //RenderTexture.active = null;
     }
 
     private void SendDatas()
@@ -90,6 +93,9 @@ public class TerrainGenerationBase : MonoBehaviour
         Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
             Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
         RenderTexture.active = null;
+
+        heightsCopy = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
+        heightsCopy = this.Terrain.terrainData.GetHeights(0, 0, heightsCopy.GetLength(0), heightsCopy.GetLength(1));
     }
 
     public void GenerateTerrain()
@@ -110,13 +116,31 @@ public class TerrainGenerationBase : MonoBehaviour
 
     public void ErodeTerrain()
     {
-        
         float[,] mesh = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
         mesh = this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
+
         TerrainErosion.Erode(mesh);
         this.Terrain.terrainData.SetHeights(0, 0, mesh);
         this.Terrain.terrainData.SyncHeightmap();
         
+    }
+
+    public void Smooth()
+    {
+        float[,] mesh = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
+        mesh = this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
+        if (heightsCopy == null)
+        {
+            heightsCopy = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
+            heightsCopy = this.Terrain.terrainData.GetHeights(0, 0, heightsCopy.GetLength(0), heightsCopy.GetLength(1));
+        }
+        if (heightsCopy == null)
+            Debug.Log("heightsCopy is null");
+        if (mesh == null)
+            Debug.Log("mesh is null");
+        TerrainPostProcessing.SmoothTerrain(mesh, heightsCopy);
+        this.Terrain.terrainData.SetHeights(0, 0, mesh);
+        this.Terrain.terrainData.SyncHeightmap();
     }
 
     public void Save()
@@ -136,5 +160,4 @@ public class TerrainGenerationBase : MonoBehaviour
         mesh = HeightMapsAddition.AddHeightMaps(mesh, terrainToAdd);
         Terrain.terrainData.SetHeights(0, 0, mesh);
     }
-
 }

@@ -313,7 +313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 1079760350}
+  m_Texture: {fileID: 1929039477}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 840158068}
   - component: {fileID: 840158069}
   - component: {fileID: 840158070}
+  - component: {fileID: 840158071}
   - component: {fileID: 840158064}
   m_Layer: 6
   m_Name: Terrain
@@ -441,8 +442,9 @@ MonoBehaviour:
   <ComputeShader>k__BackingField: {fileID: 7200000, guid: 0348e2e3f9b679241814ad0b71f4315f,
     type: 3}
   <TerrainErosion>k__BackingField: {fileID: 840158069}
+  <TerrainPostProcessing>k__BackingField: {fileID: 840158071}
   <HeightMapsAddition>k__BackingField: {fileID: 840158070}
-  <RenderTexture>k__BackingField: {fileID: 1079760350}
+  <RenderTexture>k__BackingField: {fileID: 1929039477}
   <RawImage>k__BackingField: {fileID: 320535918}
   <TerrainNameToSave>k__BackingField: Terrain1
   <TerrainNameToAdd>k__BackingField: Terrain
@@ -566,19 +568,21 @@ MonoBehaviour:
     type: 3}
   <Scale>k__BackingField: 12
   <Seed>k__BackingField: 0
-  <BorderSize>k__BackingField: 5
-  <IterationNumber>k__BackingField: 187998
+  <BorderSize>k__BackingField: 3
+  <IterationNumber>k__BackingField: 50000
   <DropletLifeTime>k__BackingField: 300
   <Acceleration>k__BackingField: 100
   <Drag>k__BackingField: 0.2
-  <BrushSize>k__BackingField: 1
+  <BrushSize>k__BackingField: 3
   <InitialVelocity>k__BackingField: 3
   <InitialWater>k__BackingField: 0.01
   <SedimentCapacityFactor>k__BackingField: 24
-  <DepositRatio>k__BackingField: 0.1
-  <ErosionRatio>k__BackingField: 0.3
+  <DepositRatio>k__BackingField: 0.3
+  <ErosionRatio>k__BackingField: 0.9
   <EvaporationRatio>k__BackingField: 0.02
   <Gravity>k__BackingField: 100
+  <ErodeEnabled>k__BackingField: 1
+  <ErosionMapUsed>k__BackingField: 0
 --- !u!114 &840158070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,7 +596,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Width>k__BackingField: 230
-  <Height>k__BackingField: 174
   <Offset>k__BackingField: {x: 0, y: 0}
   <ElevationOffset>k__BackingField: 0.1
   <ElevationRatio>k__BackingField: 1
@@ -630,6 +633,23 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &840158071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840158063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adae56e5b740b8b4da093b3cf8f172b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <SmoothShader>k__BackingField: {fileID: 7200000, guid: 9e8d2b3ba0da4d7439c090333fd9aedd,
+    type: 3}
+  <blurWeight>k__BackingField: 1
+  <Weight>k__BackingField: 1
+  <KernelRadius>k__BackingField: 1
 --- !u!1 &1041735475
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,43 +765,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!84 &1079760350
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 513
-  m_Height: 513
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 94
-  m_ColorFormat: 45
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &1103252490
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,6 +981,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &1929039477
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 513
+  m_Height: 513
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 94
+  m_ColorFormat: 45
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &2003222749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,6 +1204,8 @@ MonoBehaviour:
   <ErosionRatio>k__BackingField: 0.3
   <EvaporationRatio>k__BackingField: 0.02
   <Gravity>k__BackingField: 100
+  <ErodeEnabled>k__BackingField: 1
+  <ErosionMapUsed>k__BackingField: 0
 --- !u!114 &2003222756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1197,7 +1219,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Width>k__BackingField: 128
-  <Height>k__BackingField: 127
   <Offset>k__BackingField: {x: 211, y: 377}
   <ElevationOffset>k__BackingField: 0
   <ElevationRatio>k__BackingField: 0.72

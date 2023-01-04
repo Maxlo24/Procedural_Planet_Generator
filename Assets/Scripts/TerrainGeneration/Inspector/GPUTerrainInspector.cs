@@ -17,6 +17,10 @@ public class GPUTerrainInspector : Editor
         {
             terrain.ErodeTerrain();
         }
+        if (GUILayout.Button("Smooth Terrain"))
+        {
+            terrain.Smooth();
+        }
         if (GUILayout.Button("Save Heightmap"))
         {
             terrain.Save();

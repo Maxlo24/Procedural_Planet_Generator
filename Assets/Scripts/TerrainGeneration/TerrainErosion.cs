@@ -2,22 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class TerrainErosion : MonoBehaviour
 {
     [field: SerializeField] public ComputeShader ErosionShader { get; private set; }
 
-
     [field: SerializeField] public float Scale { get; private set; } = 10f;
-
     [field: SerializeField] public int Seed { get; private set; } = 0;
-
     [field: SerializeField, Range(0, 10)] public int BorderSize { get; private set; } = 5;
     [field: SerializeField, Range(0, 1000000)] public int IterationNumber { get; private set; } = 70000;
     [field: SerializeField, Range(0, 500)] public int DropletLifeTime { get; private set; } = 300;
     [field: SerializeField] public float Acceleration { get; private set; } = 100f;
     [field: SerializeField] public float Drag { get; private set; } = 0.2f;
-    [field: SerializeField, Range(1, 10)] public int BrushSize { get; private set; } = 3;
+    [field: SerializeField, Range(0, 10)] public int BrushSize { get; private set; } = 3;
     [field: SerializeField] public float InitialVelocity { get; private set; } = 3f;
     [field: SerializeField] public float InitialWater { get; private set; } = 0.01f;
     [field: SerializeField, Range(0, 100)] public float SedimentCapacityFactor { get; private set; } = 24f;
@@ -25,6 +23,8 @@ public class TerrainErosion : MonoBehaviour
     [field: SerializeField, Range(0, 1)] public float ErosionRatio { get; private set; } = 0.3f;
     [field: SerializeField, Range(0, 1)] public float EvaporationRatio { get; private set; } = 0.02f;
     [field: SerializeField, Range(0, 500)] public float Gravity { get; private set; } = 100f;
+    [field: SerializeField] public bool ErodeEnabled { get; private set; } = true;
+    [field: SerializeField] public bool ErosionMapUsed { get; private set; } = false;
 
     public void Erode(float[,] heights)
     {
@@ -50,33 +50,7 @@ public class TerrainErosion : MonoBehaviour
             StartPos[i].y = prng.Next(0, sizeY - 1);
         }
 
-        //Vector3[] brush = new Vector3[(2 * BrushSize + 1) * (2 * BrushSize + 1)];
-        //float normalizeC = 0;
-        //for (int i = 0; i < BrushSize; i++)
-        //{
-        //    for (int j = 0; j < BrushSize; j++)
-        //    {
-        //        normalizeC += 1.1f * (i + j + 1);
-        //        brush[i * BrushSize * 2 + j].z = (i + j + 1);
-        //        brush[(2 * BrushSize - 1 - i) * BrushSize * 2 + j].z = (i + j + 1);
-        //        brush[(2 * BrushSize - 1 - i) * BrushSize * 2 + (2 * BrushSize - 1 - j)].z = (i + j + 1);
-        //        brush[i * BrushSize * 2 + (2 * BrushSize - 1 - j)].z = (i + j + 1);
-        //    }
-        //}
-        //for (int i = 0; i < BrushSize * 2; i++)
-        //{
-        //    for (int j = 0; j < BrushSize * 2; j++)
-        //    {
-        //        brush[i * BrushSize * 2 + j].z /= normalizeC;
-        //        brush[i * BrushSize * 2 + j].x = i - (BrushSize - 1);
-        //        brush[i * BrushSize * 2 + j].y = j - (BrushSize - 1);
-        //    }
-        //}
-
-        // Create brush
-        
-        List<int> brushIndexOffsets = new List<int>();
-        List<float> brushWeights = new List<float>();
+        float[] brushWeightsArray = new float[(2 * BrushSize + 3) * (2 * BrushSize + 3)];
 
         float weightSum = 0;
         for (int brushY = -BrushSize; brushY <= BrushSize; brushY++)
@@ -84,26 +58,22 @@ public class TerrainErosion : MonoBehaviour
             for (int brushX = -BrushSize; brushX <= BrushSize; brushX++)
             {
                 float sqrDst = brushX * brushX + brushY * brushY;
-                if (sqrDst < BrushSize * BrushSize)
+                if (sqrDst < 2 * (BrushSize + 1) * 2 * (BrushSize + 1))
                 {
-                    brushIndexOffsets.Add(brushY * sizeX + brushX);
-                    float brushWeight = 1 - Mathf.Sqrt(sqrDst) / BrushSize;
-                    weightSum += brushWeight;
-                    brushWeights.Add(brushWeight);
+                    float value = Mathf.Abs(BrushSize - Mathf.Sqrt(sqrDst));
+                    brushWeightsArray[(brushY + BrushSize + 1) * (2 * BrushSize + 3) + (brushX + BrushSize + 1)] = value;
+                    weightSum += value;
                 }
             }
         }
-        for (int i = 0; i < brushWeights.Count; i++)
+        for (int i = 0; i < brushWeightsArray.Length; i++)
         {
-            brushWeights[i] /= weightSum;
+            brushWeightsArray[i] /= weightSum;
         }
-        
+
         // Send brush data to compute shader
-        ComputeBuffer brushIndexBuffer = new ComputeBuffer(brushIndexOffsets.Count, sizeof(int));
-        ComputeBuffer brushWeightBuffer = new ComputeBuffer(brushWeights.Count, sizeof(int));
-        brushIndexBuffer.SetData(brushIndexOffsets);
-        brushWeightBuffer.SetData(brushWeights);
-        ErosionShader.SetBuffer(0, "brushIndices", brushIndexBuffer);
+        ComputeBuffer brushWeightBuffer = new ComputeBuffer(brushWeightsArray.Length, sizeof(int));
+        brushWeightBuffer.SetData(brushWeightsArray);
         ErosionShader.SetBuffer(0, "brushWeights", brushWeightBuffer);
 
         ComputeBuffer heightMapBuffer = new ComputeBuffer(heightsArray.Length, sizeof(float));
@@ -114,13 +84,16 @@ public class TerrainErosion : MonoBehaviour
         startPosBuffer.SetData(StartPos);
         ErosionShader.SetBuffer(0, "initialPositions", startPosBuffer);
 
-        //ComputeBuffer brushBufferIndex = new ComputeBuffer(brush.Length, 3 * sizeof(float));
-        //brushBufferIndex.SetData(brush);
-        //ErosionShader.SetBuffer(0, "brush", brushBufferIndex);
-        //ComputeBuffer brushBufferWeights = new ComputeBuffer(brush.Length, 3 * sizeof(float));
-        //brushBufferWeights.SetData(brush);
-        //ErosionShader.SetBuffer(0, "brush", brushBufferWeights);
-        ErosionShader.SetInt("brushLength", brushIndexOffsets.Count);
+        float[] erosionMap = new float[1];
+        if (ErosionMapUsed)
+        {
+            erosionMap = ErosionMapLib.ErodeMapFromHeightMap(heights);
+        }
+        ComputeBuffer erosionMapBuffer = new ComputeBuffer(erosionMap.Length, sizeof(float));
+        erosionMapBuffer.SetData(erosionMap);
+        ErosionShader.SetBuffer(0, "erosionMap", erosionMapBuffer);
+
+        ErosionShader.SetInt("brushSize", BrushSize);
         ErosionShader.SetInt("borderSize", BorderSize);
         ErosionShader.SetInt("sizeX", sizeX);
         ErosionShader.SetInt("sizeY", sizeY);
@@ -135,13 +108,14 @@ public class TerrainErosion : MonoBehaviour
         ErosionShader.SetFloat("erosionRatio", ErosionRatio);
         ErosionShader.SetFloat("evaporationRatio", EvaporationRatio);
         ErosionShader.SetFloat("gravity", Gravity);
+        ErosionShader.SetBool("erodeEnabled", ErodeEnabled);
+        ErosionShader.SetBool("erosionMapUsed", ErosionMapUsed);
 
         ErosionShader.Dispatch(0, IterationNumber / 512, 1, 1);
 
         heightMapBuffer.GetData(heightsArray);
         heightMapBuffer.Release();
         startPosBuffer.Release();
-        brushIndexBuffer.Release();
         brushWeightBuffer.Release();
 
         for (int i = 0; i < sizeX; i++)
