@@ -53,7 +53,7 @@ public class TerrainGenerationBaseCPU : MonoBehaviour
 
         if (isErosion)
         {
-            TerrainErosion.Erode(mesh);
+            //TerrainErosion.Erode(mesh);
         }
 
         // render tex on raw image
@@ -104,7 +104,7 @@ public class TerrainGenerationBaseCPU : MonoBehaviour
             mesh = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
             mesh = this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
         }
-        TerrainErosion.Erode(mesh);
+        //TerrainErosion.Erode(mesh);
         this.Terrain.terrainData.SetHeights(0, 0, mesh);
         this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
     }

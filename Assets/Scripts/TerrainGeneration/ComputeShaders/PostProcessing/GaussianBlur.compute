@@ -1,0 +1,43 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+RWTexture2D<float> heights;
+RWTexture2D<float> outputHeights;
+RWTexture2D<float> normalHeights;
+int sizeX, sizeY;
+
+StructuredBuffer<float> kernel;
+SamplerState InputSampler;
+int kernelRadius = 1;
+float weight = 1;
+
+// Define the custom sampler
+SamplerState _CustomSampler
+{
+	Filter = MIN_MAG_MIP_LINEAR;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
+int2 clamp(int2 value, int2 minV, int2 maxV) {
+	return int2(min(max(value.x, minV.x), maxV.x), min(max(value.y, minV.y), maxV.y));
+}
+
+[numthreads(32,32,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	int2 coord = id.xy;
+	
+	float texel = 0;
+	int kernelindex = 0;
+	
+	for (int i = -kernelRadius; i <= kernelRadius; i++)
+	{
+		for (int j = -kernelRadius; j <= kernelRadius; j++)
+		{
+			float height = heights[coord + int2(i,j)];
+			texel += height * kernel[(i + kernelRadius) * (2 * kernelRadius + 1) + (j + kernelRadius)];
+		}
+	}
+	outputHeights[id.xy] = texel * (1 - weight) + normalHeights[id.xy] * weight;
+}
