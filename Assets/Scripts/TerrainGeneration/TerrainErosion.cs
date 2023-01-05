@@ -193,7 +193,7 @@ public class TerrainErosion : MonoBehaviour
         startPosBuffer.SetData(StartPos);
         ErosionShader.SetBuffer(kernel, "initialPositions", startPosBuffer);
 
-        float[] erosionMap = new float[1];
+        //float[] erosionMap = new float[1];
         //if (ErosionMapUsed)
         //{
         //    erosionMap = ErosionMapLib.ErodeMapFromHeightMap(heights);

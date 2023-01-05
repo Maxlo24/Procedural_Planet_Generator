@@ -52,4 +52,42 @@ public class ErosionMapLib : MonoBehaviour
 
         return map;
     }
+
+    public RenderTexture ErodeMapFromHeightMapToRenderTexture(float[,] heights)
+    {
+        int sizeX = heights.GetLength(0);
+        int sizeY = heights.GetLength(1);
+        float[,] map = new float[sizeX, sizeY];
+
+        float min = float.MaxValue;
+        float max = float.MinValue;
+
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int y = 0; y < sizeY; y++)
+            {
+                map[x, y] = heights[x, y];
+                if (heights[x, y] < min)
+                {
+                    min = heights[x, y];
+                }
+                if (heights[x, y] > max)
+                {
+                    max = heights[x, y];
+                }
+            }
+        }
+
+        // Normalize map
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int y = 0; y < sizeY; y++)
+            {
+                map[x, y] = (1 - (map[x, y] - min) / (max - min));
+            }
+        }
+
+        return ImageLib.ConvertFloatArrayToRenderTexture(map);
+
+    }
 }
