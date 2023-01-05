@@ -97,7 +97,7 @@ public class ImageLib : MonoBehaviour
 
     public static float[,] ConvertRenderTextureToFloatArray(RenderTexture rt)
     {
-        Texture2D tex = new Texture2D(rt.width, rt.height);
+        Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.RHalf, false);
         RenderTexture.active = rt;
         tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
         tex.Apply();
@@ -115,17 +115,65 @@ public class ImageLib : MonoBehaviour
     
     public static RenderTexture ConvertFloatArrayToRenderTexture(float[,] heights)
     {
-        Texture2D tex = new Texture2D(heights.GetLength(0), heights.GetLength(1));
-        for (int x = 0; x < heights.GetLength(0); x++)
+        Texture2D tex = new Texture2D(heights.GetLength(0), heights.GetLength(1), TextureFormat.RFloat, false);
+        
+        int width = heights.GetLength(0);
+        int height = heights.GetLength(1);
+        
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < heights.GetLength(1); y++)
+            for (int y = 0; y < height; y++)
             {
-                tex.SetPixel(x, y, new Color(heights[x, y], heights[x, y], heights[x, y]));
+                tex.SetPixel(y, x, new Color(heights[x, y], heights[x, y], heights[x, y]));
+                if (x < 3 && y < 3)
+                {
+                    Debug.Log(Convert.ToString(heights[x, y]) + " " + Convert.ToString(tex.GetPixel(x, y).grayscale));
+                    Debug.Log(heights[x, y] + " " + tex.GetPixel(x, y).r);
+                    Debug.Log(sizeof(float) + " ");
+                    Debug.Log(" ");
+                }
             }
         }
+
         tex.Apply();
-        RenderTexture rt = new RenderTexture(heights.GetLength(0), heights.GetLength(1), 0);
+        RenderTexture rt = new RenderTexture(heights.GetLength(0), heights.GetLength(1), 32, RenderTextureFormat.RFloat);
+        // enable write
+        rt.enableRandomWrite = true;
         Graphics.Blit(tex, rt);
         return rt;
     }
+
+    public static float[] Create2DGaussianKernel(int KernelRadius, float sigma)
+    {
+        // Calculate the size of the kernel
+        int KernelSize = KernelRadius * 2 + 1;
+        // Create the kernel array
+        float[] Kernel = new float[KernelSize * KernelSize];
+
+        // Calculate the sum of the kernel values
+        float sum = 0;
+        for (int i = -KernelRadius; i <= KernelRadius; i++)
+        {
+            for (int j = -KernelRadius; j <= KernelRadius; j++)
+            {
+                // Calculate the Gaussian value for the current position
+                float value = (float)((1.0 / (2 * Math.PI * sigma * sigma)) * Math.Exp(-(i * i + j * j) / (2 * sigma * sigma)));
+                // Set the value in the kernel array
+                Kernel[(i + KernelRadius) * KernelSize + (j + KernelRadius)] = value;
+                // Add the value to the sum
+                sum += value;
+            }
+        }
+
+        // Normalize the kernel values by dividing by the sum
+        for (int i = 0; i < KernelSize * KernelSize; i++)
+        {
+            Kernel[i] /= sum;
+            Debug.Log(Kernel[i]);
+        }
+        
+
+        return Kernel;
+    }
+        
 }

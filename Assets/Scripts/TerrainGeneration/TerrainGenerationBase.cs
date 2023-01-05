@@ -108,9 +108,9 @@ public class TerrainGenerationBase : MonoBehaviour
 
         SendDatas();
         ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
-        RenderTexture.active = RenderTexture;
-        RawImage.texture = RenderTexture;
-        RenderTexture.active = null;
+        //RenderTexture.active = RenderTexture;
+        //RawImage.texture = RenderTexture;
+        //RenderTexture.active = null;
         RedrawTerrain();
     }
 
@@ -134,13 +134,13 @@ public class TerrainGenerationBase : MonoBehaviour
             heightsCopy = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
             heightsCopy = this.Terrain.terrainData.GetHeights(0, 0, heightsCopy.GetLength(0), heightsCopy.GetLength(1));
         }
-        if (heightsCopy == null)
-            Debug.Log("heightsCopy is null");
-        if (mesh == null)
-            Debug.Log("mesh is null");
-        TerrainPostProcessing.SmoothTerrain(mesh, heightsCopy);
-        this.Terrain.terrainData.SetHeights(0, 0, mesh);
-        this.Terrain.terrainData.SyncHeightmap();
+
+        RenderTexture.active = TerrainPostProcessing.SmoothTerrain(mesh, heightsCopy);
+        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
+            Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
+        RenderTexture.active = null;
+        //this.Terrain.terrainData.SetHeights(0, 0, mesh);
+        //this.Terrain.terrainData.SyncHeightmap();
     }
 
     public void Save()

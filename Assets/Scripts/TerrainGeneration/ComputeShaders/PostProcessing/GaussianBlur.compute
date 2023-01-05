@@ -1,62 +1,44 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
-#define PI 3.1415926538
-
-// Create a RenderTexture with enableRandomWrite flag and set it
-// with cs.SetTexture
-RWStructuredBuffer<float> heights;
+RWTexture2D<float> heights;
+RWTexture2D<float> outputHeights;
+RWTexture2D<float> normalHeights;
 int sizeX, sizeY;
 
+StructuredBuffer<float> kernel;
+SamplerState InputSampler;
 int kernelRadius = 1;
-float blurWeight;
+float weight = 1;
 
-
-// function to calculate the blurWeight for the Gaussian blur filter
-float Gaussian(int x, int y, float sigma)
+// Define the custom sampler
+SamplerState _CustomSampler
 {
-    float g = 1.0f / (2.0f * PI * sigma * sigma);
-    g *= exp(-(x * x + y * y) / (2.0f * sigma * sigma));
-    return g;
+	Filter = MIN_MAG_MIP_LINEAR;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
+int2 clamp(int2 value, int2 minV, int2 maxV) {
+	return int2(min(max(value.x, minV.x), maxV.x), min(max(value.y, minV.y), maxV.y));
 }
 
-[numthreads(512,1,1)]
+[numthreads(32,32,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
-    // calculate the current x and y position of the thread
-    int x = id.x;
-    int y = id.y;
-    
-	int index = x * sizeY + y;
-
-    // make sure that the thread is within the bounds of the heightmap
-    if (x >= sizeX || y >= sizeY)
-        return;
-
-    // get the current height value
-    float currentHeight = heights[index];
-
-    // initialize the sum of the neighboring heights to the current height
-    float sum = currentHeight * blurWeight;
-    float count = blurWeight;
-
-    // add the heights of the neighboring pixels to the sum, using a Gaussian blur filter
-    for (int i = -kernelRadius; i <= kernelRadius; i++)
-    {
-        for (int j = -kernelRadius; j <= kernelRadius; j++)
-        {
-            if (x + i >= 0 && x + i < sizeX && y + j >= 0 && y + j < sizeY)
-            {
-                float w = Gaussian(i, j, 1.0f);
-                sum += heights[(x + i) * sizeY + y + j] * w;
-                count += w;
-            }
-        }
-    }
-
-    // smooth the height by taking the average of the current height and the sum of the neighboring heights
-    float smoothHeight = sum / count;
-
-    // set the height of the current pixel to the smoothed height
-    heights[index] = smoothHeight;
+	int2 coord = id.xy;
+	
+	float texel = 0;
+	int kernelindex = 0;
+	
+	for (int i = -kernelRadius; i <= kernelRadius; i++)
+	{
+		for (int j = -kernelRadius; j <= kernelRadius; j++)
+		{
+			float2 texcoord = float2(coord.x + i, coord.y + j);
+			float height = heights.Load(coord + int2(i,j));
+			texel += height * kernel[(i + kernelRadius) * (2 * kernelRadius + 1) + (j + kernelRadius)];
+		}
+	}
+	outputHeights[id.xy] = texel / 2.0 * (1 - weight) + normalHeights[id.xy] * weight / 2.0;
 }
