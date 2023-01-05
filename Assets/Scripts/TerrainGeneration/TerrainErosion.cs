@@ -7,7 +7,6 @@ using static UnityEngine.Rendering.DebugUI;
 public class TerrainErosion : MonoBehaviour
 {
     [field: SerializeField] public ComputeShader ErosionShader { get; private set; }
-    [field: SerializeField] public ComputeShader ErosionShader2 { get; private set; }
     [field: SerializeField] public float Scale { get; private set; } = 10f;
     [field: SerializeField] public int Seed { get; private set; } = 0;
     [field: SerializeField, Range(0, 10)] public int BorderSize { get; private set; } = 5;
@@ -25,11 +24,8 @@ public class TerrainErosion : MonoBehaviour
     [field: SerializeField, Range(0, 500)] public float Gravity { get; private set; } = 100f;
     [field: SerializeField] public bool ErodeEnabled { get; private set; } = true;
     [field: SerializeField] public bool ErosionMapUsed { get; private set; } = false;
-
-    [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
-
     
-    public void Erode(float[,] heights)
+    public void Erode(float[,] heights, ComputeShader erosionShader)
     {
         int sizeX = heights.GetLength(0);
         int sizeY = heights.GetLength(1);
@@ -77,15 +73,15 @@ public class TerrainErosion : MonoBehaviour
         // Send brush data to compute shader
         ComputeBuffer brushWeightBuffer = new ComputeBuffer(brushWeightsArray.Length, sizeof(int));
         brushWeightBuffer.SetData(brushWeightsArray);
-        ErosionShader.SetBuffer(0, "brushWeights", brushWeightBuffer);
+        erosionShader.SetBuffer(0, "brushWeights", brushWeightBuffer);
 
         ComputeBuffer heightMapBuffer = new ComputeBuffer(heightsArray.Length, sizeof(float));
         heightMapBuffer.SetData(heightsArray);
-        ErosionShader.SetBuffer(0, "heights", heightMapBuffer);
+        erosionShader.SetBuffer(0, "heights", heightMapBuffer);
 
         ComputeBuffer startPosBuffer = new ComputeBuffer(IterationNumber, 2 * sizeof(float));
         startPosBuffer.SetData(StartPos);
-        ErosionShader.SetBuffer(0, "initialPositions", startPosBuffer);
+        erosionShader.SetBuffer(0, "initialPositions", startPosBuffer);
 
         float[] erosionMap = new float[1];
         if (ErosionMapUsed)
@@ -94,27 +90,27 @@ public class TerrainErosion : MonoBehaviour
         }
         ComputeBuffer erosionMapBuffer = new ComputeBuffer(erosionMap.Length, sizeof(float));
         erosionMapBuffer.SetData(erosionMap);
-        ErosionShader.SetBuffer(0, "erosionMap", erosionMapBuffer);
+        erosionShader.SetBuffer(0, "erosionMap", erosionMapBuffer);
 
-        ErosionShader.SetInt("brushSize", BrushSize);
-        ErosionShader.SetInt("borderSize", BorderSize);
-        ErosionShader.SetInt("sizeX", sizeX);
-        ErosionShader.SetInt("sizeY", sizeY);
-        ErosionShader.SetInt("lifetime", DropletLifeTime);
-        ErosionShader.SetInt("brushSize", BrushSize);
-        ErosionShader.SetFloat("initialVelocity", InitialVelocity);
-        ErosionShader.SetFloat("acceleration", Acceleration);
-        ErosionShader.SetFloat("drag", Drag);
-        ErosionShader.SetFloat("initialWater", InitialWater);
-        ErosionShader.SetFloat("sedimentCapacityFactor", SedimentCapacityFactor);
-        ErosionShader.SetFloat("depositRatio", DepositRatio);
-        ErosionShader.SetFloat("erosionRatio", ErosionRatio);
-        ErosionShader.SetFloat("evaporationRatio", EvaporationRatio);
-        ErosionShader.SetFloat("gravity", Gravity);
-        ErosionShader.SetBool("erodeEnabled", ErodeEnabled);
-        ErosionShader.SetBool("erosionMapUsed", ErosionMapUsed);
+        erosionShader.SetInt("brushSize", BrushSize);
+        erosionShader.SetInt("borderSize", BorderSize);
+        erosionShader.SetInt("sizeX", sizeX);
+        erosionShader.SetInt("sizeY", sizeY);
+        erosionShader.SetInt("lifetime", DropletLifeTime);
+        erosionShader.SetInt("brushSize", BrushSize);
+        erosionShader.SetFloat("initialVelocity", InitialVelocity);
+        erosionShader.SetFloat("acceleration", Acceleration);
+        erosionShader.SetFloat("drag", Drag);
+        erosionShader.SetFloat("initialWater", InitialWater);
+        erosionShader.SetFloat("sedimentCapacityFactor", SedimentCapacityFactor);
+        erosionShader.SetFloat("depositRatio", DepositRatio);
+        erosionShader.SetFloat("erosionRatio", ErosionRatio);
+        erosionShader.SetFloat("evaporationRatio", EvaporationRatio);
+        erosionShader.SetFloat("gravity", Gravity);
+        erosionShader.SetBool("erodeEnabled", ErodeEnabled);
+        erosionShader.SetBool("erosionMapUsed", ErosionMapUsed);
 
-        ErosionShader.Dispatch(0, IterationNumber / 512, 1, 1);
+        erosionShader.Dispatch(0, IterationNumber / 512, 1, 1);
 
         heightMapBuffer.GetData(heightsArray);
         heightMapBuffer.Release();
@@ -137,7 +133,7 @@ public class TerrainErosion : MonoBehaviour
         heightsCopy.enableRandomWrite = true;
         Graphics.Blit(heights, heightsCopy);
 
-        int kernel = ErosionShader2.FindKernel("CSMain");
+        int kernel = ErosionShader.FindKernel("CSMain");
         
         int sizeX = heights.width;
         int sizeY = heights.height;
@@ -172,16 +168,16 @@ public class TerrainErosion : MonoBehaviour
             brushWeightsArray[i] /= weightSum;
         }
 
-        ErosionShader2.SetTexture(kernel, "heights", heightsCopy);
+        ErosionShader.SetTexture(kernel, "heights", heightsCopy);
 
         // Send brush data to compute shader
         ComputeBuffer brushWeightBuffer = new ComputeBuffer(brushWeightsArray.Length, sizeof(int));
         brushWeightBuffer.SetData(brushWeightsArray);
-        ErosionShader2.SetBuffer(kernel, "brushWeights", brushWeightBuffer);
+        ErosionShader.SetBuffer(kernel, "brushWeights", brushWeightBuffer);
 
         ComputeBuffer startPosBuffer = new ComputeBuffer(IterationNumber, 2 * sizeof(float));
         startPosBuffer.SetData(StartPos);
-        ErosionShader2.SetBuffer(kernel, "initialPositions", startPosBuffer);
+        ErosionShader.SetBuffer(kernel, "initialPositions", startPosBuffer);
 
         float[] erosionMap = new float[1];
         //if (ErosionMapUsed)
@@ -190,28 +186,27 @@ public class TerrainErosion : MonoBehaviour
         //}
         ComputeBuffer erosionMapBuffer = new ComputeBuffer(erosionMap.Length, sizeof(float));
         erosionMapBuffer.SetData(erosionMap);
-        ErosionShader2.SetBuffer(0, "erosionMap", erosionMapBuffer);
+        ErosionShader.SetBuffer(0, "erosionMap", erosionMapBuffer);
 
-        ErosionShader2.SetInt("brushSize", BrushSize);
-        ErosionShader2.SetInt("borderSize", BorderSize);
-        ErosionShader2.SetInt("sizeX", sizeX);
-        ErosionShader2.SetInt("sizeY", sizeY);
-        ErosionShader2.SetInt("lifetime", DropletLifeTime);
-        ErosionShader2.SetInt("brushSize", BrushSize);
-        ErosionShader2.SetFloat("initialVelocity", InitialVelocity);
-        ErosionShader2.SetFloat("acceleration", Acceleration);
-        ErosionShader2.SetFloat("drag", Drag);
-        ErosionShader2.SetFloat("initialWater", InitialWater);
-        ErosionShader2.SetFloat("sedimentCapacityFactor", SedimentCapacityFactor);
-        ErosionShader2.SetFloat("depositRatio", DepositRatio);
-        ErosionShader2.SetFloat("erosionRatio", ErosionRatio);
-        ErosionShader2.SetFloat("evaporationRatio", EvaporationRatio);
-        ErosionShader2.SetFloat("gravity", Gravity);
-        ErosionShader2.SetBool("erodeEnabled", ErodeEnabled);
-        ErosionShader2.SetBool("erosionMapUsed", ErosionMapUsed);
+        ErosionShader.SetInt("brushSize", BrushSize);
+        ErosionShader.SetInt("borderSize", BorderSize);
+        ErosionShader.SetInt("sizeX", sizeX);
+        ErosionShader.SetInt("sizeY", sizeY);
+        ErosionShader.SetInt("lifetime", DropletLifeTime);
+        ErosionShader.SetInt("brushSize", BrushSize);
+        ErosionShader.SetFloat("initialVelocity", InitialVelocity);
+        ErosionShader.SetFloat("acceleration", Acceleration);
+        ErosionShader.SetFloat("drag", Drag);
+        ErosionShader.SetFloat("initialWater", InitialWater);
+        ErosionShader.SetFloat("sedimentCapacityFactor", SedimentCapacityFactor);
+        ErosionShader.SetFloat("depositRatio", DepositRatio);
+        ErosionShader.SetFloat("erosionRatio", ErosionRatio);
+        ErosionShader.SetFloat("evaporationRatio", EvaporationRatio);
+        ErosionShader.SetFloat("gravity", Gravity);
+        ErosionShader.SetBool("erodeEnabled", ErodeEnabled);
+        ErosionShader.SetBool("erosionMapUsed", ErosionMapUsed);
 
-        ErosionShader2.Dispatch(kernel, IterationNumber / 512, 1, 1);
-        RenderTexture = heightsCopy;
+        ErosionShader.Dispatch(kernel, IterationNumber / 512, 1, 1);
 
         startPosBuffer.Release();
         brushWeightBuffer.Release();

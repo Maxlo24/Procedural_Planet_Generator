@@ -17,7 +17,7 @@ float evaporationRatio;
 bool erodeEnabled;
 bool erosionMapUsed;
 
-RWStructuredBuffer<float> heights;
+RWTexture2D<float> heights;
 StructuredBuffer<float2> initialPositions;
 StructuredBuffer<float> erosionMap;
 
@@ -46,10 +46,12 @@ float3 calculateHeightAndGradiant(float posX, float posY, int sizeX, int sizeY)
 	float u = posX - x;
 	float v = posY - y;
 
-	float hxy = heights[x * sizeY + y];
-	float hx1y = heights[(x + 1) * sizeY + y];
-	float hxy1 = heights[x * sizeY + (y + 1)];
-	float hx1y1 = heights[(x + 1) * sizeY + (y + 1)];
+	int2 coord = int2(x, y);
+
+	float hxy = heights[coord];
+	float hx1y = heights[coord + int2(1,0)];
+	float hxy1 = heights[coord + int2(0, 1)];
+	float hx1y1 = heights[coord + int2(1, 1)];
 
 	float height = (1 - v) * ((1 - u) * hxy + u * hx1y) + v * ((1 - u) * hxy1 + u * hx1y1);
 	float gradX = (1 - v) * (hx1y - hxy) + v * (hx1y1 - hxy1);
@@ -135,12 +137,14 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 		if (erodeEnabled || amount > 0)
 		{
+			heights[(int2(x, y)) / float2(sizeX, sizeY)] = 5.0;
 			if (brushSize == 0)
 			{
-				heights[x * sizeY + y] += amount * (1 - u) * (1 - v);
-				heights[(x + 1) * sizeY + y] += amount * (u) * (1 - v);
-				heights[x * sizeY + (y + 1)] += amount * (1 - u) * (v);
-				heights[(x + 1) * sizeY + (y + 1)] += amount * (u) * (v);
+				int2 coord = int2(x, y);
+				heights[coord] += amount * (1 - u) * (1 - v);
+				heights[coord + int2(1, 0)] += amount * (u) * (1 - v);
+				heights[coord + int2(0, 1)] += amount * (1 - u) * (v);
+				heights[coord + int2(1, 1)] += amount * (u) * (v);
 			}
 			else
 			{
@@ -155,7 +159,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 							float byp = yp - posY + brushMiddle.y;
 							float brushAmount = bilinearInterpolation(brushWeights, bxp, byp, 2 * brushSize + 3, 2 * brushSize + 3);
 							//float weight = brushWeights[(xp - x + brushSize) * (brushSize * 2 + 1) + (yp - y + brushSize)];
-							heights[xp * sizeY + yp] += amount * brushWeights[(int) bxp * (2 * brushSize + 3) + (int)byp]/*brushAmount*/;
+							heights[int2(xp, yp)] += amount * brushWeights[(int) bxp * (2 * brushSize + 3) + (int)byp]/*brushAmount*/;
 						}
 					}
 				}
@@ -167,5 +171,6 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 		speed = sqrt(max(0, speed * speed - hDiff * gravity));
 		water *= (1 - evaporationRatio);
+		
 	}
 }
