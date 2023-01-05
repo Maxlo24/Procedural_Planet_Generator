@@ -125,19 +125,11 @@ public class ImageLib : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 tex.SetPixel(y, x, new Color(heights[x, y], heights[x, y], heights[x, y]));
-                if (x < 3 && y < 3)
-                {
-                    Debug.Log(Convert.ToString(heights[x, y]) + " " + Convert.ToString(tex.GetPixel(x, y).grayscale));
-                    Debug.Log(heights[x, y] + " " + tex.GetPixel(x, y).r);
-                    Debug.Log(sizeof(float) + " ");
-                    Debug.Log(" ");
-                }
             }
         }
 
         tex.Apply();
         RenderTexture rt = new RenderTexture(heights.GetLength(0), heights.GetLength(1), 32, RenderTextureFormat.RFloat);
-        // enable write
         rt.enableRandomWrite = true;
         Graphics.Blit(tex, rt);
         return rt;
@@ -169,7 +161,6 @@ public class ImageLib : MonoBehaviour
         for (int i = 0; i < KernelSize * KernelSize; i++)
         {
             Kernel[i] /= sum;
-            Debug.Log(Kernel[i]);
         }
         
 

@@ -35,10 +35,9 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 	{
 		for (int j = -kernelRadius; j <= kernelRadius; j++)
 		{
-			float2 texcoord = float2(coord.x + i, coord.y + j);
-			float height = heights.Load(coord + int2(i,j));
+			float height = heights[coord + int2(i,j)];
 			texel += height * kernel[(i + kernelRadius) * (2 * kernelRadius + 1) + (j + kernelRadius)];
 		}
 	}
-	outputHeights[id.xy] = texel / 2.0 * (1 - weight) + normalHeights[id.xy] * weight / 2.0;
+	outputHeights[id.xy] = texel * (1 - weight) + normalHeights[id.xy] * weight;
 }
