@@ -1,13 +1,22 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+
+public struct ErodeResult
+{
+    public RenderTexture Heights;
+    public RenderTexture ErosionTexture;
+
+    public ErodeResult(RenderTexture heightsCopy, RenderTexture erosionTextureCopy) : this()
+    {
+        Heights = heightsCopy;
+        ErosionTexture = erosionTextureCopy;
+    }
+}
 
 public class TerrainErosion : MonoBehaviour
 {
     [field: SerializeField] public ComputeShader ErosionShader { get; private set; }
-    [field: SerializeField] public float Scale { get; private set; } = 10f;
+    [field: SerializeField] public ComputeShader ErosionTextureShader { get; private set; }
     [field: SerializeField] public int Seed { get; private set; } = 0;
     [field: SerializeField, Range(0, 10)] public int BorderSize { get; private set; } = 5;
     [field: SerializeField, Range(0, 1000000)] public int IterationNumber { get; private set; } = 70000;
@@ -127,14 +136,19 @@ public class TerrainErosion : MonoBehaviour
     }
 
     
-    public RenderTexture Erode(RenderTexture heights)
+    public ErodeResult Erode(RenderTexture heights, RenderTexture heightsBeforeErosion, RenderTexture erosionTexture)
     {
         RenderTexture heightsCopy = new RenderTexture(heights.width, heights.height, 0, RenderTextureFormat.RFloat);
         heightsCopy.enableRandomWrite = true;
         Graphics.Blit(heights, heightsCopy);
 
+        RenderTexture erosionTextureCopy = new RenderTexture(erosionTexture.width, erosionTexture.height, 0, RenderTextureFormat.RFloat);
+        erosionTextureCopy.enableRandomWrite = true;
+        Graphics.Blit(erosionTexture, erosionTextureCopy);
+
         int kernel = ErosionShader.FindKernel("CSMain");
-        
+
+        /** Hydraulic Erosion Simulation **/
         int sizeX = heights.width;
         int sizeY = heights.height;
 
@@ -184,9 +198,9 @@ public class TerrainErosion : MonoBehaviour
         //{
         //    erosionMap = ErosionMapLib.ErodeMapFromHeightMap(heights);
         //}
-        ComputeBuffer erosionMapBuffer = new ComputeBuffer(erosionMap.Length, sizeof(float));
-        erosionMapBuffer.SetData(erosionMap);
-        ErosionShader.SetBuffer(0, "erosionMap", erosionMapBuffer);
+        //ComputeBuffer erosionMapBuffer = new ComputeBuffer(erosionMap.Length, sizeof(float));
+        //erosionMapBuffer.SetData(erosionMap);
+        //ErosionShader.SetBuffer(0, "erosionMap", erosionMapBuffer);
 
         ErosionShader.SetInt("brushSize", BrushSize);
         ErosionShader.SetInt("borderSize", BorderSize);
@@ -205,14 +219,21 @@ public class TerrainErosion : MonoBehaviour
         ErosionShader.SetFloat("gravity", Gravity);
         ErosionShader.SetBool("erodeEnabled", ErodeEnabled);
         ErosionShader.SetBool("erosionMapUsed", ErosionMapUsed);
-
+        
         ErosionShader.Dispatch(kernel, IterationNumber / 512, 1, 1);
 
+
+        /** Generate Erosion texture **/
         startPosBuffer.Release();
         brushWeightBuffer.Release();
-        erosionMapBuffer.Release();
+        //erosionMapBuffer.Release();
 
-        return heightsCopy;
+        ErosionTextureShader.SetTexture(kernel, "heightsEroded", heightsCopy);
+        ErosionTextureShader.SetTexture(kernel, "heightsBeforeErosion", heightsBeforeErosion);
+        ErosionTextureShader.SetTexture(kernel, "erosionTexture", erosionTextureCopy);
+        ErosionTextureShader.Dispatch(kernel, heightsBeforeErosion.width / 32, heightsBeforeErosion.height / 32, 1);
+
+        return new ErodeResult(heightsCopy, erosionTextureCopy);
     }
 
 }

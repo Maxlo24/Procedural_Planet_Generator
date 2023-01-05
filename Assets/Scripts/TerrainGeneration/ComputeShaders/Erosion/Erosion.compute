@@ -19,7 +19,7 @@ bool erosionMapUsed;
 
 RWTexture2D<float> heights;
 StructuredBuffer<float2> initialPositions;
-StructuredBuffer<float> erosionMap;
+//StructuredBuffer<float> erosionMap;
 
 StructuredBuffer<float> brushWeights;
 
@@ -116,10 +116,10 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		{
 			float erosionAmount = 0;
 			float mapErosionRatio = 1;
-			if (erosionMapUsed)
-			{
-				mapErosionRatio = bilinearInterpolation(erosionMap, posX, posY, sizeX, sizeY);
-			}
+			//if (erosionMapUsed)
+			//{
+			//	mapErosionRatio = bilinearInterpolation(erosionMap, posX, posY, sizeX, sizeY);
+			//}
 
 			if (sedimentCapacity - sediment < 0)
 			{
