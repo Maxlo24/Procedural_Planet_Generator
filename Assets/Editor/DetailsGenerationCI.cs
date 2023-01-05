@@ -32,6 +32,12 @@ public class CustomInspector : Editor
         }
 
         GUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Generate rocks"))
+        {
+            ((GenerationManager)target).GenerateRocks();
+        }
+
     }
 
 }
