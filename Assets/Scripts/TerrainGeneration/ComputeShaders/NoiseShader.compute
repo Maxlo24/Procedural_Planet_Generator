@@ -86,5 +86,5 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	}
 	h = scaleElevation * (h + elevationOffset);
 
-	height[id.xy] = h;
+	height[id.xy] += h;
 }

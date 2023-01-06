@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class TerrainGenerationBase : MonoBehaviour
 {
     [field: SerializeField] public Terrain Terrain { get; private set; }
-    [field: SerializeField] public Noise Noise { get; private set; }
+    [field: SerializeField] public TerrainInfo TerrainInfo { get; private set; }
     [field: SerializeField] public List<Noise> Noises { get; private set; }
     [field: SerializeField] public GameObject NoisesGameObject { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
@@ -61,41 +61,56 @@ public class TerrainGenerationBase : MonoBehaviour
 
         if (LiveUpdate)
         {
-            FillNoises();
-            SendDatas();
-            RedrawTerrain();
+            GenerateTerrain();
         }
     }
 
-    private void SendDatas()
+    private void ApplyNoise(Noise noise)
     {
-        ComputeShader.SetTexture(0, "height", RenderTexture);
+        indexOfKernel = ComputeShader.FindKernel("CSMain");
+        
+        ComputeShader.SetTexture(indexOfKernel, "height", RenderTexture);
 
         ComputeShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
-        ComputeShader.SetInt("octaveCount", Noise.OctaveNumber);
-        ComputeShader.SetFloat("xOffset", Noise.Offset.x);
-        ComputeShader.SetFloat("yOffset", Noise.Offset.z);
-        ComputeShader.SetFloat("elevationOffset", Noise.Offset.y);
-        ComputeShader.SetFloat("scale", Noise.Scale);
-        ComputeShader.SetFloat("scaleElevation", Noise.ScaleElevation);
-        ComputeShader.SetFloat("redistribution", Noise.Redistribution);
-        ComputeShader.SetFloat("islandRatio", Noise.IslandRatio);
-        ComputeShader.SetBool("ridge", Noise.Ridge);
-        ComputeShader.SetBool("octaveDependentAmplitude", Noise.OctaveDependentAmplitude);
-        ComputeShader.SetBool("terraces", Noise.Terraces);
-        ComputeShader.SetFloat("terracesHeight", Noise.TerracesHeight);
-        ComputeShader.SetInt("distanceType", (int)Noise.DistanceType);
-        ComputeShader.SetInt("noiseType", (int)Noise.NoiseType);
+        ComputeShader.SetInt("octaveCount", noise.OctaveNumber);
+        ComputeShader.SetFloat("xOffset", noise.Offset.x);
+        ComputeShader.SetFloat("yOffset", noise.Offset.z);
+        ComputeShader.SetFloat("elevationOffset", noise.Offset.y);
+        ComputeShader.SetFloat("scale", noise.Scale);
+        ComputeShader.SetFloat("scaleElevation", noise.ScaleElevation);
+        ComputeShader.SetFloat("redistribution", noise.Redistribution);
+        ComputeShader.SetFloat("islandRatio", noise.IslandRatio);
+        ComputeShader.SetBool("ridge", noise.Ridge);
+        ComputeShader.SetBool("octaveDependentAmplitude", noise.OctaveDependentAmplitude);
+        ComputeShader.SetBool("terraces", noise.Terraces);
+        ComputeShader.SetFloat("terracesHeight", noise.TerracesHeight);
+        ComputeShader.SetInt("distanceType", (int)noise.DistanceType);
+        ComputeShader.SetInt("noiseType", (int)noise.NoiseType);
 
-        // Create buffer to send Noise.octaves to compute shader in RWStructuredBuffer
-        ComputeBuffer octaveBuffer = new ComputeBuffer(Noise.Octaves.Count, 8);
-        octaveBuffer.SetData(Noise.Octaves);
-        ComputeShader.SetBuffer(0, "octaves", octaveBuffer);
+        if (noise.Octaves.Count == 0)
+        {
+            noise.FillOctaves();
+        }
+
+        ComputeBuffer octaveBuffer = new ComputeBuffer(noise.Octaves.Count, 8);
+        octaveBuffer.SetData(noise.Octaves);
+        ComputeShader.SetBuffer(indexOfKernel, "octaves", octaveBuffer);
 
         ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
 
         octaveBuffer.Release();
     }
+
+    private void ApplyNoises()
+    {
+        foreach (Noise noise in Noises)
+        {
+            if (noise.Enabled)
+            {
+                ApplyNoise(noise);
+            }
+        }
+          }
 
     private void RedrawTerrain()
     {
@@ -112,7 +127,6 @@ public class TerrainGenerationBase : MonoBehaviour
     public void GenerateTerrain()
     {
         FillNoises();
-        indexOfKernel = ComputeShader.FindKernel("CSMain");
         
         RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
         RenderTexture.enableRandomWrite = true;
@@ -122,9 +136,14 @@ public class TerrainGenerationBase : MonoBehaviour
         ErosionTexture.enableRandomWrite = true;
         ErosionTexture.Create();
 
-        SendDatas();        
-        
+        ApplyNoises();
         RedrawTerrain();
+        float startTime = Time.realtimeSinceStartup;
+        TerrainInfo.ProcessInfoComputation(RenderTexture);
+        //TerrainInfo.ProcessInfoComputation(Terrain.terrainData.GetHeights(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution));
+        // mesure execution time
+        float endTime = Time.realtimeSinceStartup;
+        Debug.Log("ProcessInfoComputation took " + (endTime - startTime) + " seconds");
     }
     
     public void ErodeTerrain()

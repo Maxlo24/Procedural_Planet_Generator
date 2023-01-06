@@ -1,0 +1,14 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+RWTexture2D<float> heights;
+RWTexture2D<float> curve;
+
+int width;
+int height;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	float height = heights[id.xy];
+}

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 public class Noise : MonoBehaviour
 {
     [System.Serializable]
@@ -12,6 +11,9 @@ public class Noise : MonoBehaviour
         public float amplitude;
     };
     
+    [field: SerializeField] public bool Enabled { get; private set; }
+    [field: SerializeField] public string Name { get; private set; } = "Noise";
+
     [field: SerializeField] public DistanceType DistanceType { get; private set; }
     [field: SerializeField] public NoiseType NoiseType { get; private set; }
     
@@ -28,6 +30,20 @@ public class Noise : MonoBehaviour
     [field: SerializeField] public float TerracesHeight { get; private set; }
 
     [field: SerializeField] public List<Octave> Octaves { get; private set; }
+
+    public void FillOctaves(int octaveNumber = 10)
+    {
+        Octaves = new List<Octave>();
+
+        float frequency = 1f;
+        float amplitude = 1f;
+        for (int i = 0; i < octaveNumber; i++)
+        {
+            Octaves.Add(new Octave { frequency = frequency, amplitude = amplitude });
+            frequency *= 2f;
+            amplitude *= 0.5f;
+        }
+    }
 
 
     public float PerlinNoise(float x, float y)
