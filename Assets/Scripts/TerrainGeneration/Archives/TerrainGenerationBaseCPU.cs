@@ -9,7 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 public class TerrainGenerationBaseCPU : MonoBehaviour
 {
     [field: SerializeField] public Terrain Terrain { get; private set; }
-    [field: SerializeField] public Perlin Perlin { get; private set; }
+    [field: SerializeField] public Noise Noise { get; private set; }
     [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
@@ -45,7 +45,7 @@ public class TerrainGenerationBaseCPU : MonoBehaviour
             {
                 float x_n = (float)x / resolution;
                 float y_n = (float)y / resolution;
-                mesh[x, y] = Perlin.PerlinNoise(x_n, y_n);
+                mesh[x, y] = Noise.PerlinNoise(x_n, y_n);
                 tex.SetPixel(x, y, new Color(mesh[x, y], mesh[x, y], mesh[x, y]));
             }
         }
@@ -80,7 +80,7 @@ public class TerrainGenerationBaseCPU : MonoBehaviour
             {
                 float x_n = (float)x / resolution;
                 float y_n = (float)y / resolution;
-                mesh[x, y] = Perlin.PerlinNoise(x_n, y_n);
+                mesh[x, y] = Noise.PerlinNoise(x_n, y_n);
                 tex.SetPixel(x, y, new Color(mesh[x, y], mesh[x, y], mesh[x, y]));
             }
         }

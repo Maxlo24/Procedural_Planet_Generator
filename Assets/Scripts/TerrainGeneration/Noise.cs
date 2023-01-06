@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 
-public class Perlin : MonoBehaviour
+public class Noise : MonoBehaviour
 {
     [System.Serializable]
     public struct Octave

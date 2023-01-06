@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TerrainGenerationBase : MonoBehaviour
 {
     [field: SerializeField] public Terrain Terrain { get; private set; }
-    [field: SerializeField] public Perlin Perlin { get; private set; }
+    [field: SerializeField] public Noise Noise { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public TerrainPostProcessing TerrainPostProcessing { get; private set; }
@@ -66,24 +66,24 @@ public class TerrainGenerationBase : MonoBehaviour
         ComputeShader.SetTexture(0, "height", RenderTexture);
 
         ComputeShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
-        ComputeShader.SetInt("octaveCount", Perlin.OctaveNumber);
-        ComputeShader.SetFloat("xOffset", Perlin.XOffset);
-        ComputeShader.SetFloat("yOffset", Perlin.YOffset);
-        ComputeShader.SetFloat("elevationOffset", Perlin.ElevationOffset);
-        ComputeShader.SetFloat("scale", Perlin.Scale);
-        ComputeShader.SetFloat("scaleElevation", Perlin.ScaleElevation);
-        ComputeShader.SetFloat("redistribution", Perlin.Redistribution);
-        ComputeShader.SetFloat("islandRatio", Perlin.IslandRatio);
-        ComputeShader.SetBool("ridge", Perlin.Ridge);
-        ComputeShader.SetBool("octaveDependentAmplitude", Perlin.OctaveDependentAmplitude);
-        ComputeShader.SetBool("terraces", Perlin.Terraces);
-        ComputeShader.SetFloat("terracesHeight", Perlin.TerracesHeight);
-        ComputeShader.SetInt("distanceType", (int)Perlin.DistanceType);
-        ComputeShader.SetInt("noiseType", (int)Perlin.NoiseType);
+        ComputeShader.SetInt("octaveCount", Noise.OctaveNumber);
+        ComputeShader.SetFloat("xOffset", Noise.XOffset);
+        ComputeShader.SetFloat("yOffset", Noise.YOffset);
+        ComputeShader.SetFloat("elevationOffset", Noise.ElevationOffset);
+        ComputeShader.SetFloat("scale", Noise.Scale);
+        ComputeShader.SetFloat("scaleElevation", Noise.ScaleElevation);
+        ComputeShader.SetFloat("redistribution", Noise.Redistribution);
+        ComputeShader.SetFloat("islandRatio", Noise.IslandRatio);
+        ComputeShader.SetBool("ridge", Noise.Ridge);
+        ComputeShader.SetBool("octaveDependentAmplitude", Noise.OctaveDependentAmplitude);
+        ComputeShader.SetBool("terraces", Noise.Terraces);
+        ComputeShader.SetFloat("terracesHeight", Noise.TerracesHeight);
+        ComputeShader.SetInt("distanceType", (int)Noise.DistanceType);
+        ComputeShader.SetInt("noiseType", (int)Noise.NoiseType);
 
-        // Create buffer to send Perlin.octaves to compute shader in RWStructuredBuffer
-        ComputeBuffer octaveBuffer = new ComputeBuffer(Perlin.Octaves.Count, 8);
-        octaveBuffer.SetData(Perlin.Octaves);
+        // Create buffer to send Noise.octaves to compute shader in RWStructuredBuffer
+        ComputeBuffer octaveBuffer = new ComputeBuffer(Noise.Octaves.Count, 8);
+        octaveBuffer.SetData(Noise.Octaves);
         ComputeShader.SetBuffer(0, "octaves", octaveBuffer);
 
         ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
