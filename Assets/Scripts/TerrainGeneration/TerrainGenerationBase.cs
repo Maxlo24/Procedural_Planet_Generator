@@ -14,6 +14,7 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
     [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
     [field: SerializeField] public RenderTexture ErosionTexture { get; private set; }
+    [field: SerializeField] public RenderTexture DepositTexture { get; private set; }
 
 
     [field: SerializeField] public String TerrainNameToSave { get; private set; } = "Terrain";
@@ -108,25 +109,25 @@ public class TerrainGenerationBase : MonoBehaviour
         RenderTexture.enableRandomWrite = true;
         RenderTexture.Create();
 
-        //ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        //ErosionTexture.enableRandomWrite = true;
-        //ErosionTexture.Create();
-
         SendDatas();        
         
         RedrawTerrain();
+
+        RenderTexture nulltexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
+        nulltexture.enableRandomWrite = true;
+        nulltexture.Create();
+
+        Graphics.Blit(nulltexture, ErosionTexture);
+        Graphics.Blit(nulltexture, DepositTexture);
     }
     
     public void ErodeTerrain()
     {
-        ErodeResult erodeResult = TerrainErosion.Erode(RenderTexture, RenderTextureCopy, ErosionTexture);
+        ErodeResult erodeResult = TerrainErosion.Erode(RenderTexture, RenderTextureCopy, ErosionTexture, DepositTexture);
         RenderTexture = erodeResult.Heights;
 
-        //ErosionTexture.enableRandomWrite = true;
-        //ErosionTexture = erodeResult.ErosionTexture;
-
         Graphics.Blit(erodeResult.ErosionTexture, ErosionTexture);
-
+        Graphics.Blit(erodeResult.DepositTexture, DepositTexture);
 
         RenderTexture.active = RenderTexture;
         Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
