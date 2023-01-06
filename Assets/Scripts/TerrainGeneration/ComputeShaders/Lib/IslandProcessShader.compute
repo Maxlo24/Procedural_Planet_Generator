@@ -1,14 +1,57 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
+#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Lib/DistancesShader.cginc"
+
 RWTexture2D<float> heights;
-RWTexture2D<float> curve;
+StructuredBuffer<float> curve;
 
 int width;
 int height;
 
-[numthreads(8,8,1)]
-void CSMain (uint3 id : SV_DispatchThreadID)
+int curveLength;
+float firstTime;
+float lastTime;
+bool islandProcess;
+
+float elevationOffset;
+
+float islandRatio;
+
+float EvaluateCurve(float x)
 {
-	float height = heights[id.xy];
+	float step = (lastTime - firstTime) / (curveLength - 1);
+	float div = (x - firstTime) / step;
+	int index = int(div);
+
+	if (index < 0)
+	{
+		return curve[0];
+	}
+	else if (index >= curveLength - 1)
+	{
+		return curve[curveLength - 1];
+	}
+
+	// Interpolate
+	float t = div - index;
+	float y = curve[index] * (1 - t) + curve[index + 1] * t;
+
+	return y;
+
+}
+
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	float h = heights[id.xy];
+
+	if (islandProcess)
+	{
+		float2 coord = id.xy / float2(width - 1, height - 1);
+		float2 n = coord * 2.0 - float2(1.0, 1.0);
+		h = h * (1 - islandRatio) + islandRatio * (h + (1 - EvaluateCurve(Distance(n.x, n.y, 0)))) / 2.0;
+	}
+
+	heights[id.xy] = h + elevationOffset;
 }

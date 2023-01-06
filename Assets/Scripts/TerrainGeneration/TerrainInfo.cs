@@ -10,9 +10,6 @@ public class TerrainInfo : MonoBehaviour
     
     public void ProcessInfoComputation(RenderTexture rt)
     {
-        // mesure execution time
-        float startTime = Time.realtimeSinceStartup;
-
         float[,] heights = ImageLib.ConvertRenderTextureToFloatArray(rt);
         
         Min = float.MaxValue;
@@ -29,10 +26,6 @@ public class TerrainInfo : MonoBehaviour
                     Max = height;
             }
         }
-
-        // mesure execution time
-        float endTime = Time.realtimeSinceStartup;
-        Debug.Log("ProcessInfoComputation took " + (endTime - startTime) + " seconds");
     }
 
     public void ProcessInfoComputation(float[,] heights)

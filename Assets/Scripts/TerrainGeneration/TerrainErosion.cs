@@ -228,10 +228,10 @@ public class TerrainErosion : MonoBehaviour
         brushWeightBuffer.Release();
         //erosionMapBuffer.Release();
 
-        ErosionTextureShader.SetTexture(kernel, "heightsEroded", heightsCopy);
-        ErosionTextureShader.SetTexture(kernel, "heightsBeforeErosion", heightsBeforeErosion);
-        ErosionTextureShader.SetTexture(kernel, "erosionTexture", erosionTextureCopy);
-        ErosionTextureShader.Dispatch(kernel, heightsBeforeErosion.width / 32, heightsBeforeErosion.height / 32, 1);
+        //ErosionTextureShader.SetTexture(kernel, "heightsEroded", heightsCopy);
+        //ErosionTextureShader.SetTexture(kernel, "heightsBeforeErosion", heightsBeforeErosion);
+        //ErosionTextureShader.SetTexture(kernel, "erosionTexture", erosionTextureCopy);
+        //ErosionTextureShader.Dispatch(kernel, heightsBeforeErosion.width / 32, heightsBeforeErosion.height / 32, 1);
 
         return new ErodeResult(heightsCopy, erosionTextureCopy);
     }

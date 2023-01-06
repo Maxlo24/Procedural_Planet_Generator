@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class TerrainGenerationBase : MonoBehaviour
 {
     [field: SerializeField] public Terrain Terrain { get; private set; }
-    [field: SerializeField] public TerrainInfo TerrainInfo { get; private set; }
     [field: SerializeField] public List<Noise> Noises { get; private set; }
     [field: SerializeField] public GameObject NoisesGameObject { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
+    [field: SerializeField] public TerrainProcessing TerrainProcessing { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public TerrainPostProcessing TerrainPostProcessing { get; private set; }
     [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
@@ -27,7 +27,7 @@ public class TerrainGenerationBase : MonoBehaviour
     private RenderTexture RenderTextureCopy;
 
     int indexOfKernel;
-    
+
     private void Start()
     {
         indexOfKernel = ComputeShader.FindKernel("CSMain");
@@ -43,15 +43,15 @@ public class TerrainGenerationBase : MonoBehaviour
 
     private void Update()
     {
-        
-            
+
+
         if (RenderTexture == null)
         {
             RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
             RenderTexture.enableRandomWrite = true;
             RenderTexture.Create();
         }
-        
+
         if (ErosionTexture == null)
         {
             ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
@@ -68,7 +68,7 @@ public class TerrainGenerationBase : MonoBehaviour
     private void ApplyNoise(Noise noise)
     {
         indexOfKernel = ComputeShader.FindKernel("CSMain");
-        
+
         ComputeShader.SetTexture(indexOfKernel, "height", RenderTexture);
 
         ComputeShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
@@ -110,7 +110,7 @@ public class TerrainGenerationBase : MonoBehaviour
                 ApplyNoise(noise);
             }
         }
-          }
+    }
 
     private void RedrawTerrain()
     {
@@ -127,7 +127,7 @@ public class TerrainGenerationBase : MonoBehaviour
     public void GenerateTerrain()
     {
         FillNoises();
-        
+
         RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
         RenderTexture.enableRandomWrite = true;
         RenderTexture.Create();
@@ -137,15 +137,12 @@ public class TerrainGenerationBase : MonoBehaviour
         ErosionTexture.Create();
 
         ApplyNoises();
+
+        Graphics.Blit(TerrainProcessing.ApplyIslandProcessing(RenderTexture), RenderTexture);
+
         RedrawTerrain();
-        float startTime = Time.realtimeSinceStartup;
-        TerrainInfo.ProcessInfoComputation(RenderTexture);
-        //TerrainInfo.ProcessInfoComputation(Terrain.terrainData.GetHeights(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution));
-        // mesure execution time
-        float endTime = Time.realtimeSinceStartup;
-        Debug.Log("ProcessInfoComputation took " + (endTime - startTime) + " seconds");
     }
-    
+
     public void ErodeTerrain()
     {
         ErodeResult erodeResult = TerrainErosion.Erode(RenderTexture, RenderTextureCopy, ErosionTexture);
