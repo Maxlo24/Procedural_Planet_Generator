@@ -33,9 +33,6 @@ public class TerrainGenerationBase : MonoBehaviour
         RenderTexture.enableRandomWrite = true;
         RenderTexture.Create();
 
-        ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        ErosionTexture.enableRandomWrite = true;
-        ErosionTexture.Create();
     }
 
     private void Update()
@@ -47,12 +44,12 @@ public class TerrainGenerationBase : MonoBehaviour
             RenderTexture.Create();
         }
         
-        if (ErosionTexture == null)
-        {
-            ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-            ErosionTexture.enableRandomWrite = true;
-            ErosionTexture.Create();
-        }
+        //if (ErosionTexture == null)
+        //{
+        //    ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
+        //    ErosionTexture.enableRandomWrite = true;
+        //    ErosionTexture.Create();
+        //}
 
         if (LiveUpdate)
         {
@@ -111,9 +108,9 @@ public class TerrainGenerationBase : MonoBehaviour
         RenderTexture.enableRandomWrite = true;
         RenderTexture.Create();
 
-        ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        ErosionTexture.enableRandomWrite = true;
-        ErosionTexture.Create();
+        //ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
+        //ErosionTexture.enableRandomWrite = true;
+        //ErosionTexture.Create();
 
         SendDatas();        
         
@@ -124,7 +121,12 @@ public class TerrainGenerationBase : MonoBehaviour
     {
         ErodeResult erodeResult = TerrainErosion.Erode(RenderTexture, RenderTextureCopy, ErosionTexture);
         RenderTexture = erodeResult.Heights;
-        ErosionTexture = erodeResult.ErosionTexture;
+
+        //ErosionTexture.enableRandomWrite = true;
+        //ErosionTexture = erodeResult.ErosionTexture;
+
+        Graphics.Blit(erodeResult.ErosionTexture, ErosionTexture);
+
 
         RenderTexture.active = RenderTexture;
         Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),

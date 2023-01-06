@@ -61,6 +61,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Erosion_map:
+        m_Texture: {fileID: 8400000, guid: 70166aa5d2cffea4e9a498febc5b3948, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Grass_normal:
         m_Texture: {fileID: 2800000, guid: 496e38a077ecaf74ea6eb40cdde5e913, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -129,6 +133,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 1d274af48ca9ada42ba90e86e591aff6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTextures_2aa9781326554707993f35b4546a10e8_Normaltexture_2971450874:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTextures_f72f052cd5154c5fbb5351773dfd449c_Normaltexture_2971450874:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Sediment_normal:
         m_Texture: {fileID: 2800000, guid: 21aa1cc2f78ff504788f19297b8d8f62, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -185,8 +197,8 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cloud_shadow: 0.336
-    - _Cloud_size: 4.28
+    - _Cloud_shadow: 0.558
+    - _Cloud_size: 3.39
     - _Cloud_speed: 0.0768
     - _Cull: 2
     - _Cutoff: 0.5
@@ -197,6 +209,7 @@ Material:
     - _EnableHeightBlend: 0
     - _EnableInstancedPerPixelNormal: 1
     - _EnvironmentReflections: 1
+    - _Erode_threshold: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -206,6 +219,7 @@ Material:
     - _Metallic1: 0
     - _Metallic2: 0
     - _Metallic3: 0
+    - _Multiplyer: 50
     - _Normals_strength: 0.5
     - _NumLayersCount: 1
     - _OcclusionStrength: 1
