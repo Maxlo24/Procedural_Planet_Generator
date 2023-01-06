@@ -20,9 +20,7 @@ public class Noise : MonoBehaviour
     [field: SerializeField, Range(-2, 2)] public float IslandRatio { get; private set; } = 0f;
     [field: SerializeField, Range(0, 20)] public float Scale { get; private set; } = 1f;
     [field: SerializeField, Range(0, 4)] public float ScaleElevation { get; private set; } = 1f;
-    [field: SerializeField] public float XOffset { get; private set; } = 0f;
-    [field: SerializeField] public float YOffset { get; private set; } = 0f;
-    [field: SerializeField] public float ElevationOffset { get; private set; } = 0f;
+    [field: SerializeField] public Vector3 Offset { get; private set; }
     [field: SerializeField] public bool Ridge { get; private set; }
     [field: SerializeField] public bool OctaveDependentAmplitude { get; private set; }
 
@@ -41,7 +39,7 @@ public class Noise : MonoBehaviour
         {
             sumPersistency += Octaves[i].amplitude;
             float sumElevation = !OctaveDependentAmplitude || elevation == 0f? 1f : elevation;
-            elevation += NoiseLib.Noise((x + XOffset) * Octaves[i].frequency * Scale, (y + YOffset) * Octaves[i].frequency * Scale, NoiseType) * Octaves[i].amplitude * sumElevation;
+            elevation += NoiseLib.Noise((x + Offset.x) * Octaves[i].frequency * Scale, (y + Offset.z) * Octaves[i].frequency * Scale, NoiseType) * Octaves[i].amplitude * sumElevation;
             
         }
 
@@ -55,6 +53,6 @@ public class Noise : MonoBehaviour
         {
             elevation = Mathf.Floor(elevation * TerracesHeight) / TerracesHeight;
         }
-        return ScaleElevation * (elevation + ElevationOffset);
+        return ScaleElevation * (elevation + Offset.y);
     }
 }

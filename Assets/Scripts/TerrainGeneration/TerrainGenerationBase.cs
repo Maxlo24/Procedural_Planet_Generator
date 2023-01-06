@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class TerrainGenerationBase : MonoBehaviour
 {
     [field: SerializeField] public Terrain Terrain { get; private set; }
     [field: SerializeField] public Noise Noise { get; private set; }
+    [field: SerializeField] public List<Noise> Noises { get; private set; }
+    [field: SerializeField] public GameObject NoisesGameObject { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public TerrainPostProcessing TerrainPostProcessing { get; private set; }
@@ -40,6 +43,8 @@ public class TerrainGenerationBase : MonoBehaviour
 
     private void Update()
     {
+        
+            
         if (RenderTexture == null)
         {
             RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
@@ -56,6 +61,7 @@ public class TerrainGenerationBase : MonoBehaviour
 
         if (LiveUpdate)
         {
+            FillNoises();
             SendDatas();
             RedrawTerrain();
         }
@@ -67,9 +73,9 @@ public class TerrainGenerationBase : MonoBehaviour
 
         ComputeShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
         ComputeShader.SetInt("octaveCount", Noise.OctaveNumber);
-        ComputeShader.SetFloat("xOffset", Noise.XOffset);
-        ComputeShader.SetFloat("yOffset", Noise.YOffset);
-        ComputeShader.SetFloat("elevationOffset", Noise.ElevationOffset);
+        ComputeShader.SetFloat("xOffset", Noise.Offset.x);
+        ComputeShader.SetFloat("yOffset", Noise.Offset.z);
+        ComputeShader.SetFloat("elevationOffset", Noise.Offset.y);
         ComputeShader.SetFloat("scale", Noise.Scale);
         ComputeShader.SetFloat("scaleElevation", Noise.ScaleElevation);
         ComputeShader.SetFloat("redistribution", Noise.Redistribution);
@@ -105,6 +111,7 @@ public class TerrainGenerationBase : MonoBehaviour
 
     public void GenerateTerrain()
     {
+        FillNoises();
         indexOfKernel = ComputeShader.FindKernel("CSMain");
         
         RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
@@ -157,5 +164,18 @@ public class TerrainGenerationBase : MonoBehaviour
 
         mesh = HeightMapsAddition.AddHeightMaps(mesh, terrainToAdd);
         Terrain.terrainData.SetHeights(0, 0, mesh);
+    }
+
+    public void FillNoises()
+    {
+        // Fill Noises with all enabled components of type Noise in NoisesGameObject
+        Noises = new List<Noise>();
+        foreach (Noise noise in NoisesGameObject.GetComponents<Noise>())
+        {
+            if (noise.enabled)
+            {
+                Noises.Add(noise);
+            }
+        }
     }
 }
