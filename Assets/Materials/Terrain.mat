@@ -130,11 +130,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Rock_normal:
-        m_Texture: {fileID: 2800000, guid: 5d66b8adf743efd45b57194e0233cf4f, type: 3}
+        m_Texture: {fileID: 2800000, guid: e4f1bbef3d8bdea46bc23ba20c9ab18d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Rock_texture:
-        m_Texture: {fileID: 2800000, guid: 1d274af48ca9ada42ba90e86e591aff6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1368ead630dc6b54ea5de76ccc3e9a2c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTextures_2aa9781326554707993f35b4546a10e8_Normaltexture_2971450874:
@@ -200,7 +200,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _Beach_spread: 25.2
+    - _Beach_spread: 21.31
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -210,7 +210,7 @@ Material:
     - _Cloud_speed: 0.0768
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Deposit_ratio: 68.4
+    - _Deposit_ratio: 35.12
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -219,7 +219,7 @@ Material:
     - _EnableInstancedPerPixelNormal: 1
     - _EnvironmentReflections: 1
     - _Erode_threshold: 0
-    - _Erosion_ratio: 1
+    - _Erosion_ratio: 0.542
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -238,7 +238,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Sea_level: -1
-    - _Slope_transition: 15.5
+    - _Slope_transition: 18.4
     - _Smoothness: 0.3
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
@@ -249,27 +249,27 @@ Material:
     - _SrcBlend: 1
     - _Strength: 1
     - _Surface: 0
-    - _Texture_scale: 136
+    - _Texture_scale: 100
     - _Textures_scale: 150
-    - _Transition_width: 0.233
+    - _Transition_width: 0.061
     - _Uniformity: 0
     - _Wind_speed: 0.05
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Beach_color: {r: 0.4811321, g: 0.22731893, b: 0.21560164, a: 0}
+    - _Beach_color: {r: 0.754717, g: 0.74645513, b: 0.60875756, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Deposit_color: {r: 0.06132078, g: 1, b: 0.9256559, a: 0}
     - _DustColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Erosion_color: {r: 0.314, g: 0.314, b: 0.314, a: 0}
-    - _Grass_color: {r: 0.8379369, g: 0.8490566, b: 0.50863296, a: 0}
+    - _Grass_color: {r: 0.6650537, g: 0.8207547, b: 0.53039336, a: 0}
     - _MainColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
     - _Noise: {r: 100, g: 0.8, b: 0, a: 0}
-    - _Rock_color: {r: 1, g: 1, b: 1, a: 0}
+    - _Rock_color: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 0}
     - _Scale: {r: 1, g: 1, b: 0, a: 0}
-    - _Sediment_color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 0.99215686}
+    - _Sediment_color: {r: 0.5188679, g: 0.46717295, b: 0.40383586, a: 0.99215686}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7517056022234436585

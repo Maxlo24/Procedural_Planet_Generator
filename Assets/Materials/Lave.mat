@@ -128,7 +128,7 @@ Material:
     - _ReceiveShadows: 1
     - _Refraction_speed: 0.01
     - _Refraction_strength: 1
-    - _Smoothness: 1
+    - _Smoothness: 0.051
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 0.1
@@ -136,7 +136,7 @@ Material:
     - _Strength: 15
     - _Surface: 0
     - _Tile_speed: 0.05
-    - _Wave_amplitude: 0.01
+    - _Wave_amplitude: 0.002
     - _Wave_speed: 0.5
     - _WorkflowMode: 1
     - _ZTest: 4
@@ -147,13 +147,13 @@ Material:
     - _Base_color: {r: 0, g: 0.05660379, b: 0.045597497, a: 0}
     - _Border_color: {r: 1.0509804, g: 2.5254903, b: 2.9960785, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Deep_color: {r: 1, g: 0.91944766, b: 0, a: 1}
+    - _Deep_color: {r: 1, g: 0.5287268, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Foam_color: {r: 0, g: 0, b: 0, a: 0.6156863}
-    - _Foam_scale: {r: 200, g: 200, b: 0, a: 0}
+    - _Foam_color: {r: 0, g: 0, b: 0, a: 1}
+    - _Foam_scale: {r: 1000, g: 1000, b: 0, a: 0}
     - _Refraction_scale: {r: 10, g: 10, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Surface_color: {r: 1, g: 0, b: 0.23032951, a: 0.16470589}
+    - _Surface_color: {r: 16, g: 3.5764706, b: 0, a: 0.16470589}
     - _Tile_size: {r: 20, g: 20, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7635701927347016929
