@@ -5,11 +5,13 @@ public struct ErodeResult
 {
     public RenderTexture Heights;
     public RenderTexture ErosionTexture;
+    public RenderTexture DepositTexture;
 
-    public ErodeResult(RenderTexture heightsCopy, RenderTexture erosionTextureCopy) : this()
+    public ErodeResult(RenderTexture heightsCopy, RenderTexture erosionTextureCopy, RenderTexture depositTexture) : this()
     {
         Heights = heightsCopy;
         ErosionTexture = erosionTextureCopy;
+        DepositTexture = depositTexture;
     }
 }
 
@@ -136,15 +138,19 @@ public class TerrainErosion : MonoBehaviour
     }
 
     
-    public ErodeResult Erode(RenderTexture heights, RenderTexture heightsBeforeErosion, RenderTexture erosionTexture)
+    public ErodeResult Erode(RenderTexture heights, RenderTexture heightsBeforeErosion, RenderTexture erosionText, RenderTexture depositText)
     {
         RenderTexture heightsCopy = new RenderTexture(heights.width, heights.height, 0, RenderTextureFormat.RFloat);
         heightsCopy.enableRandomWrite = true;
         Graphics.Blit(heights, heightsCopy);
 
-        RenderTexture erosionTextureCopy = new RenderTexture(erosionTexture.width, erosionTexture.height, 0, RenderTextureFormat.RFloat);
-        erosionTextureCopy.enableRandomWrite = true;
-        Graphics.Blit(erosionTexture, erosionTextureCopy);
+        RenderTexture erosionTexture = new RenderTexture(heightsCopy.width, heightsCopy.height, 0, RenderTextureFormat.RFloat);
+        erosionTexture.enableRandomWrite = true;
+        Graphics.Blit(erosionText, erosionTexture);
+
+        RenderTexture depositTexture = new RenderTexture(heightsCopy.width, heightsCopy.height, 0, RenderTextureFormat.RFloat);
+        depositTexture.enableRandomWrite = true;
+        Graphics.Blit(depositText, depositTexture);
 
         int kernel = ErosionShader.FindKernel("CSMain");
 
@@ -183,6 +189,8 @@ public class TerrainErosion : MonoBehaviour
         }
 
         ErosionShader.SetTexture(kernel, "heights", heightsCopy);
+        ErosionShader.SetTexture(kernel, "erosion", erosionTexture);
+        ErosionShader.SetTexture(kernel, "deposit", depositTexture);
 
         // Send brush data to compute shader
         ComputeBuffer brushWeightBuffer = new ComputeBuffer(brushWeightsArray.Length, sizeof(int));
@@ -228,12 +236,12 @@ public class TerrainErosion : MonoBehaviour
         brushWeightBuffer.Release();
         //erosionMapBuffer.Release();
 
-        ErosionTextureShader.SetTexture(kernel, "heightsEroded", heightsCopy);
-        ErosionTextureShader.SetTexture(kernel, "heightsBeforeErosion", heightsBeforeErosion);
-        ErosionTextureShader.SetTexture(kernel, "erosionTexture", erosionTextureCopy);
-        ErosionTextureShader.Dispatch(kernel, heightsBeforeErosion.width / 32, heightsBeforeErosion.height / 32, 1);
+        //ErosionTextureShader.SetTexture(kernel, "heightsEroded", heightsCopy);
+        //ErosionTextureShader.SetTexture(kernel, "heightsBeforeErosion", heightsBeforeErosion);
+        //ErosionTextureShader.SetTexture(kernel, "erosionTexture", erosionTextureCopy);
+        //ErosionTextureShader.Dispatch(kernel, heightsBeforeErosion.width / 32, heightsBeforeErosion.height / 32, 1);
 
-        return new ErodeResult(heightsCopy, erosionTextureCopy);
+        return new ErodeResult(heightsCopy, erosionTexture, depositTexture);
     }
 
 }
