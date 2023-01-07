@@ -1,0 +1,254 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6745990505756710249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6745990505756710261}
+  - component: {fileID: 6745990505756710260}
+  - component: {fileID: 6745990505756710263}
+  - component: {fileID: 6745990505756710258}
+  - component: {fileID: 6745990505756710259}
+  - component: {fileID: 6745990505756710256}
+  - component: {fileID: 6745990505756710257}
+  - component: {fileID: 6745990505756710262}
+  m_Layer: 6
+  m_Name: Terrain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &6745990505756710261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745990505756710249}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -100.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!218 &6745990505756710260
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745990505756710249}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: 23e5d2fd0a3f5cf489218f07929b7f47, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 0
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_StaticShadowCaster: 0
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 2100000, guid: b02fb9e5610de614eb79a8808ac694bf, type: 2}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0256
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+--- !u!154 &6745990505756710263
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745990505756710249}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 23e5d2fd0a3f5cf489218f07929b7f47, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!114 &6745990505756710258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745990505756710249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DistanceType>k__BackingField: 0
+  <NoiseType>k__BackingField: 5
+  <OctaveNumber>k__BackingField: 4
+  <Redistribution>k__BackingField: 2.6
+  <IslandRatio>k__BackingField: 0
+  <Scale>k__BackingField: 2.1
+  <ScaleElevation>k__BackingField: 0.37
+  <XOffset>k__BackingField: -1.83
+  <YOffset>k__BackingField: 43.3
+  <ElevationOffset>k__BackingField: 0.02
+  <Ridge>k__BackingField: 0
+  <OctaveDependentAmplitude>k__BackingField: 0
+  <Terraces>k__BackingField: 0
+  <TerracesHeight>k__BackingField: 570.21
+  <Octaves>k__BackingField:
+  - frequency: 1
+    amplitude: 1
+  - frequency: 2
+    amplitude: 0.5
+  - frequency: 4
+    amplitude: 0.25
+  - frequency: 8
+    amplitude: 0.125
+  - frequency: 16
+    amplitude: 0.0625
+  - frequency: 32
+    amplitude: 0.03125
+  - frequency: 64
+    amplitude: 0.015625
+  - frequency: 128
+    amplitude: 0.0078125
+--- !u!114 &6745990505756710259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745990505756710249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b803252f29fab489600d37040df4a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ErosionShader>k__BackingField: {fileID: 7200000, guid: 48825e46363a7434e9deec52095a32bb,
+    type: 3}
+  <ErosionTextureShader>k__BackingField: {fileID: 7200000, guid: 3845ba13f78353a459af9d1866526c08,
+    type: 3}
+  <Seed>k__BackingField: 0
+  <BorderSize>k__BackingField: 7
+  <IterationNumber>k__BackingField: 562690
+  <DropletLifeTime>k__BackingField: 500
+  <Acceleration>k__BackingField: 100
+  <Drag>k__BackingField: 0.2
+  <BrushSize>k__BackingField: 0
+  <InitialVelocity>k__BackingField: 3
+  <InitialWater>k__BackingField: 0.01
+  <SedimentCapacityFactor>k__BackingField: 24
+  <DepositRatio>k__BackingField: 0.3
+  <ErosionRatio>k__BackingField: 0.9
+  <EvaporationRatio>k__BackingField: 0.058
+  <Gravity>k__BackingField: 300
+  <ErodeEnabled>k__BackingField: 1
+  <ErosionMapUsed>k__BackingField: 0
+--- !u!114 &6745990505756710256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745990505756710249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1d12c4a80ee304c927a1a541bcdf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Width>k__BackingField: 230
+  <Offset>k__BackingField: {x: 0, y: 0}
+  <ElevationOffset>k__BackingField: 0.1
+  <ElevationRatio>k__BackingField: 1
+  <MinRadiusWeight>k__BackingField: 0
+  <RadiusWeight>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5046258
+      value: 0.22627263
+      inSlope: 1.047764
+      outSlope: 1.047764
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &6745990505756710257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745990505756710249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adae56e5b740b8b4da093b3cf8f172b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <SmoothShader>k__BackingField: {fileID: 7200000, guid: 9e8d2b3ba0da4d7439c090333fd9aedd,
+    type: 3}
+  <Sigma>k__BackingField: 3.92
+  <Weight>k__BackingField: 0.595
+  <KernelRadius>k__BackingField: 5
+--- !u!114 &6745990505756710262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745990505756710249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13407ba1656bdc944a1e086269da6df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Terrain>k__BackingField: {fileID: 6745990505756710260}
+  <Perlin>k__BackingField: {fileID: 6745990505756710258}
+  <ComputeShader>k__BackingField: {fileID: 7200000, guid: 0348e2e3f9b679241814ad0b71f4315f,
+    type: 3}
+  <TerrainErosion>k__BackingField: {fileID: 6745990505756710259}
+  <TerrainPostProcessing>k__BackingField: {fileID: 6745990505756710257}
+  <HeightMapsAddition>k__BackingField: {fileID: 6745990505756710256}
+  <RenderTexture>k__BackingField: {fileID: 0}
+  <ErosionTexture>k__BackingField: {fileID: 8400000, guid: 70166aa5d2cffea4e9a498febc5b3948,
+    type: 2}
+  <DepositTexture>k__BackingField: {fileID: 8400000, guid: ef3d21e159049dd40a67103742eb1871,
+    type: 2}
+  <TerrainNameToSave>k__BackingField: Terrain1
+  <TerrainNameToAdd>k__BackingField: Terrain
+  <LiveUpdate>k__BackingField: 0
