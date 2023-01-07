@@ -32,31 +32,19 @@ public class TerrainGenerationBase : MonoBehaviour
     {
         indexOfKernel = ComputeShader.FindKernel("CSMain");
 
-        RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        RenderTexture.enableRandomWrite = true;
-        RenderTexture.Create();
-
-        ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        ErosionTexture.enableRandomWrite = true;
-        ErosionTexture.Create();
+        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
     }
 
     private void Update()
     {
-
-
         if (RenderTexture == null)
         {
-            RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-            RenderTexture.enableRandomWrite = true;
-            RenderTexture.Create();
+            RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
         }
-
         if (ErosionTexture == null)
         {
-            ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-            ErosionTexture.enableRandomWrite = true;
-            ErosionTexture.Create();
+            ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
         }
 
         if (LiveUpdate)
@@ -118,29 +106,23 @@ public class TerrainGenerationBase : MonoBehaviour
         Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
             Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
         RenderTexture.active = null;
-
-        RenderTextureCopy = new RenderTexture(RenderTexture.width, RenderTexture.height, 0, RenderTextureFormat.RFloat);
-        RenderTextureCopy.enableRandomWrite = true;
-        Graphics.Blit(RenderTexture, RenderTextureCopy);
     }
 
     public void GenerateTerrain()
     {
         FillNoises();
 
-        RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        RenderTexture.enableRandomWrite = true;
-        RenderTexture.Create();
+        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
 
-        ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        ErosionTexture.enableRandomWrite = true;
-        ErosionTexture.Create();
+        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
 
         ApplyNoises();
 
         Graphics.Blit(TerrainProcessing.ApplyIslandProcessing(RenderTexture), RenderTexture);
 
         RedrawTerrain();
+
+        RenderTextureCopy = ImageLib.CopyRenderTexture(RenderTexture);
     }
 
     public void ErodeTerrain()
@@ -149,19 +131,13 @@ public class TerrainGenerationBase : MonoBehaviour
         RenderTexture = erodeResult.Heights;
         ErosionTexture = erodeResult.ErosionTexture;
 
-        RenderTexture.active = RenderTexture;
-        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
-            Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
-        RenderTexture.active = null;
+        RedrawTerrain();
     }
 
     public void Smooth()
     {
         RenderTexture = TerrainPostProcessing.SmoothTerrain(RenderTextureCopy, RenderTexture);
-        RenderTexture.active = RenderTexture;
-        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
-            Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
-        RenderTexture.active = null;
+        RedrawTerrain();
     }
 
     public void Save()

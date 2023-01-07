@@ -166,5 +166,22 @@ public class ImageLib : MonoBehaviour
 
         return Kernel;
     }
-        
+
+    public static RenderTexture CreateRenderTexture(int width, int height, RenderTextureFormat format)
+    {
+        RenderTexture rt = new RenderTexture(width, height, 0, format);
+        rt.enableRandomWrite = true;
+        rt.Create();
+        return rt;
+    }
+    public static RenderTexture CopyRenderTexture(RenderTexture rt)
+    {
+        RenderTexture rtCopy = new RenderTexture(rt.width, rt.height, 0, rt.format);
+        rtCopy.enableRandomWrite = true;
+        rtCopy.Create();
+        Graphics.Blit(rt, rtCopy);
+        return rtCopy;
+    }
+
+
 }

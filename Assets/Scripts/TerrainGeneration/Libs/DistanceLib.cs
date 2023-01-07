@@ -62,11 +62,7 @@ public class DistanceLib
         for (int i = 0; i < size; i++)
         {
             curveArray[i] = curve.Evaluate(Mathf.Lerp(first, last, (float)i / (float) (size - 1)));
-            Debug.Log(curveArray[i]);
         }
         return curveArray;
     }
-
-
-
 }

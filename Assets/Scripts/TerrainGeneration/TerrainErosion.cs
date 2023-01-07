@@ -16,7 +16,6 @@ public struct ErodeResult
 public class TerrainErosion : MonoBehaviour
 {
     [field: SerializeField] public ComputeShader ErosionShader { get; private set; }
-    [field: SerializeField] public ComputeShader ErosionTextureShader { get; private set; }
     [field: SerializeField] public int Seed { get; private set; } = 0;
     [field: SerializeField, Range(0, 10)] public int BorderSize { get; private set; } = 5;
     [field: SerializeField, Range(0, 1000000)] public int IterationNumber { get; private set; } = 70000;
@@ -135,16 +134,11 @@ public class TerrainErosion : MonoBehaviour
         }
     }
 
-    
     public ErodeResult Erode(RenderTexture heights, RenderTexture heightsBeforeErosion, RenderTexture erosionTexture)
     {
-        RenderTexture heightsCopy = new RenderTexture(heights.width, heights.height, 0, RenderTextureFormat.RFloat);
-        heightsCopy.enableRandomWrite = true;
-        Graphics.Blit(heights, heightsCopy);
+        RenderTexture heightsCopy = ImageLib.CopyRenderTexture(heights);
 
-        RenderTexture erosionTextureCopy = new RenderTexture(erosionTexture.width, erosionTexture.height, 0, RenderTextureFormat.RFloat);
-        erosionTextureCopy.enableRandomWrite = true;
-        Graphics.Blit(erosionTexture, erosionTextureCopy);
+        RenderTexture erosionTextureCopy = ImageLib.CopyRenderTexture(erosionTexture);
 
         int kernel = ErosionShader.FindKernel("CSMain");
 
@@ -226,12 +220,6 @@ public class TerrainErosion : MonoBehaviour
         /** Generate Erosion texture **/
         startPosBuffer.Release();
         brushWeightBuffer.Release();
-        //erosionMapBuffer.Release();
-
-        //ErosionTextureShader.SetTexture(kernel, "heightsEroded", heightsCopy);
-        //ErosionTextureShader.SetTexture(kernel, "heightsBeforeErosion", heightsBeforeErosion);
-        //ErosionTextureShader.SetTexture(kernel, "erosionTexture", erosionTextureCopy);
-        //ErosionTextureShader.Dispatch(kernel, heightsBeforeErosion.width / 32, heightsBeforeErosion.height / 32, 1);
 
         return new ErodeResult(heightsCopy, erosionTextureCopy);
     }
