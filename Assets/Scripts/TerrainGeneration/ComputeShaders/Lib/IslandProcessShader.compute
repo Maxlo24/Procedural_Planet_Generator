@@ -41,7 +41,7 @@ float EvaluateCurve(float x)
 
 }
 
-[numthreads(27, 27, 1)]
+[numthreads(32, 32, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	float h = heights[id.xy];

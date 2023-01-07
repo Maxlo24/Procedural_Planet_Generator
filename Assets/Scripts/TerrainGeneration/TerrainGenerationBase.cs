@@ -70,8 +70,13 @@ public class TerrainGenerationBase : MonoBehaviour
         ComputeShader.SetFloat("islandRatio", noise.IslandRatio);
         ComputeShader.SetBool("ridge", noise.Ridge);
         ComputeShader.SetBool("octaveDependentAmplitude", noise.OctaveDependentAmplitude);
+
+        ComputeShader.SetBool("elevationLimit", noise.ElevationLimit);
+        ComputeShader.SetVector("elevationLimitHeights", noise.ElevationLimitHeights);
+
         ComputeShader.SetBool("terraces", noise.Terraces);
         ComputeShader.SetFloat("terracesHeight", noise.TerracesHeight);
+        
         ComputeShader.SetInt("distanceType", (int)noise.DistanceType);
         ComputeShader.SetInt("noiseType", (int)noise.NoiseType);
 
@@ -84,7 +89,7 @@ public class TerrainGenerationBase : MonoBehaviour
         octaveBuffer.SetData(noise.Octaves);
         ComputeShader.SetBuffer(indexOfKernel, "octaves", octaveBuffer);
 
-        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 27, Terrain.terrainData.heightmapResolution / 27, 1);
+        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution/ 32 + 1, Terrain.terrainData.heightmapResolution/ 32 + 1, 1);
 
         octaveBuffer.Release();
     }

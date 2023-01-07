@@ -25,6 +25,9 @@ public class Noise : MonoBehaviour
     [field: SerializeField] public Vector3 Offset { get; private set; }
     [field: SerializeField] public bool Ridge { get; private set; }
     [field: SerializeField] public bool OctaveDependentAmplitude { get; private set; }
+    
+    [field: SerializeField] public bool ElevationLimit { get; private set; }
+    [field: SerializeField] public Vector2 ElevationLimitHeights { get; private set; }
 
     [field: SerializeField] public bool Terraces { get; private set; }
     [field: SerializeField] public float TerracesHeight { get; private set; }
