@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +8,10 @@ using UnityEngine.UI;
 public class TerrainGenerationBase : MonoBehaviour
 {
     [field: SerializeField] public Terrain Terrain { get; private set; }
-    [field: SerializeField] public Perlin Perlin { get; private set; }
+    [field: SerializeField] public List<Noise> Noises { get; private set; }
+    [field: SerializeField] public GameObject NoisesGameObject { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
+    [field: SerializeField] public TerrainProcessing TerrainProcessing { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public TerrainPostProcessing TerrainPostProcessing { get; private set; }
     [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
@@ -24,71 +27,77 @@ public class TerrainGenerationBase : MonoBehaviour
     private RenderTexture RenderTextureCopy;
 
     int indexOfKernel;
-    
+
     private void Start()
     {
         indexOfKernel = ComputeShader.FindKernel("CSMain");
 
-        RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        RenderTexture.enableRandomWrite = true;
-        RenderTexture.Create();
-
-        ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        ErosionTexture.enableRandomWrite = true;
-        ErosionTexture.Create();
+        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
     }
 
     private void Update()
     {
         if (RenderTexture == null)
         {
-            RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-            RenderTexture.enableRandomWrite = true;
-            RenderTexture.Create();
+            RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
         }
-        
         if (ErosionTexture == null)
         {
-            ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-            ErosionTexture.enableRandomWrite = true;
-            ErosionTexture.Create();
+            ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
         }
 
         if (LiveUpdate)
         {
-            SendDatas();
-            RedrawTerrain();
+            GenerateTerrain();
         }
     }
 
-    private void SendDatas()
+    private void ApplyNoise(Noise noise)
     {
-        ComputeShader.SetTexture(0, "height", RenderTexture);
+        indexOfKernel = ComputeShader.FindKernel("CSMain");
+
+        ComputeShader.SetTexture(indexOfKernel, "height", RenderTexture);
 
         ComputeShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
-        ComputeShader.SetInt("octaveCount", Perlin.OctaveNumber);
-        ComputeShader.SetFloat("xOffset", Perlin.XOffset);
-        ComputeShader.SetFloat("yOffset", Perlin.YOffset);
-        ComputeShader.SetFloat("elevationOffset", Perlin.ElevationOffset);
-        ComputeShader.SetFloat("scale", Perlin.Scale);
-        ComputeShader.SetFloat("scaleElevation", Perlin.ScaleElevation);
-        ComputeShader.SetFloat("redistribution", Perlin.Redistribution);
-        ComputeShader.SetFloat("islandRatio", Perlin.IslandRatio);
-        ComputeShader.SetBool("ridge", Perlin.Ridge);
-        ComputeShader.SetBool("octaveDependentAmplitude", Perlin.OctaveDependentAmplitude);
-        ComputeShader.SetBool("terraces", Perlin.Terraces);
-        ComputeShader.SetFloat("terracesHeight", Perlin.TerracesHeight);
-        ComputeShader.SetInt("distanceType", (int)Perlin.DistanceType);
-        ComputeShader.SetInt("noiseType", (int)Perlin.NoiseType);
+        ComputeShader.SetInt("octaveCount", noise.OctaveNumber);
+        ComputeShader.SetFloat("xOffset", noise.Offset.x);
+        ComputeShader.SetFloat("yOffset", noise.Offset.z);
+        ComputeShader.SetFloat("elevationOffset", noise.Offset.y);
+        ComputeShader.SetFloat("scale", noise.Scale);
+        ComputeShader.SetFloat("scaleElevation", noise.ScaleElevation);
+        ComputeShader.SetFloat("redistribution", noise.Redistribution);
+        ComputeShader.SetFloat("islandRatio", noise.IslandRatio);
+        ComputeShader.SetBool("ridge", noise.Ridge);
+        ComputeShader.SetBool("octaveDependentAmplitude", noise.OctaveDependentAmplitude);
+        ComputeShader.SetBool("terraces", noise.Terraces);
+        ComputeShader.SetFloat("terracesHeight", noise.TerracesHeight);
+        ComputeShader.SetInt("distanceType", (int)noise.DistanceType);
+        ComputeShader.SetInt("noiseType", (int)noise.NoiseType);
 
-        // Create buffer to send Perlin.octaves to compute shader in RWStructuredBuffer
-        ComputeBuffer octaveBuffer = new ComputeBuffer(Perlin.Octaves.Count, 8);
-        octaveBuffer.SetData(Perlin.Octaves);
-        ComputeShader.SetBuffer(0, "octaves", octaveBuffer);
+        if (noise.Octaves.Count == 0)
+        {
+            noise.FillOctaves();
+        }
+
+        ComputeBuffer octaveBuffer = new ComputeBuffer(noise.Octaves.Count, 8);
+        octaveBuffer.SetData(noise.Octaves);
+        ComputeShader.SetBuffer(indexOfKernel, "octaves", octaveBuffer);
 
         ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
 
         octaveBuffer.Release();
+    }
+
+    private void ApplyNoises()
+    {
+        foreach (Noise noise in Noises)
+        {
+            if (noise.Enabled)
+            {
+                ApplyNoise(noise);
+            }
+        }
     }
 
     private void RedrawTerrain()
@@ -97,48 +106,38 @@ public class TerrainGenerationBase : MonoBehaviour
         Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
             Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
         RenderTexture.active = null;
-
-        RenderTextureCopy = new RenderTexture(RenderTexture.width, RenderTexture.height, 0, RenderTextureFormat.RFloat);
-        RenderTextureCopy.enableRandomWrite = true;
-        Graphics.Blit(RenderTexture, RenderTextureCopy);
     }
 
     public void GenerateTerrain()
     {
-        indexOfKernel = ComputeShader.FindKernel("CSMain");
-        
-        RenderTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        RenderTexture.enableRandomWrite = true;
-        RenderTexture.Create();
+        FillNoises();
 
-        ErosionTexture = new RenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, 32, RenderTextureFormat.RHalf);
-        ErosionTexture.enableRandomWrite = true;
-        ErosionTexture.Create();
+        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
 
-        SendDatas();        
-        
+        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+
+        ApplyNoises();
+
+        Graphics.Blit(TerrainProcessing.ApplyIslandProcessing(RenderTexture), RenderTexture);
+
         RedrawTerrain();
+
+        RenderTextureCopy = ImageLib.CopyRenderTexture(RenderTexture);
     }
-    
+
     public void ErodeTerrain()
     {
         ErodeResult erodeResult = TerrainErosion.Erode(RenderTexture, RenderTextureCopy, ErosionTexture);
         RenderTexture = erodeResult.Heights;
         ErosionTexture = erodeResult.ErosionTexture;
 
-        RenderTexture.active = RenderTexture;
-        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
-            Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
-        RenderTexture.active = null;
+        RedrawTerrain();
     }
 
     public void Smooth()
     {
         RenderTexture = TerrainPostProcessing.SmoothTerrain(RenderTextureCopy, RenderTexture);
-        RenderTexture.active = RenderTexture;
-        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution),
-            Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
-        RenderTexture.active = null;
+        RedrawTerrain();
     }
 
     public void Save()
@@ -157,5 +156,18 @@ public class TerrainGenerationBase : MonoBehaviour
 
         mesh = HeightMapsAddition.AddHeightMaps(mesh, terrainToAdd);
         Terrain.terrainData.SetHeights(0, 0, mesh);
+    }
+
+    public void FillNoises()
+    {
+        // Fill Noises with all enabled components of type Noise in NoisesGameObject
+        Noises = new List<Noise>();
+        foreach (Noise noise in NoisesGameObject.GetComponents<Noise>())
+        {
+            if (noise.enabled)
+            {
+                Noises.Add(noise);
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@
 
 float SquareBump(float x, float y)
 {
-    return 1 - pow(x, 2) - pow(y, 2);
+    return pow(x, 2) + pow(y, 2);
 }
 
 float EuclideanSquare(float x, float y)
