@@ -32,6 +32,12 @@ float scaleElevation;
 bool ridge;
 bool octaveDependentAmplitude;
 
+bool elevationLimit;
+float2 elevationLimitHeights;
+
+bool absolute;
+bool invert;
+
 bool terraces;
 float terracesHeight;
 
@@ -39,7 +45,7 @@ int distanceType = 0;
 
 int noiseType = 0;
 
-[numthreads(27, 27, 1)]
+[numthreads(32, 32, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	float x = float(id.x) / float(resolution);
@@ -63,6 +69,17 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		
 		sumPersistency += amplitude;
 		float h_I = noise((float2(x, y) + float2(xOffset, yOffset)) * frequency * scale, noiseType);
+		
+		if (absolute)
+		{
+			h_I = abs(h_I);
+		}
+
+		if (invert)
+		{
+			h_I = - h_I;
+		}
+		
 		if (ridge)
 		{
 			h_I = Ridge(h_I);
@@ -84,7 +101,13 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	{
 		h = floor(h * terracesHeight) / terracesHeight;
 	}
+	
 	h = scaleElevation * (h + elevationOffset);
+	
+	if (elevationLimit)
+	{
+		h = clamp(h, elevationLimitHeights.x / 10.0, elevationLimitHeights.y / 10.0);
+	}
 
 	height[id.xy] += h;
 }

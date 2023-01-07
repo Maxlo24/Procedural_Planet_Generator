@@ -41,7 +41,7 @@ public class TerrainProcessing : MonoBehaviour
 
         IslandShader.SetFloat("islandRatio", IslandRatio);
         
-        IslandShader.Dispatch(kernel, heights.width / 27, heights.height / 27, 1);
+        IslandShader.Dispatch(kernel, heights.width/ 32 + 1, heights.height/ 32 + 1, 1);
 
         curveBuffer.Release();
 
