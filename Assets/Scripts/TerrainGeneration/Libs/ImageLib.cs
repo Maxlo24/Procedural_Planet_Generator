@@ -163,7 +163,6 @@ public class ImageLib : MonoBehaviour
             Kernel[i] /= sum;
         }
         
-
         return Kernel;
     }
 
