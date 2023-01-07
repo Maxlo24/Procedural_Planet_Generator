@@ -23,6 +23,7 @@ public class Noise : MonoBehaviour
     [field: SerializeField, Range(0, 20)] public float Scale { get; private set; } = 1f;
     [field: SerializeField, Range(0, 4)] public float ScaleElevation { get; private set; } = 1f;
     [field: SerializeField] public Vector3 Offset { get; private set; }
+    
     [field: SerializeField] public bool Ridge { get; private set; }
     [field: SerializeField] public bool OctaveDependentAmplitude { get; private set; }
     
@@ -31,6 +32,10 @@ public class Noise : MonoBehaviour
 
     [field: SerializeField] public bool Terraces { get; private set; }
     [field: SerializeField] public float TerracesHeight { get; private set; }
+
+    [field: SerializeField] public bool Absolute { get; private set; }
+    [field: SerializeField] public bool Invert { get; private set; }
+
 
     [field: SerializeField] public List<Octave> Octaves { get; private set; }
 

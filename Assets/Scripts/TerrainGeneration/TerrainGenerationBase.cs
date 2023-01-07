@@ -70,13 +70,16 @@ public class TerrainGenerationBase : MonoBehaviour
         ComputeShader.SetFloat("islandRatio", noise.IslandRatio);
         ComputeShader.SetBool("ridge", noise.Ridge);
         ComputeShader.SetBool("octaveDependentAmplitude", noise.OctaveDependentAmplitude);
-
+        
         ComputeShader.SetBool("elevationLimit", noise.ElevationLimit);
         ComputeShader.SetVector("elevationLimitHeights", noise.ElevationLimitHeights);
 
         ComputeShader.SetBool("terraces", noise.Terraces);
         ComputeShader.SetFloat("terracesHeight", noise.TerracesHeight);
-        
+
+        ComputeShader.SetBool("absolute", noise.Absolute);
+        ComputeShader.SetBool("invert", noise.Invert);
+
         ComputeShader.SetInt("distanceType", (int)noise.DistanceType);
         ComputeShader.SetInt("noiseType", (int)noise.NoiseType);
 
