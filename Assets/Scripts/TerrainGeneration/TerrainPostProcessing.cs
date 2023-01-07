@@ -33,7 +33,7 @@ public class TerrainPostProcessing : MonoBehaviour
         SmoothShader.SetInt("kernelRadius", KernelRadius);
         SmoothShader.SetInt("sizeX", basicHeights.width);
         SmoothShader.SetInt("sizeY", basicHeights.height);
-        SmoothShader.Dispatch(kernel, basicHeights.width / 32, basicHeights.height / 32, 1);
+        SmoothShader.Dispatch(kernel, basicHeights.width / 27, basicHeights.height / 27, 1);
 
         // release buffer
         kernelBuffer.Release();

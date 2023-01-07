@@ -39,7 +39,7 @@ int distanceType = 0;
 
 int noiseType = 0;
 
-[numthreads(32, 32, 1)]
+[numthreads(27, 27, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	float x = float(id.x) / float(resolution);

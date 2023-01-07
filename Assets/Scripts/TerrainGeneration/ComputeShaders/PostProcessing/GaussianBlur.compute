@@ -23,7 +23,7 @@ int2 clamp(int2 value, int2 minV, int2 maxV) {
 	return int2(min(max(value.x, minV.x), maxV.x), min(max(value.y, minV.y), maxV.y));
 }
 
-[numthreads(32,32,1)]
+[numthreads(27,27,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
 	int2 coord = id.xy;

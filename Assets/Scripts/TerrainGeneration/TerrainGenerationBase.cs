@@ -84,7 +84,7 @@ public class TerrainGenerationBase : MonoBehaviour
         octaveBuffer.SetData(noise.Octaves);
         ComputeShader.SetBuffer(indexOfKernel, "octaves", octaveBuffer);
 
-        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32, Terrain.terrainData.heightmapResolution / 32, 1);
+        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 27, Terrain.terrainData.heightmapResolution / 27, 1);
 
         octaveBuffer.Release();
     }

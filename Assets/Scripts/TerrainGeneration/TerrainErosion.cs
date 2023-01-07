@@ -214,8 +214,7 @@ public class TerrainErosion : MonoBehaviour
         ErosionShader.SetBool("erodeEnabled", ErodeEnabled);
         ErosionShader.SetBool("erosionMapUsed", ErosionMapUsed);
         
-        ErosionShader.Dispatch(kernel, IterationNumber / 512, 1, 1);
-
+        ErosionShader.Dispatch(kernel, IterationNumber / 256, 1, 1);
 
         /** Generate Erosion texture **/
         startPosBuffer.Release();
