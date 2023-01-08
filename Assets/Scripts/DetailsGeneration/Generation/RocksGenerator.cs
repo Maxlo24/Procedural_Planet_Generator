@@ -14,11 +14,11 @@ public class RocksGenerator : MonoBehaviour
     [SerializeField] private DetailsSize _detailsSize;
 
 
-    [HideInInspector] public Vector2 slopeAngleRange = new Vector2(0f, 25f);
-    [HideInInspector] public Vector2 altitudeRange = new Vector2(-20f, 100f);
+    [SerializeField] public Vector2 slopeAngleRange = new Vector2(0f, 25f);
+    [SerializeField] public Vector2 altitudeRange = new Vector2(-20f, 100f);
 
     [Range(0, 100)]
-    [SerializeField] private int rocksDensity = 50;
+    [SerializeField] private int elementDensity = 50;
 
     [Header("Scale")]
     [SerializeField] private Vector3 _scaleRandomness = Vector3.one;
@@ -29,7 +29,7 @@ public class RocksGenerator : MonoBehaviour
     private int MaxCount = 10000;
 
 
-    public void SpawnRocks()
+    public void SpawnElements()
     {
         //LoadTerrain();
 
@@ -54,7 +54,7 @@ public class RocksGenerator : MonoBehaviour
         {
             for (int v = 0; v < terrain.terrainData.detailHeight; v += 1)
             {
-                if (Random.Range(0, 100000) > rocksDensity) continue;
+                if (Random.Range(0, 100000) > elementDensity) continue;
 
                 
                 Vector3 wpos = terrain.DetailToWorld(v, u);
