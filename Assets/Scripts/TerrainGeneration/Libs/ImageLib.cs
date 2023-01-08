@@ -129,7 +129,7 @@ public class ImageLib : MonoBehaviour
         }
 
         tex.Apply();
-        RenderTexture rt = new RenderTexture(heights.GetLength(0), heights.GetLength(1), 32, RenderTextureFormat.RFloat);
+        RenderTexture rt = new RenderTexture(heights.GetLength(0), heights.GetLength(1), 0, RenderTextureFormat.RFloat);
         rt.enableRandomWrite = true;
         Graphics.Blit(tex, rt);
         return rt;
@@ -182,5 +182,31 @@ public class ImageLib : MonoBehaviour
         return rtCopy;
     }
 
+    public static float GetMinFromRenderTexture(RenderTexture rt, int xmin, int xmax, int ymin, int ymax)
+    {
+        Texture2D tex = new Texture2D(xmax - xmin, ymax - ymin, (TextureFormat)rt.format, false);
+        RenderTexture.active = rt;
+        tex.ReadPixels(new Rect(xmin, ymin, xmax - xmin, ymax - ymin), 0, 0);
+        tex.Apply();
+        float min = float.MaxValue;
+        float max = float.MinValue;
+        for (int x = 0; x < tex.width; x++)
+        {
+            for (int y = 0; y < tex.height; y++)
+            {
+                float value = tex.GetPixel(x, y).r;
+                if (value < min)
+                {
+                    min = value;
+                }
+            }
+        }
 
+        return min;
+    }
+
+    public static float GetMinFromRenderTexture(RenderTexture rt)
+    {
+        return GetMinFromRenderTexture(rt, 0, rt.width, 0, rt.height);
+    }
 }

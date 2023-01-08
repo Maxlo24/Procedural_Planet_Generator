@@ -13,6 +13,10 @@ public class GPUTerrainInspector : Editor
         {
             terrain.GenerateTerrain();
         }
+        if (GUILayout.Button("Generate Craters"))
+        {
+            terrain.GenerateCraters();
+        }
         if (GUILayout.Button("Erode Terrain"))
         {
             terrain.ErodeTerrain();
