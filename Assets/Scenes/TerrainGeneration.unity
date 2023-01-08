@@ -123,6 +123,43 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!84 &147651244
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 2049
+  m_Height: 2049
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 45
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &253668779
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +365,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320535916}
   m_CullTransparentMesh: 1
---- !u!84 &548605577
+--- !u!84 &535559127
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -342,12 +379,12 @@ RenderTexture:
   m_DownscaleFallback: 0
   m_IsAlphaChannelOptional: 0
   serializedVersion: 5
-  m_Width: 1025
-  m_Height: 1025
+  m_Width: 512
+  m_Height: 512
   m_AntiAliasing: 1
   m_MipCount: -1
   m_DepthStencilFormat: 0
-  m_ColorFormat: 45
+  m_ColorFormat: 49
   m_MipMap: 0
   m_GenerateMips: 1
   m_SRGB: 0
@@ -486,8 +523,9 @@ MonoBehaviour:
   <TerrainErosion>k__BackingField: {fileID: 840158069}
   <TerrainPostProcessing>k__BackingField: {fileID: 840158071}
   <HeightMapsAddition>k__BackingField: {fileID: 840158070}
-  <RenderTexture>k__BackingField: {fileID: 1294761523}
-  <ErosionTexture>k__BackingField: {fileID: 548605577}
+  <RenderTexture>k__BackingField: {fileID: 147651244}
+  <ErosionTexture>k__BackingField: {fileID: 1366001667}
+  <DepositTexture>k__BackingField: {fileID: 535559127}
   <TerrainNameToSave>k__BackingField: Terrain1
   <TerrainNameToAdd>k__BackingField: Terrain
   <LiveUpdate>k__BackingField: 0
@@ -582,6 +620,7 @@ MonoBehaviour:
   <Gravity>k__BackingField: 20
   <ErodeEnabled>k__BackingField: 1
   <ErosionMapUsed>k__BackingField: 0
+  <GenerateErosionTexture>k__BackingField: 0
 --- !u!114 &840158070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -969,7 +1008,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!84 &1294761523
+--- !u!84 &1366001667
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -983,12 +1022,12 @@ RenderTexture:
   m_DownscaleFallback: 0
   m_IsAlphaChannelOptional: 0
   serializedVersion: 5
-  m_Width: 1025
-  m_Height: 1025
+  m_Width: 2049
+  m_Height: 2049
   m_AntiAliasing: 1
   m_MipCount: -1
   m_DepthStencilFormat: 0
-  m_ColorFormat: 49
+  m_ColorFormat: 45
   m_MipMap: 0
   m_GenerateMips: 1
   m_SRGB: 0
@@ -1068,6 +1107,8 @@ MonoBehaviour:
   <ElevationLimitHeights>k__BackingField: {x: 0, y: 0}
   <Terraces>k__BackingField: 0
   <TerracesHeight>k__BackingField: 0
+  <Absolute>k__BackingField: 0
+  <Invert>k__BackingField: 0
   <Octaves>k__BackingField:
   - frequency: 1
     amplitude: 1
@@ -1109,14 +1150,16 @@ MonoBehaviour:
   <Redistribution>k__BackingField: 2.1
   <IslandRatio>k__BackingField: 0
   <Scale>k__BackingField: 2.6
-  <ScaleElevation>k__BackingField: 0.2
+  <ScaleElevation>k__BackingField: 0.4
   <Offset>k__BackingField: {x: 9.95, y: -0.22, z: 1.59}
   <Ridge>k__BackingField: 0
   <OctaveDependentAmplitude>k__BackingField: 0
   <ElevationLimit>k__BackingField: 1
-  <ElevationLimitHeights>k__BackingField: {x: 0.19, y: 0.42}
+  <ElevationLimitHeights>k__BackingField: {x: 0.38, y: 0.84}
   <Terraces>k__BackingField: 0
   <TerracesHeight>k__BackingField: 0
+  <Absolute>k__BackingField: 0
+  <Invert>k__BackingField: 0
   <Octaves>k__BackingField:
   - frequency: 1
     amplitude: 1
@@ -1166,6 +1209,8 @@ MonoBehaviour:
   <ElevationLimitHeights>k__BackingField: {x: 0.12, y: 0.16}
   <Terraces>k__BackingField: 0
   <TerracesHeight>k__BackingField: 33.8
+  <Absolute>k__BackingField: 0
+  <Invert>k__BackingField: 0
   <Octaves>k__BackingField:
   - frequency: 1
     amplitude: 1

@@ -16,12 +16,12 @@ float gravity;
 float evaporationRatio;
 bool erodeEnabled;
 bool erosionMapUsed;
+bool generateErosionTexture;
 
 RWTexture2D<float> heights;
 RWTexture2D<float> erosion;
 RWTexture2D<float> deposit;
 StructuredBuffer<float2> initialPositions;
-//StructuredBuffer<float> erosionMap;
 
 StructuredBuffer<float> brushWeights;
 
@@ -153,19 +153,22 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 				heights[coord + int2(0, 1)] += v01;
 				heights[coord + int2(1, 1)] += v11;
 
-				if (amount > 0)
+				if (generateErosionTexture)
 				{
-					deposit[coord] += v00;
-					deposit[coord + int2(1, 0)] += v10;
-					deposit[coord + int2(0, 1)] += v01;
-					deposit[coord + int2(1, 1)] += v11;
-				}
-				else
-				{
-					erosion[coord] -= v00;
-					erosion[coord + int2(1, 0)] -= v10;
-					erosion[coord + int2(0, 1)] -= v01;
-					erosion[coord + int2(1, 1)] -= v11;
+					if (amount > 0)
+					{
+						deposit[coord] += v00;
+						deposit[coord + int2(1, 0)] += v10;
+						deposit[coord + int2(0, 1)] += v01;
+						deposit[coord + int2(1, 1)] += v11;
+					}
+					else
+					{
+						erosion[coord] -= v00;
+						erosion[coord + int2(1, 0)] -= v10;
+						erosion[coord + int2(0, 1)] -= v01;
+						erosion[coord + int2(1, 1)] -= v11;
+					}
 				}
 			}
 			else
