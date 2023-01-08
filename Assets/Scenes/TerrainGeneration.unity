@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 840158069}
   - component: {fileID: 840158070}
   - component: {fileID: 840158072}
+  - component: {fileID: 840158073}
   - component: {fileID: 840158071}
   - component: {fileID: 840158064}
   m_Layer: 6
@@ -484,6 +485,7 @@ MonoBehaviour:
     type: 3}
   <TerrainProcessing>k__BackingField: {fileID: 840158072}
   <TerrainErosion>k__BackingField: {fileID: 840158069}
+  <CraterGeneration>k__BackingField: {fileID: 840158073}
   <TerrainPostProcessing>k__BackingField: {fileID: 840158071}
   <HeightMapsAddition>k__BackingField: {fileID: 840158070}
   <RenderTexture>k__BackingField: {fileID: 1660361366}
@@ -491,7 +493,7 @@ MonoBehaviour:
   <DepositTexture>k__BackingField: {fileID: 604823077}
   <TerrainNameToSave>k__BackingField: Terrain1
   <TerrainNameToAdd>k__BackingField: Terrain
-  <LiveUpdate>k__BackingField: 0
+  <LiveUpdate>k__BackingField: 1
 --- !u!154 &840158065
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -700,7 +702,26 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <ElevationOffset>k__BackingField: 0
+  <ElevationOffset>k__BackingField: 0.12
+--- !u!114 &840158073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840158063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8040b28741fb329409dc587807d20103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CraterShader>k__BackingField: {fileID: 7200000, guid: a715fc9231203aa4bb5d46cda90ccb4e,
+    type: 3}
+  <Seed>k__BackingField: 187
+  <Number>k__BackingField: 1
+  <RadiusRange>k__BackingField: {x: 86.8, y: 112.5}
+  <DepthRange>k__BackingField: {x: 0.8, y: 2.41}
+  <TerrainBorder>k__BackingField: 0
 --- !u!84 &863215479
 RenderTexture:
   m_ObjectHideFlags: 0

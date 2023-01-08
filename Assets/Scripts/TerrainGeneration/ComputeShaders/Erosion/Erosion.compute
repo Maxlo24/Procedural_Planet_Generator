@@ -98,7 +98,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		newPosX += dirX;
 		newPosY += dirY;
 
-		if (newPosX < borderSize || newPosY < borderSize || newPosX >= sizeX - borderSize || newPosY >= sizeY - borderSize || (dirX == 0 && dirY == 0))
+		if (newPosX < borderSize || newPosY < borderSize || newPosX >= sizeX - borderSize - 1 || newPosY >= sizeY - borderSize - 1 || (dirX == 0 && dirY == 0))
 		{
 			break;
 		}
@@ -139,7 +139,6 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 		if (erodeEnabled || amount > 0)
 		{
-			heights[(int2(x, y)) / float2(sizeX, sizeY)] = 5.0;
 			if (brushSize == 0)
 			{
 				float v00 = amount * (1 - u) * (1 - v);

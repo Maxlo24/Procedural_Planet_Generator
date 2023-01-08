@@ -1,0 +1,36 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float> result;
+
+float minCenter;
+float2 position;
+float radius;
+float depth;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	// Dig a crater in result texture
+	int2 positionI = int2(0, 512) + int2(position.x, -position.y); /*int2(position)*/;
+
+	int2 pos = positionI + id.xy - int2(radius, radius);
+	
+	float dist = length(pos - positionI);
+
+	if (dist < radius)
+	{
+		float middle = result[positionI] - radius * depth;
+
+		float w = pow(dist / radius, 2);
+
+		float diff = max(0, minCenter - depth);
+				//pos = int2(0,512) + int2(pos.x,-pos.y);
+
+		float h = result[pos] * w + diff * (1 - w);
+		result[pos] = h;
+	}
+
+}
