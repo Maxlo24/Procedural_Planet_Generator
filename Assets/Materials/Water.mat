@@ -69,6 +69,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: e4f1bbef3d8bdea46bc23ba20c9ab18d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d774477d13de4fb8ba05e793f8c872bb_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 1368ead630dc6b54ea5de76ccc3e9a2c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -117,6 +121,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Height_frequency: 0.5
+    - _Ice_crack: 0
     - _Intensity: 10
     - _Metallic: 0
     - _Normal_strength: 0.5

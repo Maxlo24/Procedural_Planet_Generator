@@ -129,7 +129,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DustColor: {r: 0.43618724, g: 0.5471698, b: 0.45619202, a: 1}
+    - _DustColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainColor: {r: 0.6039216, g: 0.5810426, b: 0.5137255, a: 0}
     - _Noise: {r: 75, g: 0.85, b: 0, a: 0}

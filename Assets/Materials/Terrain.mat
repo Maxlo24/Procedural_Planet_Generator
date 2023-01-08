@@ -209,7 +209,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Beach_randomness: 5
-    - _Beach_spread: 3.4
+    - _Beach_spread: 5.9
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -255,8 +255,8 @@ Material:
     - _Smoothness3: 0.5
     - _SmoothnessTextureChannel: 0
     - _Snow_Smoothness: 15
-    - _Snow_intensity: 0
-    - _Snow_level: 14
+    - _Snow_intensity: 0.725
+    - _Snow_level: 51
     - _Snow_randomness: 20
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -283,7 +283,7 @@ Material:
     - _Rock_color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 0}
     - _Scale: {r: 1, g: 1, b: 0, a: 0}
     - _Sediment_color: {r: 0.084905684, g: 0.06497742, b: 0.04045035, a: 0.99215686}
-    - _Snow_color: {r: 0.6097436, g: 1.1946257, b: 1.6362739, a: 0}
+    - _Snow_color: {r: 1.4359818, g: 1.5894507, b: 1.7007157, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7517056022234436585
