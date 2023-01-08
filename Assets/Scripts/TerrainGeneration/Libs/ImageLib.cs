@@ -186,9 +186,10 @@ public class ImageLib : MonoBehaviour
     {
         Texture2D tex = new Texture2D(xmax - xmin, ymax - ymin, (TextureFormat)rt.format, false);
         RenderTexture.active = rt;
-        tex.ReadPixels(new Rect(0, 0, xmax, ymax), 0, 0);
+        tex.ReadPixels(new Rect(xmin, ymin, xmax - xmin, ymax - ymin), 0, 0);
         tex.Apply();
         float min = float.MaxValue;
+        float max = float.MinValue;
         for (int x = 0; x < tex.width; x++)
         {
             for (int y = 0; y < tex.height; y++)
@@ -200,6 +201,7 @@ public class ImageLib : MonoBehaviour
                 }
             }
         }
+
         return min;
     }
 
