@@ -17,6 +17,8 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
     [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
     [field: SerializeField] public RenderTexture ErosionTexture { get; private set; }
+    [field: SerializeField] public RenderTexture DepositTexture { get; private set; }
+
 
 
     [field: SerializeField] public String TerrainNameToSave { get; private set; } = "Terrain";
@@ -131,13 +133,19 @@ public class TerrainGenerationBase : MonoBehaviour
         RedrawTerrain();
 
         RenderTextureCopy = ImageLib.CopyRenderTexture(RenderTexture);
+
+        RenderTexture nulltexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+
+        Graphics.Blit(nulltexture, ErosionTexture);
+        Graphics.Blit(nulltexture, DepositTexture);
     }
 
     public void ErodeTerrain()
     {
-        ErodeResult erodeResult = TerrainErosion.Erode(RenderTexture, RenderTextureCopy, ErosionTexture);
+        ErodeResult erodeResult = TerrainErosion.Erode(RenderTexture, RenderTextureCopy, ErosionTexture, DepositTexture);
         RenderTexture = erodeResult.Heights;
         ErosionTexture = erodeResult.ErosionTexture;
+        DepositTexture = erodeResult.DepositTexture;
 
         RedrawTerrain();
     }
