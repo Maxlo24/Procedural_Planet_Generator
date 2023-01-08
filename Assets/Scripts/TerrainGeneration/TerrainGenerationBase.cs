@@ -34,19 +34,19 @@ public class TerrainGenerationBase : MonoBehaviour
     {
         indexOfKernel = ComputeShader.FindKernel("CSMain");
 
-        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
-        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
+        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
     }
 
     private void Update()
     {
         if (RenderTexture == null)
         {
-            RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+            RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
         }
         if (ErosionTexture == null)
         {
-            ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+            ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
         }
 
         if (LiveUpdate)
@@ -122,9 +122,9 @@ public class TerrainGenerationBase : MonoBehaviour
     {
         FillNoises();
 
-        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
 
-        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
 
         ApplyNoises();
 
@@ -134,7 +134,7 @@ public class TerrainGenerationBase : MonoBehaviour
 
         RenderTextureCopy = ImageLib.CopyRenderTexture(RenderTexture);
 
-        RenderTexture nulltexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RHalf);
+        RenderTexture nulltexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
 
         Graphics.Blit(nulltexture, ErosionTexture);
         Graphics.Blit(nulltexture, DepositTexture);

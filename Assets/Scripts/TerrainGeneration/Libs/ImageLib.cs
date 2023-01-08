@@ -97,7 +97,7 @@ public class ImageLib : MonoBehaviour
 
     public static float[,] ConvertRenderTextureToFloatArray(RenderTexture rt)
     {
-        Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.RHalf, false);
+        Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.RFloat, false);
         RenderTexture.active = rt;
         tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
         tex.Apply();
