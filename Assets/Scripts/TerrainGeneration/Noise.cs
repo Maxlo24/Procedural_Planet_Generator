@@ -85,12 +85,12 @@ public class Noise : MonoBehaviour
     
     public void SortTerraces()
     {
-        CustomTerracesDescription.Sort();
+        CustomTerracesDescription.Sort((x, y) => x.x.CompareTo(y.x));
     }
     
     public List<Vector2> GetCustomTerraces()
     {
-        if (CustomTerraces)
+        if (CustomTerraces && CustomTerracesDescription.Count > 0)
         {
             return CustomTerracesDescription;
         }
