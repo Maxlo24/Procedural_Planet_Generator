@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Noise : MonoBehaviour
 {
     [System.Serializable]
@@ -10,23 +9,24 @@ public class Noise : MonoBehaviour
         public float frequency;
         public float amplitude;
     };
-    
+
     [field: SerializeField] public bool Enabled { get; private set; }
     [field: SerializeField] public string Name { get; private set; } = "Noise";
 
+    [field: SerializeField] public ApplicationMode Mode { get; private set; } = ApplicationMode.ADDITION;
     [field: SerializeField] public DistanceType DistanceType { get; private set; }
     [field: SerializeField] public NoiseType NoiseType { get; private set; }
-    
-    [field: SerializeField, Range(1,20)] public int OctaveNumber { get; private set; } = 8;                  // Number of octaves
+
+    [field: SerializeField, Range(1, 20)] public int OctaveNumber { get; private set; } = 8;                  // Number of octaves
     [field: SerializeField, Range(0, 20)] public float Redistribution { get; private set; } = 1f;
     [field: SerializeField, Range(-2, 2)] public float IslandRatio { get; private set; } = 0f;
     [field: SerializeField, Range(0, 20)] public float Scale { get; private set; } = 1f;
     [field: SerializeField, Range(0, 4)] public float ScaleElevation { get; private set; } = 1f;
     [field: SerializeField] public Vector3 Offset { get; private set; }
-    
+
     [field: SerializeField] public bool Ridge { get; private set; }
     [field: SerializeField] public bool OctaveDependentAmplitude { get; private set; }
-    
+
     [field: SerializeField] public bool ElevationLimit { get; private set; }
     [field: SerializeField] public Vector2 ElevationLimitHeights { get; private set; }
 
@@ -58,13 +58,13 @@ public class Noise : MonoBehaviour
     {
         float elevation = 0f;
         float sumPersistency = 0f;
-        
+
         for (int i = 0; i < OctaveNumber; i++)
         {
             sumPersistency += Octaves[i].amplitude;
-            float sumElevation = !OctaveDependentAmplitude || elevation == 0f? 1f : elevation;
+            float sumElevation = !OctaveDependentAmplitude || elevation == 0f ? 1f : elevation;
             elevation += NoiseLib.Noise((x + Offset.x) * Octaves[i].frequency * Scale, (y + Offset.z) * Octaves[i].frequency * Scale, NoiseType) * Octaves[i].amplitude * sumElevation;
-            
+
         }
 
         elevation = elevation / sumPersistency;

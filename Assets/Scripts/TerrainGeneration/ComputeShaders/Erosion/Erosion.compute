@@ -51,7 +51,7 @@ float3 calculateHeightAndGradiant(float posX, float posY, int sizeX, int sizeY)
 	int2 coord = int2(x, y);
 
 	float hxy = heights[coord];
-	float hx1y = heights[coord + int2(1,0)];
+	float hx1y = heights[coord + int2(1, 0)];
 	float hxy1 = heights[coord + int2(0, 1)];
 	float hx1y1 = heights[coord + int2(1, 1)];
 
@@ -145,7 +145,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 				float v10 = amount * u * (1 - v);
 				float v01 = amount * (1 - u) * v;
 				float v11 = amount * u * v;
-				
+
 				int2 coord = int2(x, y);
 				heights[coord] += v00;
 				heights[coord + int2(1, 0)] += v10;
@@ -183,7 +183,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 							float byp = yp - posY + brushMiddle.y;
 							float brushAmount = bilinearInterpolation(brushWeights, bxp, byp, 2 * brushSize + 3, 2 * brushSize + 3);
 							//float weight = brushWeights[(xp - x + brushSize) * (brushSize * 2 + 1) + (yp - y + brushSize)];
-							heights[int2(xp, yp)] += amount * brushWeights[(int) bxp * (2 * brushSize + 3) + (int)byp]/*brushAmount*/;
+							heights[int2(xp, yp)] += amount * brushWeights[(int)bxp * (2 * brushSize + 3) + (int)byp]/*brushAmount*/;
 
 							if (amount > 0)
 							{
@@ -204,6 +204,6 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 		speed = sqrt(max(0, speed * speed - hDiff * gravity));
 		water *= (1 - evaporationRatio);
-		
+
 	}
 }

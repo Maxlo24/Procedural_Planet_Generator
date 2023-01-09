@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ApplicationMode
+{
+    ADDITION,
+    MULTIPLICATION
+};
+
 public enum NoiseType
 {
     PERLIN,

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
@@ -102,7 +100,7 @@ public class ImageLib : MonoBehaviour
         tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
         tex.Apply();
 
-        float [,] heightMap = new float[tex.width, tex.height];
+        float[,] heightMap = new float[tex.width, tex.height];
         for (int x = 0; x < tex.width; x++)
         {
             for (int y = 0; y < tex.height; y++)
@@ -112,14 +110,14 @@ public class ImageLib : MonoBehaviour
         }
         return heightMap;
     }
-    
+
     public static RenderTexture ConvertFloatArrayToRenderTexture(float[,] heights)
     {
         Texture2D tex = new Texture2D(heights.GetLength(0), heights.GetLength(1), TextureFormat.RFloat, false);
-        
+
         int width = heights.GetLength(0);
         int height = heights.GetLength(1);
-        
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -162,7 +160,7 @@ public class ImageLib : MonoBehaviour
         {
             Kernel[i] /= sum;
         }
-        
+
         return Kernel;
     }
 
@@ -182,7 +180,7 @@ public class ImageLib : MonoBehaviour
         return rtCopy;
     }
 
-    public static float GetMinFromRenderTexture(RenderTexture rt, int xmin, int xmax, int ymin, int ymax)
+    public static Vector2 GetMinMaxFromRenderTexture(RenderTexture rt, int xmin, int xmax, int ymin, int ymax)
     {
         Texture2D tex = new Texture2D(xmax - xmin, ymax - ymin, (TextureFormat)rt.format, false);
         RenderTexture.active = rt;
@@ -190,6 +188,7 @@ public class ImageLib : MonoBehaviour
         tex.Apply();
         float min = float.MaxValue;
         float max = float.MinValue;
+
         for (int x = 0; x < tex.width; x++)
         {
             for (int y = 0; y < tex.height; y++)
@@ -199,14 +198,46 @@ public class ImageLib : MonoBehaviour
                 {
                     min = value;
                 }
+                if (value > max)
+                {
+                    max = value;
+                }
             }
         }
 
-        return min;
+        return new Vector2(min, max);
     }
 
-    public static float GetMinFromRenderTexture(RenderTexture rt)
+    public static Vector2 GetMinMaxFromRenderTexture(RenderTexture rt)
     {
-        return GetMinFromRenderTexture(rt, 0, rt.width, 0, rt.height);
+        return GetMinMaxFromRenderTexture(rt, 0, rt.width, 0, rt.height);
+    }
+
+    public static RenderTexture NormalizeRenderTexture(ComputeShader ComputeShader, RenderTexture rt)
+    {
+        Vector2 minMax = GetMinMaxFromRenderTexture(rt);
+        float min = minMax.x;
+        float max = minMax.y;
+        RenderTexture rtNormalized = CopyRenderTexture(rt);
+
+        int kernel = ComputeShader.FindKernel("CSMain");
+        ComputeShader.SetTexture(kernel, "result", rtNormalized);
+        ComputeShader.SetFloat("min", min);
+        ComputeShader.SetFloat("max", max);
+        ComputeShader.Dispatch(kernel, rt.width / 32 + 1, rt.height / 32 + 1, 1);
+
+        return rtNormalized;
+    }
+
+    public static RenderTexture MultiplyRenderTexture(ComputeShader ComputeShader, RenderTexture rt, RenderTexture rt2)
+    {
+        RenderTexture rtNormalized = CopyRenderTexture(rt);
+
+        int kernel = ComputeShader.FindKernel("CSMain");
+        ComputeShader.SetTexture(kernel, "result", rtNormalized);
+        ComputeShader.SetTexture(kernel, "imageToMultiply", rt2);
+        ComputeShader.Dispatch(kernel, rt.width / 32 + 1, rt.height / 32 + 1, 1);
+
+        return rtNormalized;
     }
 }
