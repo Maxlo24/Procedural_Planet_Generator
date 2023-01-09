@@ -52,6 +52,7 @@ public class CraterGeneration : MonoBehaviour
             CraterShader.SetFloat("depth", craters.Depth[i] / 100f);
             CraterShader.SetFloat("elevationRange", craters.ElevationRange[i] / 100f);
             CraterShader.SetTexture(kernel, "result", rtOutput);
+            CraterShader.SetTexture(kernel, "copy", rt);
             CraterShader.Dispatch(kernel, ((int)(craters.Radius[i] + craters.SecondaryRadiusOffset[i]) * 2 + 1) / 8 + 1, ((int)(craters.Radius[i] + craters.SecondaryRadiusOffset[i]) * 2 + 1) / 8 + 1, 1);
         }
 

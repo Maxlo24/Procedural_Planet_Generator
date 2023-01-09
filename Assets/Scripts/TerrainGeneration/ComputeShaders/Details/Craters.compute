@@ -4,6 +4,7 @@
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 RWTexture2D<float> result;
+RWTexture2D<float> copy;
 
 float minCenter;
 float2 position;
@@ -25,12 +26,12 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	{
 		float w = pow(dist / radius, 2);
 		float diff = max(0, minCenter - depth);
-		result[pos] = (result[pos] + elevationRange) * w + diff * (1 - w);
+		result[pos] = (copy[pos] + elevationRange) * w + diff * (1 - w);
 	}
 	else if (dist < secondaryRadius)
 	{
 		float w = pow((dist - radius) / secondaryRadiusOffset, 2);
-		result[pos] = result[pos] + elevationRange * (1 - w);
+		result[pos] = copy[pos] + elevationRange * (1 - w);
 	}
 
 }
