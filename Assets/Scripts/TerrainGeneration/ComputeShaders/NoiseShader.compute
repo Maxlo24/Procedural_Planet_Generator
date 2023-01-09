@@ -38,8 +38,11 @@ float2 elevationLimitHeights;
 bool absolute;
 bool invert;
 
-bool terraces;
-float terracesHeight;
+bool basicTerraces;
+float basicTerracesHeight;
+
+bool customTerraces;
+RWStructuredBuffer<float2> customTerracesDescription;
 
 int distanceType = 0;
 
@@ -97,9 +100,22 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	float ny = y * 2 - 1;
 	h = h * (1 - islandRatio) + islandRatio * (h + (1 - Distance(nx, ny, distanceType))) / 2;
 
-	if (terraces)
+	if (basicTerraces)
 	{
-		h = floor(h * terracesHeight) / terracesHeight;
+		h = floor(h * basicTerracesHeight) / basicTerracesHeight;
+	}
+
+	if (customTerraces)
+	{
+		for (int i = 0; i < customTerracesDescription.Length(); i++)
+		{
+			float2 terrace = customTerracesDescription[i];
+			if (h >= terrace.x && h <= terrace.y)
+			{
+				h += terrace.y - terrace.x;
+			}
+			else if 
+		}
 	}
 	
 	h = scaleElevation * (h + elevationOffset);

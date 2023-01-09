@@ -90,8 +90,18 @@ public class TerrainGenerationBase : MonoBehaviour
         ComputeShader.SetBool("elevationLimit", noise.ElevationLimit);
         ComputeShader.SetVector("elevationLimitHeights", noise.ElevationLimitHeights);
 
-        ComputeShader.SetBool("terraces", noise.Terraces);
-        ComputeShader.SetFloat("terracesHeight", noise.TerracesHeight);
+        ComputeShader.SetBool("basicTerraces", noise.BasicTerraces);
+        ComputeShader.SetFloat("basicTerracesHeight", noise.BasicTerracesHeight);
+
+        ComputeShader.SetBool("customTerraces", noise.CustomTerraces);
+        if (noise.CustomTerraces)
+        {
+            noise.SortTerraces();
+        }
+        List<Vector2> terracesDescription = noise.GetCustomTerraces();
+        ComputeBuffer terracesBuffer = new ComputeBuffer(terracesDescription.Count, 2 * sizeof(float));
+        terracesBuffer.SetData(terracesDescription);
+        ComputeShader.SetBuffer(indexOfKernel, "customTerracesDescription", terracesBuffer);
 
         ComputeShader.SetBool("absolute", noise.Absolute);
         ComputeShader.SetBool("invert", noise.Invert);

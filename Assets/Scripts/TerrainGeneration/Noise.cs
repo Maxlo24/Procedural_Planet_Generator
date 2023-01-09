@@ -30,8 +30,11 @@ public class Noise : MonoBehaviour
     [field: SerializeField] public bool ElevationLimit { get; private set; }
     [field: SerializeField] public Vector2 ElevationLimitHeights { get; private set; }
 
-    [field: SerializeField] public bool Terraces { get; private set; }
-    [field: SerializeField] public float TerracesHeight { get; private set; }
+    [field: SerializeField] public bool BasicTerraces { get; private set; }
+    [field: SerializeField] public float BasicTerracesHeight { get; private set; }
+
+    [field: SerializeField] public bool CustomTerraces { get; private set; }
+    [field: SerializeField] public List<Vector2> CustomTerracesDescription { get; private set; }
 
     [field: SerializeField] public bool Absolute { get; private set; }
     [field: SerializeField] public bool Invert { get; private set; }
@@ -73,10 +76,25 @@ public class Noise : MonoBehaviour
         float ny = y * 2f - 1f;
         elevation = elevation * (1f - IslandRatio) + IslandRatio * (elevation + (1f - DistanceLib.Distance(nx, ny, DistanceType))) / 2f;
 
-        if (Terraces)
+        if (BasicTerraces)
         {
-            elevation = Mathf.Floor(elevation * TerracesHeight) / TerracesHeight;
+            elevation = Mathf.Floor(elevation * BasicTerracesHeight) / BasicTerracesHeight;
         }
         return ScaleElevation * (elevation + Offset.y);
+    }
+    
+    public void SortTerraces()
+    {
+        CustomTerracesDescription.Sort();
+    }
+    
+    public List<Vector2> GetCustomTerraces()
+    {
+        if (CustomTerraces)
+        {
+            return CustomTerracesDescription;
+        }
+
+        return new List<Vector2>() { Vector2.zero };
     }
 }
