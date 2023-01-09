@@ -11,6 +11,8 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public List<Noise> Noises { get; private set; }
     [field: SerializeField] public GameObject NoisesGameObject { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
+    [field: SerializeField] public ComputeShader NormalizeShader { get; private set; }
+    [field: SerializeField] public ComputeShader MultiplyShader { get; private set; }
     [field: SerializeField] public TerrainProcessing TerrainProcessing { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public CraterGeneration CraterGeneration { get; private set; }
@@ -60,7 +62,18 @@ public class TerrainGenerationBase : MonoBehaviour
     {
         indexOfKernel = ComputeShader.FindKernel("CSMain");
 
-        ComputeShader.SetTexture(indexOfKernel, "height", RenderTexture);
+        RenderTexture rt;
+
+        if (noise.Mode == ApplicationMode.ADDITION)
+        {
+            rt = ImageLib.CopyRenderTexture(RenderTexture);
+        }
+        else
+        {
+            rt = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
+        }
+
+        ComputeShader.SetTexture(indexOfKernel, "height", rt);
 
         ComputeShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
         ComputeShader.SetInt("octaveCount", noise.OctaveNumber);
@@ -73,7 +86,7 @@ public class TerrainGenerationBase : MonoBehaviour
         ComputeShader.SetFloat("islandRatio", noise.IslandRatio);
         ComputeShader.SetBool("ridge", noise.Ridge);
         ComputeShader.SetBool("octaveDependentAmplitude", noise.OctaveDependentAmplitude);
-        
+
         ComputeShader.SetBool("elevationLimit", noise.ElevationLimit);
         ComputeShader.SetVector("elevationLimitHeights", noise.ElevationLimitHeights);
 
@@ -95,9 +108,17 @@ public class TerrainGenerationBase : MonoBehaviour
         octaveBuffer.SetData(noise.Octaves);
         ComputeShader.SetBuffer(indexOfKernel, "octaves", octaveBuffer);
 
-        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution/ 32 + 1, Terrain.terrainData.heightmapResolution/ 32 + 1, 1);
+        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
 
         octaveBuffer.Release();
+
+        if (noise.Mode == ApplicationMode.MULTIPLICATION)
+        {
+            rt = ImageLib.NormalizeRenderTexture(NormalizeShader, rt);
+            rt = ImageLib.MultiplyRenderTexture(MultiplyShader, rt, RenderTexture);
+        }
+
+        RenderTexture = rt;
     }
 
     private void ApplyNoises()
