@@ -10,12 +10,14 @@ public class IcosahedronGenerator
     public List<Polygon> Polygons { get => polygons; private set => polygons = value; }
     public List<Vector3> Vertices { get => vertices; private set => vertices = value; }
 
-    NoiseFilter noiseFilter = new NoiseFilter();
+    NoiseFilter noiseFilter;
 
     // create constructor
-    public IcosahedronGenerator()
+    public IcosahedronGenerator(NoiseSettings noiseSettings)
     {
+        noiseFilter = new NoiseFilter(noiseSettings);
     }
+
     // create constructor with scale parameter
 
     public void Initialize()
@@ -130,11 +132,11 @@ public class IcosahedronGenerator
         return ret;
     }
 
-    public void Rescale(int scale)
+    public void Rescale(float scale)
     {
         for (int i = 0; i < vertices.Count; i++)
         {
-            vertices[i] = vertices[i].normalized * scale;
+            vertices[i] = vertices[i] * scale;
         }
     }
 
@@ -147,10 +149,7 @@ public class IcosahedronGenerator
 
     public float ComputeNoise(Vector3 point)
     {
-
-
         float noiseValue = noiseFilter.Evaluate(point);
-
         return noiseValue;
     }
 }

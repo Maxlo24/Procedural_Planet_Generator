@@ -1,79 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Icosahedron : MonoBehaviour
 {
     [Header("Resolution")]
-    [Range(0, 5)][SerializeField] private int subdivisions = 1;
+    [Range(0, 7)][SerializeField] private int subdivisions = 1;
     // scale of the icosahedron (default 1)
     [Header("Scale")]
-    [Range(1,10)][SerializeField] private int scale = 1;
-
-    [Header("Noise")]
-    [SerializeField] private float noiseScale = 1;
+    [Range(1, 10)][SerializeField] private float scale = 1;
 
     [Header("Graphics")]
     [SerializeField] private Shader shader;
 
-    private GameObject sphereMesh;
-    protected MeshFilter meshFilter;
+    public Mesh sphereMesh;
+    public MeshFilter meshFilter;
 
-    private IcosahedronGenerator icosahedron;
+    public IcosahedronGenerator icosahedron;
 
-    private int lastSubdivision = int.MinValue;
-    private int lastScale = int.MinValue;
+    [SerializeField]  NoiseSettings noiseSettings;
 
 
     private void Start()
     {
-        // créer sphere 
-        print("Start");
-        lastSubdivision = subdivisions;
-        lastScale = scale;
-        this.name = "IcoSphere";
-        icosahedron = new IcosahedronGenerator();
-        icosahedron.Initialize();
-        icosahedron.Subdivide(subdivisions);
-        this.sphereMesh = new GameObject("Sphere Mesh");
-        this.sphereMesh.transform.parent = this.transform;
-        Material newMat = Resources.Load("Green", typeof(Material)) as Material;
-        // assign material to sphere
-        this.sphereMesh.AddComponent<MeshFilter>();
+
         UpdateMesh();
 
     }
-    public void UpdateMesh()
+
+    public void genMesh()
     {
-
-        if (this.sphereMesh)
-        {
-            // print "destroying old mesh"
-            print("destroying old mesh");
-            // destroy current meshs
-            
-
-            StartCoroutine(Destroy(this.sphereMesh));
-        }
-
-
-        icosahedron.Rescale(scale); 
-        // rescale the icosahedron
-
-        // for each point in the icosahedron : call the noise filter
-        for (int i = 0; i < icosahedron.Vertices.Count; i++)
-        {
-            icosahedron.Vertices[i] = icosahedron.Vertices[i]*(1+ noiseScale * icosahedron.ComputeNoise(icosahedron.Vertices[i]));
-        }
-
-
-
-        MeshRenderer surfaceRenderer = this.sphereMesh.AddComponent<MeshRenderer>();
-        surfaceRenderer.sharedMaterial = new Material(shader);
-
-        Mesh sphereMesh = new Mesh();
-
         int vertexCount = icosahedron.Polygons.Count * 3;
         int[] indices = new int[vertexCount];
 
@@ -99,9 +57,49 @@ public class Icosahedron : MonoBehaviour
         sphereMesh.vertices = vertices;
         sphereMesh.normals = normals;
         sphereMesh.SetTriangles(indices, 0);
+    }
+    
+    public void UpdateMesh()
+    {
 
-        MeshFilter terrainFilter = this.sphereMesh.AddComponent<MeshFilter>();
-        terrainFilter.sharedMesh = sphereMesh;
+
+        icosahedron = new IcosahedronGenerator(noiseSettings);
+        icosahedron.Initialize();
+        // créer sphere 
+
+
+        sphereMesh = new Mesh();
+        // change mesh index format
+        sphereMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+        sphereMesh.name = "IcoSphere";
+
+        //Assigning the mesh to the object
+        // if (meshFilter != null) meshFilter = new MeshFilter();
+        MeshRenderer meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
+        MeshFilter meshFilter = this.gameObject.GetComponent<MeshFilter>();
+        if (meshFilter == null)
+        {
+            this.gameObject.AddComponent<MeshFilter>();
+        }
+        if (meshRenderer == null)
+        {
+            this.gameObject.AddComponent<MeshRenderer>().sharedMaterial = new Material(shader);
+        }
+
+
+        icosahedron.Subdivide(subdivisions);
+
+
+        // for each point in the icosahedron : call the noise filter
+        for (int i = 0; i < icosahedron.Vertices.Count; i++)
+        {
+            icosahedron.Vertices[i] = icosahedron.Vertices[i]*(1+ icosahedron.ComputeNoise(icosahedron.Vertices[i]));
+        }
+        icosahedron.Rescale(scale);
+
+        genMesh();
+        meshFilter.mesh = sphereMesh;
+
     }
 
 
@@ -115,24 +113,24 @@ public class Icosahedron : MonoBehaviour
 
     private void OnValidate()
     {
-        Debug.Log("OnValidate");
-        if (subdivisions != lastSubdivision || scale != lastScale)
-        {
-            lastSubdivision = subdivisions;
-            lastScale = scale;
-            UpdateMesh();
-        }
+        /*        if (subdivisions != lastSubdivision || scale != lastScale)
+                {
+                    lastSubdivision = subdivisions;
+                    lastScale = scale;
+                    UpdateMesh();
+                }*/
+        UpdateMesh();
 
     }
 
     private void Update()
     {
-        if (subdivisions != lastSubdivision || scale != lastScale)
-        {
-            lastSubdivision = subdivisions;
-            lastScale = scale;
-            UpdateMesh();
-        }
-        
+        /*        if (subdivisions != lastSubdivision || scale != lastScale)
+                {
+                    lastSubdivision = subdivisions;
+                    lastScale = scale;
+                    UpdateMesh();
+                }*/
+        UpdateMesh();
     }
 }
