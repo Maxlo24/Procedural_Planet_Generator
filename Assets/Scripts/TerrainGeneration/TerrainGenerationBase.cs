@@ -11,6 +11,7 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public List<Noise> Noises { get; private set; }
     [field: SerializeField] public GameObject NoisesGameObject { get; private set; }
     [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
+    [field: SerializeField] public ComputeShader TerracesShader { get; private set; }
     [field: SerializeField] public ComputeShader NormalizeShader { get; private set; }
     [field: SerializeField] public ComputeShader MultiplyShader { get; private set; }
     [field: SerializeField] public TerrainProcessing TerrainProcessing { get; private set; }
@@ -87,12 +88,6 @@ public class TerrainGenerationBase : MonoBehaviour
         ComputeShader.SetBool("ridge", noise.Ridge);
         ComputeShader.SetBool("octaveDependentAmplitude", noise.OctaveDependentAmplitude);
 
-        ComputeShader.SetBool("elevationLimit", noise.ElevationLimit);
-        ComputeShader.SetVector("elevationLimitHeights", noise.ElevationLimitHeights);
-
-        ComputeShader.SetBool("terraces", noise.Terraces);
-        ComputeShader.SetFloat("terracesHeight", noise.TerracesHeight);
-
         ComputeShader.SetBool("absolute", noise.Absolute);
         ComputeShader.SetBool("invert", noise.Invert);
 
@@ -112,6 +107,29 @@ public class TerrainGenerationBase : MonoBehaviour
 
         octaveBuffer.Release();
 
+        TerracesShader.SetTexture(indexOfKernel, "heights", rt);
+
+        TerracesShader.SetBool("elevationLimit", noise.ElevationLimit);
+        TerracesShader.SetVector("elevationLimitHeights", noise.ElevationLimitHeights);
+
+        TerracesShader.SetBool("basicTerraces", noise.BasicTerraces);
+        ComputeShader.SetFloat("basicTerracesHeight", noise.BasicTerracesHeight);
+
+        TerracesShader.SetBool("customTerraces", noise.CustomTerraces);
+
+        if (noise.CustomTerraces)
+        {
+            noise.SortTerraces();
+        }
+        List<Vector2> terracesDescription = noise.GetCustomTerraces();
+        TerracesShader.SetInt("customTerracesLength", terracesDescription.Count);
+        ComputeBuffer terracesBuffer = new ComputeBuffer(terracesDescription.Count, 2 * sizeof(float));
+        terracesBuffer.SetData(terracesDescription);
+        TerracesShader.SetBuffer(indexOfKernel, "customTerracesDescription", terracesBuffer);
+
+        TerracesShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
+
+        
         if (noise.Mode == ApplicationMode.MULTIPLICATION)
         {
             rt = ImageLib.NormalizeRenderTexture(NormalizeShader, rt);

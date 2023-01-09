@@ -447,6 +447,8 @@ MonoBehaviour:
   <NoisesGameObject>k__BackingField: {fileID: 1699329004}
   <ComputeShader>k__BackingField: {fileID: 7200000, guid: 0348e2e3f9b679241814ad0b71f4315f,
     type: 3}
+  <TerracesShader>k__BackingField: {fileID: 7200000, guid: 30232209f123aef43824becccc628993,
+    type: 3}
   <NormalizeShader>k__BackingField: {fileID: 7200000, guid: 95cef70a360c4aa4fb295341251bf79d,
     type: 3}
   <MultiplyShader>k__BackingField: {fileID: 7200000, guid: 60432a16087e27a409194d5f8fa2c4fc,
@@ -456,9 +458,9 @@ MonoBehaviour:
   <CraterGeneration>k__BackingField: {fileID: 840158073}
   <TerrainPostProcessing>k__BackingField: {fileID: 840158071}
   <HeightMapsAddition>k__BackingField: {fileID: 840158070}
-  <RenderTexture>k__BackingField: {fileID: 1128538868}
-  <ErosionTexture>k__BackingField: {fileID: 1194306774}
-  <DepositTexture>k__BackingField: {fileID: 1237174584}
+  <RenderTexture>k__BackingField: {fileID: 1562894611}
+  <ErosionTexture>k__BackingField: {fileID: 2041396513}
+  <DepositTexture>k__BackingField: {fileID: 1530198454}
   <TerrainNameToSave>k__BackingField: Terrain1
   <TerrainNameToAdd>k__BackingField: Terrain
   <LiveUpdate>k__BackingField: 0
@@ -515,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 840158063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 373, z: 0}
+  m_LocalPosition: {x: 0, y: -85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -551,7 +553,7 @@ MonoBehaviour:
   <ErosionRatio>k__BackingField: 0.087
   <EvaporationRatio>k__BackingField: 0.014
   <Gravity>k__BackingField: 20
-  <ErodeEnabled>k__BackingField: 1
+  <ErodeEnabled>k__BackingField: 0
   <ErosionMapUsed>k__BackingField: 0
   <GenerateErosionTexture>k__BackingField: 0
 --- !u!114 &840158070
@@ -962,81 +964,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!84 &1128538868
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 1025
-  m_Height: 1025
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 49
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
---- !u!84 &1194306774
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 1025
-  m_Height: 1025
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 49
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
---- !u!84 &1237174584
+--- !u!84 &1530198454
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1052,6 +980,43 @@ RenderTexture:
   serializedVersion: 5
   m_Width: 512
   m_Height: 512
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 49
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
+--- !u!84 &1562894611
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 2049
+  m_Height: 2049
   m_AntiAliasing: 1
   m_MipCount: -1
   m_DepthStencilFormat: 0
@@ -1120,7 +1085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Enabled>k__BackingField: 1
+  <Enabled>k__BackingField: 0
   <Name>k__BackingField: Noise
   <Mode>k__BackingField: 1
   <DistanceType>k__BackingField: 0
@@ -1135,8 +1100,10 @@ MonoBehaviour:
   <OctaveDependentAmplitude>k__BackingField: 0
   <ElevationLimit>k__BackingField: 1
   <ElevationLimitHeights>k__BackingField: {x: 0, y: 0.29}
-  <Terraces>k__BackingField: 0
-  <TerracesHeight>k__BackingField: 0
+  <BasicTerraces>k__BackingField: 0
+  <BasicTerracesHeight>k__BackingField: 0
+  <CustomTerraces>k__BackingField: 0
+  <CustomTerracesDescription>k__BackingField: []
   <Absolute>k__BackingField: 0
   <Invert>k__BackingField: 0
   <Octaves>k__BackingField:
@@ -1172,7 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Enabled>k__BackingField: 1
+  <Enabled>k__BackingField: 0
   <Name>k__BackingField: Noise
   <Mode>k__BackingField: 0
   <DistanceType>k__BackingField: 0
@@ -1187,8 +1154,10 @@ MonoBehaviour:
   <OctaveDependentAmplitude>k__BackingField: 0
   <ElevationLimit>k__BackingField: 1
   <ElevationLimitHeights>k__BackingField: {x: 0, y: 1.2}
-  <Terraces>k__BackingField: 0
-  <TerracesHeight>k__BackingField: 0
+  <BasicTerraces>k__BackingField: 0
+  <BasicTerracesHeight>k__BackingField: 0
+  <CustomTerraces>k__BackingField: 0
+  <CustomTerracesDescription>k__BackingField: []
   <Absolute>k__BackingField: 0
   <Invert>k__BackingField: 0
   <Octaves>k__BackingField:
@@ -1224,23 +1193,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Enabled>k__BackingField: 0
+  <Enabled>k__BackingField: 1
   <Name>k__BackingField: 'Noise 1 '
   <Mode>k__BackingField: 0
   <DistanceType>k__BackingField: 0
   <NoiseType>k__BackingField: 2
-  <OctaveNumber>k__BackingField: 6
+  <OctaveNumber>k__BackingField: 11
   <Redistribution>k__BackingField: 1
   <IslandRatio>k__BackingField: 0
   <Scale>k__BackingField: 1.4
-  <ScaleElevation>k__BackingField: 0
-  <Offset>k__BackingField: {x: 4.73, y: -0.49, z: 0}
+  <ScaleElevation>k__BackingField: 1.13
+  <Offset>k__BackingField: {x: 4.73, y: -0.5, z: 0}
   <Ridge>k__BackingField: 0
   <OctaveDependentAmplitude>k__BackingField: 0
   <ElevationLimit>k__BackingField: 1
-  <ElevationLimitHeights>k__BackingField: {x: 0.12, y: 0.16}
-  <Terraces>k__BackingField: 0
-  <TerracesHeight>k__BackingField: 33.8
+  <ElevationLimitHeights>k__BackingField: {x: 0.4, y: 1}
+  <BasicTerraces>k__BackingField: 0
+  <BasicTerracesHeight>k__BackingField: 0
+  <CustomTerraces>k__BackingField: 1
+  <CustomTerracesDescription>k__BackingField:
+  - {x: 0.6, y: 0.1}
+  - {x: 0.9, y: 0.2}
   <Absolute>k__BackingField: 0
   <Invert>k__BackingField: 0
   <Octaves>k__BackingField:
@@ -1276,7 +1249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Enabled>k__BackingField: 1
+  <Enabled>k__BackingField: 0
   <Name>k__BackingField: Noise
   <Mode>k__BackingField: 0
   <DistanceType>k__BackingField: 0
@@ -1291,8 +1264,12 @@ MonoBehaviour:
   <OctaveDependentAmplitude>k__BackingField: 0
   <ElevationLimit>k__BackingField: 0
   <ElevationLimitHeights>k__BackingField: {x: 0, y: 0}
-  <Terraces>k__BackingField: 0
-  <TerracesHeight>k__BackingField: 0
+  <BasicTerraces>k__BackingField: 0
+  <BasicTerracesHeight>k__BackingField: 0
+  <CustomTerraces>k__BackingField: 1
+  <CustomTerracesDescription>k__BackingField:
+  - {x: 0.1, y: 0.05}
+  - {x: 0.5, y: 0.5}
   <Absolute>k__BackingField: 0
   <Invert>k__BackingField: 0
   <Octaves>k__BackingField:
@@ -1589,3 +1566,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &2041396513
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 2049
+  m_Height: 2049
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 49
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2

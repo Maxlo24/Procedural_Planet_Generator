@@ -32,14 +32,8 @@ float scaleElevation;
 bool ridge;
 bool octaveDependentAmplitude;
 
-bool elevationLimit;
-float2 elevationLimitHeights;
-
 bool absolute;
 bool invert;
-
-bool terraces;
-float terracesHeight;
 
 int distanceType = 0;
 
@@ -97,17 +91,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	float ny = y * 2 - 1;
 	h = h * (1 - islandRatio) + islandRatio * (h + (1 - Distance(nx, ny, distanceType))) / 2;
 
-	if (terraces)
-	{
-		h = floor(h * terracesHeight) / terracesHeight;
-	}
-	
 	h = scaleElevation * (h + elevationOffset);
-	
-	if (elevationLimit)
-	{
-		h = clamp(h, elevationLimitHeights.x / 10.0, elevationLimitHeights.y / 10.0);
-	}
 
 	height[id.xy] += h;
 }

@@ -1,0 +1,46 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+RWTexture2D<float> heights;
+
+bool elevationLimit;
+float2 elevationLimitHeights;
+
+bool basicTerraces;
+float basicTerracesHeight;
+
+bool customTerraces;
+StructuredBuffer<float2> customTerracesDescription;
+int customTerracesLength;
+
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	float h = heights[id.xy];
+	if (basicTerraces)
+	{
+		h = floor(h * basicTerracesHeight) / basicTerracesHeight;
+	}
+
+	if (elevationLimit)
+	{
+		h = clamp(h, elevationLimitHeights.x / 10.0, elevationLimitHeights.y / 10.0);
+	}
+
+	if (customTerraces)
+	{
+		for (int i = 0; i < customTerracesLength; i++)
+		{
+			float2 terrace = customTerracesDescription[i];
+
+			float diff = h - terrace.x / 10.0;
+			if (diff >= 0)
+			{
+				float up = clamp(diff * 5.0, 0.0, terrace.y / 10.0);
+				h += up;
+			}
+		}
+	}
+
+	heights[id.xy] = h;
+}
