@@ -257,7 +257,6 @@ public class ImageLib : MonoBehaviour
 
         while (rtCopyMin.width >= divParam || rtCopyMin.height >= divParam)
         {
-
             minMaxShader.SetTexture(kernel, "rtMin", rtMin);
             minMaxShader.SetTexture(kernel, "rtMax", rtMax);
             minMaxShader.SetTexture(kernel, "rtCopyMin", rtCopyMin);
