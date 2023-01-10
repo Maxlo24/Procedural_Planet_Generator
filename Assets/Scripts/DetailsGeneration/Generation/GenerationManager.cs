@@ -145,9 +145,9 @@ public class GenerationManager : MonoBehaviour
     }
 
 
-    public void GenerateRocks()
+    public void GenerateElements()
     {
-       GetComponent<RocksGenerator>().SpawnRocks();
+       GetComponent<RocksGenerator>().SpawnElements();
 
     }
 

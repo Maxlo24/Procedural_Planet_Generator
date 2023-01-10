@@ -33,9 +33,9 @@ public class CustomInspector : Editor
 
         GUILayout.EndHorizontal();
 
-        if (GUILayout.Button("Generate rocks"))
+        if (GUILayout.Button("Generate elements"))
         {
-            ((GenerationManager)target).GenerateRocks();
+            ((GenerationManager)target).GenerateElements();
         }
 
     }
