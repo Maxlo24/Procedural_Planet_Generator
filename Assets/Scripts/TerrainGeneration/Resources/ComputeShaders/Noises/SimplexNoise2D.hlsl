@@ -22,7 +22,7 @@
 //               https://github.com/ashima/webgl-noise
 //
 
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseUtils.hlsl" 
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseUtils.hlsl" 
 
 
 float snoise(float2 v)

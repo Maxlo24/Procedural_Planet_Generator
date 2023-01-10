@@ -1,7 +1,7 @@
 #ifndef _INCLUDE_WORLEY_NOISE_ 
 #define _INCLUDE_WORLEY_NOISE_
 
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseUtils.hlsl"
 
 float3 dist(float3 x, float3 y, bool manhattanDistance) {
 	return manhattanDistance ? abs(x) + abs(y) : (x * x + y * y);

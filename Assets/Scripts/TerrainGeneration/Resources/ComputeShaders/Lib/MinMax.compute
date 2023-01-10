@@ -1,0 +1,46 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float> rtMin;
+RWTexture2D<float> rtMax;
+RWTexture2D<float> rtCopyMin;
+RWTexture2D<float> rtCopyMax;
+
+int width;
+int height;
+
+int divParam;
+
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	float min = 99999.0;
+	float max = -99999.0;
+
+	for (int i = 0; i < divParam; i++)
+	{
+		for (int j = 0; j < divParam; j++)
+		{
+			int x = int(id.x);
+			int y = int(id.y);
+			if (divParam * x + i < width && divParam * y + j < height)
+			{
+				float valueMin = rtCopyMin[divParam * x + int2(i, j)];
+				if (valueMin < min)
+				{
+					min = valueMin;
+				}
+				float valueMax = rtCopyMax[divParam * y + int2(i, j)];
+				if (valueMax > max)
+				{
+					max = valueMax;
+				}
+			}
+
+		}
+	}
+	rtMin[id.xy] = min;
+	rtMax[id.xy] = max;
+}

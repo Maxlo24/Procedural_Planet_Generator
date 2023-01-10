@@ -26,7 +26,7 @@
 #ifndef PERLIN_NOISE_INCLUDED
 #define PERLIN_NOISE_INCLUDED
 
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseUtils.hlsl"
 
 // Classic Perlin noise
 float PerlinNoise(float3 P)

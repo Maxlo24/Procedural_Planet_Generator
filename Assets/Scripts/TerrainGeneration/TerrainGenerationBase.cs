@@ -10,20 +10,14 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public Terrain Terrain { get; private set; }
     [field: SerializeField] public List<Noise> Noises { get; private set; }
     [field: SerializeField] public GameObject NoisesGameObject { get; private set; }
-    [field: SerializeField] public ComputeShader ComputeShader { get; private set; }
-    [field: SerializeField] public ComputeShader TerracesShader { get; private set; }
-    [field: SerializeField] public ComputeShader NormalizeShader { get; private set; }
-    [field: SerializeField] public ComputeShader MultiplyShader { get; private set; }
     [field: SerializeField] public TerrainProcessing TerrainProcessing { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public CraterGeneration CraterGeneration { get; private set; }
     [field: SerializeField] public TerrainPostProcessing TerrainPostProcessing { get; private set; }
     [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
-    [field: SerializeField] public RenderTexture RenderTexture { get; private set; }
-    [field: SerializeField] public RenderTexture ErosionTexture { get; private set; }
-    [field: SerializeField] public RenderTexture DepositTexture { get; private set; }
-
-
+    [SerializeField] public RenderTexture RenderTexture;
+    [SerializeField] public RenderTexture ErosionTexture;
+    [SerializeField] public RenderTexture DepositTexture;
 
     [field: SerializeField] public String TerrainNameToSave { get; private set; } = "Terrain";
     [field: SerializeField] public String TerrainNameToAdd { get; private set; } = "Terrain";
@@ -36,8 +30,6 @@ public class TerrainGenerationBase : MonoBehaviour
 
     private void Start()
     {
-        indexOfKernel = ComputeShader.FindKernel("CSMain");
-
         RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
         ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
     }
@@ -61,7 +53,10 @@ public class TerrainGenerationBase : MonoBehaviour
 
     private void ApplyNoise(Noise noise)
     {
-        indexOfKernel = ComputeShader.FindKernel("CSMain");
+        ComputeShader noiseShader = Resources.Load<ComputeShader>(ShaderLib.NoiseShader);
+        ComputeShader terraceShader = Resources.Load<ComputeShader>(ShaderLib.TerraceShader);
+
+        indexOfKernel = noiseShader.FindKernel("CSMain");
 
         RenderTexture rt;
 
@@ -74,25 +69,25 @@ public class TerrainGenerationBase : MonoBehaviour
             rt = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
         }
 
-        ComputeShader.SetTexture(indexOfKernel, "height", rt);
+        noiseShader.SetTexture(indexOfKernel, "height", rt);
 
-        ComputeShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
-        ComputeShader.SetInt("octaveCount", noise.OctaveNumber);
-        ComputeShader.SetFloat("xOffset", noise.Offset.x);
-        ComputeShader.SetFloat("yOffset", noise.Offset.z);
-        ComputeShader.SetFloat("elevationOffset", noise.Offset.y);
-        ComputeShader.SetFloat("scale", noise.Scale);
-        ComputeShader.SetFloat("scaleElevation", noise.ScaleElevation);
-        ComputeShader.SetFloat("redistribution", noise.Redistribution);
-        ComputeShader.SetFloat("islandRatio", noise.IslandRatio);
-        ComputeShader.SetBool("ridge", noise.Ridge);
-        ComputeShader.SetBool("octaveDependentAmplitude", noise.OctaveDependentAmplitude);
+        noiseShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
+        noiseShader.SetInt("octaveCount", noise.OctaveNumber);
+        noiseShader.SetFloat("xOffset", noise.Offset.x);
+        noiseShader.SetFloat("yOffset", noise.Offset.z);
+        noiseShader.SetFloat("elevationOffset", noise.Offset.y);
+        noiseShader.SetFloat("scale", noise.Scale);
+        noiseShader.SetFloat("scaleElevation", noise.ScaleElevation);
+        noiseShader.SetFloat("redistribution", noise.Redistribution);
+        noiseShader.SetFloat("islandRatio", noise.IslandRatio);
+        noiseShader.SetBool("ridge", noise.Ridge);
+        noiseShader.SetBool("octaveDependentAmplitude", noise.OctaveDependentAmplitude);
 
-        ComputeShader.SetBool("absolute", noise.Absolute);
-        ComputeShader.SetBool("invert", noise.Invert);
+        noiseShader.SetBool("absolute", noise.Absolute);
+        noiseShader.SetBool("invert", noise.Invert);
 
-        ComputeShader.SetInt("distanceType", (int)noise.DistanceType);
-        ComputeShader.SetInt("noiseType", (int)noise.NoiseType);
+        noiseShader.SetInt("distanceType", (int)noise.DistanceType);
+        noiseShader.SetInt("noiseType", (int)noise.NoiseType);
 
         if (noise.Octaves.Count == 0)
         {
@@ -101,39 +96,42 @@ public class TerrainGenerationBase : MonoBehaviour
 
         ComputeBuffer octaveBuffer = new ComputeBuffer(noise.Octaves.Count, 8);
         octaveBuffer.SetData(noise.Octaves);
-        ComputeShader.SetBuffer(indexOfKernel, "octaves", octaveBuffer);
+        noiseShader.SetBuffer(indexOfKernel, "octaves", octaveBuffer);
 
-        ComputeShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
+        noiseShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
 
         octaveBuffer.Release();
 
-        TerracesShader.SetTexture(indexOfKernel, "heights", rt);
 
-        TerracesShader.SetBool("elevationLimit", noise.ElevationLimit);
-        TerracesShader.SetVector("elevationLimitHeights", noise.ElevationLimitHeights);
+        indexOfKernel = terraceShader.FindKernel("CSMain");
+        terraceShader.SetTexture(indexOfKernel, "heights", rt);
 
-        TerracesShader.SetBool("basicTerraces", noise.BasicTerraces);
-        ComputeShader.SetFloat("basicTerracesHeight", noise.BasicTerracesHeight);
+        terraceShader.SetBool("elevationLimit", noise.ElevationLimit);
+        terraceShader.SetVector("elevationLimitHeights", noise.ElevationLimitHeights);
 
-        TerracesShader.SetBool("customTerraces", noise.CustomTerraces);
+        terraceShader.SetBool("basicTerraces", noise.BasicTerraces);
+        noiseShader.SetFloat("basicTerracesHeight", noise.BasicTerracesHeight);
+
+        terraceShader.SetBool("customTerraces", noise.CustomTerraces);
 
         if (noise.CustomTerraces)
         {
             noise.SortTerraces();
         }
         List<Vector2> terracesDescription = noise.GetCustomTerraces();
-        TerracesShader.SetInt("customTerracesLength", terracesDescription.Count);
+        terraceShader.SetInt("customTerracesLength", terracesDescription.Count);
         ComputeBuffer terracesBuffer = new ComputeBuffer(terracesDescription.Count, 2 * sizeof(float));
         terracesBuffer.SetData(terracesDescription);
-        TerracesShader.SetBuffer(indexOfKernel, "customTerracesDescription", terracesBuffer);
+        terraceShader.SetBuffer(indexOfKernel, "customTerracesDescription", terracesBuffer);
 
-        TerracesShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
+        terraceShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
 
-        
+        terracesBuffer.Release();
+
         if (noise.Mode == ApplicationMode.MULTIPLICATION)
         {
-            rt = ImageLib.NormalizeRenderTexture(NormalizeShader, rt);
-            rt = ImageLib.MultiplyRenderTexture(MultiplyShader, rt, RenderTexture);
+            ImageLib.NormalizeRenderTexture(ref rt);
+            ImageLib.MultiplyRenderTexture(ref rt, RenderTexture);
         }
 
         RenderTexture = rt;
@@ -161,44 +159,42 @@ public class TerrainGenerationBase : MonoBehaviour
     public void GenerateTerrain()
     {
         FillNoises();
-
+        RenderTexture?.Release();
         RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
-
-        ErosionTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
 
         ApplyNoises();
 
-        Graphics.Blit(TerrainProcessing.ApplyIslandProcessing(RenderTexture), RenderTexture);
+        TerrainProcessing.ApplyIslandProcessing(ref RenderTexture);
 
         RedrawTerrain();
-
+        if (RenderTextureCopy != null) RenderTextureCopy.Release();
         RenderTextureCopy = ImageLib.CopyRenderTexture(RenderTexture);
+
+        //ImageLib.GetMinMaxFromRenderTexture(RenderTexture, out float min, out float max);
 
         RenderTexture nulltexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
 
         Graphics.Blit(nulltexture, ErosionTexture);
         Graphics.Blit(nulltexture, DepositTexture);
+
+        nulltexture.Release();
     }
 
     public void GenerateCraters()
     {
-        RenderTexture = CraterGeneration.GenerateCraters(RenderTexture, Terrain);
+        CraterGeneration.GenerateCraters(ref RenderTexture, Terrain.terrainData.heightmapResolution);
         RedrawTerrain();
     }
 
     public void ErodeTerrain()
     {
-        ErodeResult erodeResult = TerrainErosion.Erode(RenderTexture, RenderTextureCopy, ErosionTexture, DepositTexture);
-        RenderTexture = erodeResult.Heights;
-        ErosionTexture = erodeResult.ErosionTexture;
-        DepositTexture = erodeResult.DepositTexture;
-
+        TerrainErosion.Erode(ref RenderTexture, ref ErosionTexture, ref DepositTexture);
         RedrawTerrain();
     }
 
     public void Smooth()
     {
-        RenderTexture = TerrainPostProcessing.SmoothTerrain(RenderTextureCopy, RenderTexture);
+        TerrainPostProcessing.SmoothTerrain(RenderTextureCopy, ref RenderTexture);
         RedrawTerrain();
     }
 
