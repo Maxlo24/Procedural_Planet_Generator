@@ -1,6 +1,8 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseLib.hlsl"
+
 RWTexture2D<float> heights;
 
 bool elevationLimit;
@@ -12,6 +14,10 @@ float basicTerracesHeight;
 bool customTerraces;
 StructuredBuffer<float2> customTerracesDescription;
 int customTerracesLength;
+
+bool addNoise;
+float addNoiseFrequency;
+float addNoiseAmplitude;
 
 [numthreads(32, 32, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
@@ -33,7 +39,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		{
 			float2 terrace = customTerracesDescription[i];
 
-			float diff = h - terrace.x / 10.0;
+			float diff = h - terrace.x / 10.0 + noise(id.xy * addNoiseFrequency / 10.0, 1) * addNoiseAmplitude / 100.0;
 			if (diff >= 0)
 			{
 				float up = clamp(diff * 5.0, 0.0, terrace.y / 10.0);

@@ -35,6 +35,9 @@ public class Noise : MonoBehaviour
 
     [field: SerializeField] public bool CustomTerraces { get; private set; }
     [field: SerializeField] public List<Vector2> CustomTerracesDescription { get; private set; }
+    [field: SerializeField] public bool AddNoise { get; private set; }
+    [field: SerializeField] public float NoiseFrequency { get; private set; } = 0.5f;
+    [field: SerializeField] public float NoiseAmplitude { get; private set; } = 0.2f;
 
     [field: SerializeField] public bool Absolute { get; private set; }
     [field: SerializeField] public bool Invert { get; private set; }
@@ -170,6 +173,10 @@ public class Noise : MonoBehaviour
         ComputeBuffer terracesBuffer = new ComputeBuffer(terracesDescription.Count, 2 * sizeof(float));
         terracesBuffer.SetData(terracesDescription);
         terraceShader.SetBuffer(indexOfKernel, "customTerracesDescription", terracesBuffer);
+
+        terraceShader.SetBool("addNoise", this.AddNoise);
+        terraceShader.SetFloat("addNoiseFrequency", this.NoiseFrequency);
+        terraceShader.SetFloat("addNoiseAmplitude", this.NoiseAmplitude);
 
         terraceShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
 
