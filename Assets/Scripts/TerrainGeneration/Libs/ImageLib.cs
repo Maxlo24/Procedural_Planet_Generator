@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 using System;
+using Unity.VisualScripting;
 
 public class ImageLib : MonoBehaviour
 {
@@ -213,31 +214,91 @@ public class ImageLib : MonoBehaviour
         return GetMinMaxFromRenderTexture(rt, 0, rt.width, 0, rt.height);
     }
 
-    public static RenderTexture NormalizeRenderTexture(ComputeShader ComputeShader, RenderTexture rt)
+    public static void NormalizeRenderTexture(ref RenderTexture rt)
     {
-        Vector2 minMax = GetMinMaxFromRenderTexture(rt);
-        float min = minMax.x;
-        float max = minMax.y;
-        RenderTexture rtNormalized = CopyRenderTexture(rt);
+        GetMinMaxFromRenderTexture(rt, out float min, out float max);
 
-        int kernel = ComputeShader.FindKernel("CSMain");
-        ComputeShader.SetTexture(kernel, "result", rtNormalized);
-        ComputeShader.SetFloat("min", min);
-        ComputeShader.SetFloat("max", max);
-        ComputeShader.Dispatch(kernel, rt.width / 32 + 1, rt.height / 32 + 1, 1);
-
-        return rtNormalized;
+        ComputeShader normalizeShader = Resources.Load<ComputeShader>(ShaderLib.NormalizeShader);
+        int kernel = normalizeShader.FindKernel("CSMain");
+        normalizeShader.SetTexture(kernel, "result", rt);
+        normalizeShader.SetFloat("min", min);
+        normalizeShader.SetFloat("max", max);
+        normalizeShader.Dispatch(kernel, rt.width / 32 + 1, rt.height / 32 + 1, 1);
     }
 
-    public static RenderTexture MultiplyRenderTexture(ComputeShader ComputeShader, RenderTexture rt, RenderTexture rt2)
+    public static void MultiplyRenderTexture(ref RenderTexture rt, RenderTexture rt2)
     {
-        RenderTexture rtNormalized = CopyRenderTexture(rt);
+        ComputeShader multiplyShader = Resources.Load<ComputeShader>(ShaderLib.MultiplyShader);
+        int kernel = multiplyShader.FindKernel("CSMain");
+        multiplyShader.SetTexture(kernel, "result", rt);
+        multiplyShader.SetTexture(kernel, "imageToMultiply", rt2);
+        multiplyShader.Dispatch(kernel, rt.width / 32 + 1, rt.height / 32 + 1, 1);
+    }
 
-        int kernel = ComputeShader.FindKernel("CSMain");
-        ComputeShader.SetTexture(kernel, "result", rtNormalized);
-        ComputeShader.SetTexture(kernel, "imageToMultiply", rt2);
-        ComputeShader.Dispatch(kernel, rt.width / 32 + 1, rt.height / 32 + 1, 1);
+    public static void GetMinMaxFromRenderTexture(int terrainRes, RenderTexture rt, int xmin, int xmax, int ymin, int ymax, out float min, out float max)
+    {
+        ComputeShader minMaxShader = Resources.Load<ComputeShader>(ShaderLib.MinMaxShader);
+        int kernel = minMaxShader.FindKernel("CSMain");
 
-        return rtNormalized;
+        RenderTexture rtCopyMin;
+        if (xmax - xmin == rt.width && ymax - ymin == rt.height)
+        {
+            rtCopyMin = CopyRenderTexture(rt);
+        }
+        else
+        {
+            rtCopyMin = Truncate(rt, xmin, xmax, terrainRes - ymax, terrainRes - ymin);
+        }
+        RenderTexture rtCopyMax = CopyRenderTexture(rtCopyMin);
+
+        RenderTexture rtMin = CreateRenderTexture(rtCopyMin.width / 3 + 1, rtCopyMax.width / 3 + 1, rt.format);
+        RenderTexture rtMax = CreateRenderTexture(rtCopyMax.width / 3 + 1, rtCopyMax.width / 3 + 1, rt.format);
+
+        int divParam = 3; // !!!! > 2
+
+        while (rtCopyMin.width >= divParam || rtCopyMin.height >= divParam)
+        {
+
+            minMaxShader.SetTexture(kernel, "rtMin", rtMin);
+            minMaxShader.SetTexture(kernel, "rtMax", rtMax);
+            minMaxShader.SetTexture(kernel, "rtCopyMin", rtCopyMin);
+            minMaxShader.SetTexture(kernel, "rtCopyMax", rtCopyMax);
+            minMaxShader.SetInt("width", rtCopyMin.width);
+            minMaxShader.SetInt("height", rtCopyMin.height);
+            minMaxShader.SetInt("divParam", divParam);
+            minMaxShader.Dispatch(kernel, rtMin.width / 32 + 1, rtMin.height / 32 + 1, 1);
+
+            rtCopyMin = rtMin;
+            rtCopyMax = rtMax;
+
+            rtMin = CreateRenderTexture(rtMin.width / divParam + 1, rtMin.width / divParam + 1, rt.format);
+            rtMax = CreateRenderTexture(rtMax.width / divParam + 1, rtMax.width / divParam + 1, rt.format);
+        }
+
+        min = GetMinMaxFromRenderTexture(rtCopyMin).x;
+        max = GetMinMaxFromRenderTexture(rtCopyMax).y;
+    }
+
+    public static void GetMinMaxFromRenderTexture(RenderTexture rt, out float min, out float max)
+    {
+        GetMinMaxFromRenderTexture(-1, rt, 0, rt.width, 0, rt.height, out min, out max);
+    }
+
+    public static RenderTexture Truncate(RenderTexture rt, int xmin, int xmax, int ymin, int ymax)
+    {
+        ComputeShader truncateShader = Resources.Load<ComputeShader>(ShaderLib.TruncateShader);
+
+        RenderTexture rtResized = CreateRenderTexture(xmax - xmin, ymax - ymin, rt.format);
+
+        int kernel = truncateShader.FindKernel("CSMain");
+        truncateShader.SetTexture(kernel, "result", rtResized);
+        truncateShader.SetTexture(kernel, "original", rt);
+        truncateShader.SetInt("xmin", xmin);
+        truncateShader.SetInt("ymin", ymin);
+        truncateShader.SetInt("xmax", xmax);
+        truncateShader.SetInt("ymax", ymax);
+        truncateShader.Dispatch(kernel, (xmax - xmin) / 32 + 1, (ymax - ymin) / 32 + 1, 1);
+
+        return rtResized;
     }
 }

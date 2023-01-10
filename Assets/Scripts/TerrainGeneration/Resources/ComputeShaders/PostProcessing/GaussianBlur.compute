@@ -2,7 +2,6 @@
 #pragma kernel CSMain
 
 RWTexture2D<float> heights;
-RWTexture2D<float> outputHeights;
 RWTexture2D<float> normalHeights;
 int sizeX, sizeY;
 
@@ -24,7 +23,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 
 	if (coord.x - kernelRadius < 0 || coord.x + kernelRadius >= sizeX || coord.y - kernelRadius < 0 || coord.y + kernelRadius >= sizeY)
 	{
-		outputHeights[coord] = heights[coord];
+		normalHeights[coord] = heights[coord];
 		return;
 	}
 	
@@ -37,5 +36,5 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 		}
 	}
 
-	outputHeights[id.xy] = texel * (1 - weight) + normalHeights[id.xy] * weight;
+	normalHeights[id.xy] = texel * (1 - weight) + normalHeights[id.xy] * weight;
 }

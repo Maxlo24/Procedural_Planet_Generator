@@ -13,7 +13,7 @@
 
 =========================================================================*/
 
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseUtils.hlsl"
 
 
 /*=========================================================================

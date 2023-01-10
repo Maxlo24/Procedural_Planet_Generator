@@ -1,7 +1,7 @@
 #ifndef _INCLUDE_VORONOI_NOISE_ 
 #define _INCLUDE_VORONOI_NOISE_
 
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseUtils.hlsl"
 
 float vrnoise(float2 p)
 {

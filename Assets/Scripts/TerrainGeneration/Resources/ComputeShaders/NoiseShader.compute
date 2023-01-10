@@ -5,9 +5,9 @@ CGPROGRAM
 #include "HLSLSupport.cginc"
 ENDCG
 
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Lib/DistancesShader.cginc"
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/LibUtils.hlsl"
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseLib.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Lib/DistancesShader.cginc"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/LibUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseLib.hlsl"
 
 struct Octave {
 	float frequency;

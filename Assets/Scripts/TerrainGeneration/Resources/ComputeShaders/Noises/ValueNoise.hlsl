@@ -1,7 +1,7 @@
 #ifndef _INCLUDE_VALUE_NOISE_ 
 #define _INCLUDE_VALUE_NOISE_
 
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseUtils.hlsl"
 
 float vnoise(float2 p)
 {

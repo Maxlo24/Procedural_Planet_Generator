@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class CraterGeneration : MonoBehaviour
 {
-    [field: SerializeField] public ComputeShader CraterShader { get; private set; }
     [field: SerializeField] public int Seed { get; private set; } = 0;
     [field: SerializeField] public int Number { get; private set; } = 0;
     [field: SerializeField] public Vector2 RadiusRange { get; private set; } = new Vector2(2, 5);
@@ -28,15 +27,16 @@ public class CraterGeneration : MonoBehaviour
             ElevationRange = elevationRange;
         }
     }
-
-    public RenderTexture GenerateCraters(RenderTexture rt, Terrain terrain)
+    
+    public void GenerateCraters(ref RenderTexture rt, int terrainRes)
     {
-        TerrainData td = terrain.terrainData;
-        RenderTexture rtOutput = ImageLib.CopyRenderTexture(rt);
-
+        RenderTexture rtCopy = ImageLib.CopyRenderTexture(rt);
+        
         System.Random prng = new System.Random(Seed);
-        int kernel = CraterShader.FindKernel("CSMain");
 
+        ComputeShader craterShader = Resources.Load<ComputeShader>(ShaderLib.CraterShader);
+        int kernel = craterShader.FindKernel("CSMain");
+        
         Crater craters = GetCratersInformation(rt.width, rt.height, prng);
 
         for (int i = 0; i < Number; i++)
@@ -44,19 +44,20 @@ public class CraterGeneration : MonoBehaviour
             float radius = craters.Radius[i];
             Vector2 vecMin = craters.Position[i] - new Vector2(radius, radius) / 1f;
             Vector2 vecMax = craters.Position[i] + new Vector2(radius, radius) / 1f;
-            float minCenter = ImageLib.GetMinMaxFromRenderTexture(rt, (int)vecMin.x, (int)vecMax.x, (int)vecMin.y, (int)vecMax.y).x;
-            CraterShader.SetFloat("minCenter", minCenter);
-            CraterShader.SetVector("position", new Vector2(0, td.heightmapResolution) + new Vector2(craters.Position[i].x, -craters.Position[i].y));
-            CraterShader.SetFloat("radius", craters.Radius[i]);
-            CraterShader.SetFloat("secondaryRadiusOffset", craters.SecondaryRadiusOffset[i]);
-            CraterShader.SetFloat("depth", craters.Depth[i] / 100f);
-            CraterShader.SetFloat("elevationRange", craters.ElevationRange[i] / 100f);
-            CraterShader.SetTexture(kernel, "result", rtOutput);
-            CraterShader.SetTexture(kernel, "copy", rt);
-            CraterShader.Dispatch(kernel, ((int)(craters.Radius[i] + craters.SecondaryRadiusOffset[i]) * 2 + 1) / 8 + 1, ((int)(craters.Radius[i] + craters.SecondaryRadiusOffset[i]) * 2 + 1) / 8 + 1, 1);
+            
+            ImageLib.GetMinMaxFromRenderTexture(terrainRes, rt, (int)vecMin.x, (int)vecMax.x, (int)vecMin.y, (int)vecMax.y, out float minCenter, out float maxCenter);
+            craterShader.SetFloat("minCenter", minCenter);
+            craterShader.SetVector("position", new Vector2(0, terrainRes) + new Vector2(craters.Position[i].x, -craters.Position[i].y));
+            craterShader.SetFloat("radius", craters.Radius[i]);
+            craterShader.SetFloat("secondaryRadiusOffset", craters.SecondaryRadiusOffset[i]);
+            craterShader.SetFloat("depth", craters.Depth[i] / 100f);
+            craterShader.SetFloat("elevationRange", craters.ElevationRange[i] / 100f);
+            craterShader.SetTexture(kernel, "result", rt);
+            craterShader.SetTexture(kernel, "copy", rtCopy);
+            craterShader.Dispatch(kernel, ((int)(craters.Radius[i] + craters.SecondaryRadiusOffset[i]) * 2 + 1) / 8 + 1, ((int)(craters.Radius[i] + craters.SecondaryRadiusOffset[i]) * 2 + 1) / 8 + 1, 1);
         }
 
-        return rtOutput;
+        rtCopy.Release();
     }
 
     private Vector2 GetRandomPosition(int minX, int minY, int sizeX, int sizeY, System.Random prng)

@@ -1,8 +1,8 @@
 #ifndef _INCLUDE_FRACTAL_BROWNIAN_NOISE_ 
 #define _INCLUDE_FRACTAL_BROWNIAN_NOISE_
 
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/NoiseUtils.hlsl"
-#include "Assets/Scripts/TerrainGeneration/ComputeShaders/Noises/SimplexNoise2D.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/SimplexNoise2D.hlsl"
 
 #define NUM_OCTAVES 5
 
