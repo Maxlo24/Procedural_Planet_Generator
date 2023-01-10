@@ -136,7 +136,7 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 5956040741380252971}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &7544438410514202896
 MonoBehaviour:
   m_ObjectHideFlags: 0
