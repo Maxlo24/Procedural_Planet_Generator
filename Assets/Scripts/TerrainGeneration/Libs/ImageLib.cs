@@ -176,7 +176,6 @@ public class ImageLib : MonoBehaviour
     {
         RenderTexture rtCopy = new RenderTexture(rt.width, rt.height, 0, rt.format);
         rtCopy.enableRandomWrite = true;
-        rtCopy.Create();
         Graphics.Blit(rt, rtCopy);
         return rtCopy;
     }

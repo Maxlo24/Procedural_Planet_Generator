@@ -97,4 +97,90 @@ public class Noise : MonoBehaviour
 
         return new List<Vector2>() { Vector2.zero };
     }
+
+    public void ApplyNoise(ref RenderTexture renderTexture, Terrain Terrain)
+    {
+        ComputeShader noiseShader = Resources.Load<ComputeShader>(ShaderLib.NoiseShader);
+        ComputeShader terraceShader = Resources.Load<ComputeShader>(ShaderLib.TerraceShader);
+
+        int indexOfKernel = noiseShader.FindKernel("CSMain");
+
+        RenderTexture rt;
+
+        if (this.Mode == ApplicationMode.ADDITION)
+        {
+            rt = ImageLib.CopyRenderTexture(renderTexture);
+        }
+        else
+        {
+            rt = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
+        }
+
+        noiseShader.SetTexture(indexOfKernel, "height", rt);
+
+        noiseShader.SetInt("resolution", Terrain.terrainData.heightmapResolution);
+        noiseShader.SetInt("octaveCount", this.OctaveNumber);
+        noiseShader.SetFloat("xOffset", this.Offset.x);
+        noiseShader.SetFloat("yOffset", this.Offset.z);
+        noiseShader.SetFloat("elevationOffset", this.Offset.y);
+        noiseShader.SetFloat("scale", this.Scale);
+        noiseShader.SetFloat("scaleElevation", this.ScaleElevation);
+        noiseShader.SetFloat("redistribution", this.Redistribution);
+        noiseShader.SetFloat("islandRatio", this.IslandRatio);
+        noiseShader.SetBool("ridge", this.Ridge);
+        noiseShader.SetBool("octaveDependentAmplitude", this.OctaveDependentAmplitude);
+
+        noiseShader.SetBool("absolute", this.Absolute);
+        noiseShader.SetBool("invert", this.Invert);
+
+        noiseShader.SetInt("distanceType", (int)this.DistanceType);
+        noiseShader.SetInt("noiseType", (int)this.NoiseType);
+
+        if (this.Octaves.Count == 0)
+        {
+            this.FillOctaves();
+        }
+
+        ComputeBuffer octaveBuffer = new ComputeBuffer(this.Octaves.Count, 8);
+        octaveBuffer.SetData(this.Octaves);
+        noiseShader.SetBuffer(indexOfKernel, "octaves", octaveBuffer);
+
+        noiseShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
+
+        octaveBuffer.Release();
+
+
+        indexOfKernel = terraceShader.FindKernel("CSMain");
+        terraceShader.SetTexture(indexOfKernel, "heights", rt);
+
+        terraceShader.SetBool("elevationLimit", this.ElevationLimit);
+        terraceShader.SetVector("elevationLimitHeights", this.ElevationLimitHeights);
+
+        terraceShader.SetBool("basicTerraces", this.BasicTerraces);
+        noiseShader.SetFloat("basicTerracesHeight", this.BasicTerracesHeight);
+
+        terraceShader.SetBool("customTerraces", this.CustomTerraces);
+
+        if (this.CustomTerraces)
+        {
+            this.SortTerraces();
+        }
+        List<Vector2> terracesDescription = this.GetCustomTerraces();
+        terraceShader.SetInt("customTerracesLength", terracesDescription.Count);
+        ComputeBuffer terracesBuffer = new ComputeBuffer(terracesDescription.Count, 2 * sizeof(float));
+        terracesBuffer.SetData(terracesDescription);
+        terraceShader.SetBuffer(indexOfKernel, "customTerracesDescription", terracesBuffer);
+
+        terraceShader.Dispatch(indexOfKernel, Terrain.terrainData.heightmapResolution / 32 + 1, Terrain.terrainData.heightmapResolution / 32 + 1, 1);
+
+        terracesBuffer.Release();
+
+        if (this.Mode == ApplicationMode.MULTIPLICATION)
+        {
+            ImageLib.NormalizeRenderTexture(ref rt);
+            ImageLib.MultiplyRenderTexture(ref rt, renderTexture);
+        }
+
+        renderTexture = rt;
+    }
 }
