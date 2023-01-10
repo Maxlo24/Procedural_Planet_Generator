@@ -10,28 +10,39 @@ float minCenter;
 float2 position;
 float radius;
 float secondaryRadiusOffset;
+float thirdRadiusOffset;
 float depth;
 float elevationRange;
 
-[numthreads(8, 8, 1)]
+int sizeX;
+int sizeY;
+
+[numthreads(32, 32, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	// Dig a crater in result texture
 	int2 positionI = int2(position.x, position.y);
 	float secondaryRadius = radius + secondaryRadiusOffset;
-	int2 pos = positionI + id.xy - int2(secondaryRadius, secondaryRadius);
+	float thirdRadius = secondaryRadius + thirdRadiusOffset;
+	int2 pos = positionI + id.xy - int2(thirdRadius, thirdRadius);
 	float dist = length(pos - positionI);
 
 	if (dist < radius)
 	{
 		float w = pow(dist / radius, 2);
 		float diff = max(0, minCenter - depth);
-		result[pos] = (copy[pos] + elevationRange) * w + diff * (1 - w);
+		result[pos] = ((copy[pos] + result[pos]) / 2.0 + elevationRange) * w + diff * (1 - w);
 	}
 	else if (dist < secondaryRadius)
 	{
 		float w = pow((dist - radius) / secondaryRadiusOffset, 2);
-		result[pos] = copy[pos] + elevationRange * (1 - w);
+		result[pos] = (copy[pos] + result[pos]) / 2.0 + elevationRange * (1 - w);
+	}
+	else if (dist < thirdRadius)
+	{
+		float w = pow((dist - secondaryRadius) / thirdRadiusOffset, 1);
+		result[pos] = (copy[pos] + result[pos]) / 2.0 * (1 - w) + result[pos] * w;
+
 	}
 
 }

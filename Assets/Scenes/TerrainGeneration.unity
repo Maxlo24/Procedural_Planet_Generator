@@ -450,7 +450,7 @@ MonoBehaviour:
   <CraterGeneration>k__BackingField: {fileID: 840158073}
   <TerrainPostProcessing>k__BackingField: {fileID: 840158071}
   <HeightMapsAddition>k__BackingField: {fileID: 840158070}
-  RenderTexture: {fileID: 1027804771}
+  RenderTexture: {fileID: 897130508}
   ErosionTexture: {fileID: 8400000, guid: 70166aa5d2cffea4e9a498febc5b3948, type: 2}
   DepositTexture: {fileID: 8400000, guid: ef3d21e159049dd40a67103742eb1871, type: 2}
   <TerrainNameToSave>k__BackingField: Terrain1
@@ -509,7 +509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 840158063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 357, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -545,7 +545,7 @@ MonoBehaviour:
   <Gravity>k__BackingField: 20
   <ErodeEnabled>k__BackingField: 1
   <ErosionMapUsed>k__BackingField: 0
-  <GenerateErosionTexture>k__BackingField: 1
+  <GenerateErosionTexture>k__BackingField: 0
 --- !u!114 &840158070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,7 +658,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <ElevationOffset>k__BackingField: 0
+  <ElevationOffset>k__BackingField: -0.03
 --- !u!114 &840158073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,12 +671,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8040b28741fb329409dc587807d20103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Seed>k__BackingField: 298
-  <Number>k__BackingField: 3
-  <RadiusRange>k__BackingField: {x: 416.65, y: 500}
-  <SecondaryRadiusRange>k__BackingField: {x: 70, y: 89.37}
-  <DepthRange>k__BackingField: {x: 2.13, y: 2.99}
-  <ElevationRange>k__BackingField: {x: 0.62, y: 1.02}
+  <Seed>k__BackingField: 76
+  <Number>k__BackingField: 4
+  <RadiusRange>k__BackingField: {x: 110, y: 139.6}
+  <SecondaryRadiusRange>k__BackingField: {x: 13.5, y: 30.8}
+  <ThirdRadiusRange>k__BackingField: {x: 26.2, y: 36}
+  <DepthRange>k__BackingField: {x: 0.6, y: 1}
+  <ElevationRange>k__BackingField: {x: 0.2, y: 0.3}
   <TerrainBorder>k__BackingField: 0
 --- !u!84 &863215479
 RenderTexture:
@@ -715,7 +716,7 @@ RenderTexture:
   m_Dimension: 2
   m_VolumeDepth: 1
   m_ShadowSamplingMode: 2
---- !u!84 &1027804771
+--- !u!84 &897130508
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1013,7 +1014,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699329004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 50, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1032,7 +1033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Enabled>k__BackingField: 1
+  <Enabled>k__BackingField: 0
   <Name>k__BackingField: Noise
   <Mode>k__BackingField: 1
   <DistanceType>k__BackingField: 0
@@ -1096,7 +1097,7 @@ MonoBehaviour:
   <IslandRatio>k__BackingField: 0
   <Scale>k__BackingField: 2.6
   <ScaleElevation>k__BackingField: 0.4
-  <Offset>k__BackingField: {x: 9.95, y: -0.22, z: 1.59}
+  <Offset>k__BackingField: {x: 9.95, y: -0.25, z: 1.59}
   <Ridge>k__BackingField: 0
   <OctaveDependentAmplitude>k__BackingField: 0
   <ElevationLimit>k__BackingField: 1
@@ -1140,7 +1141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Enabled>k__BackingField: 1
+  <Enabled>k__BackingField: 0
   <Name>k__BackingField: 'Noise 1 '
   <Mode>k__BackingField: 0
   <DistanceType>k__BackingField: 0
@@ -1201,22 +1202,20 @@ MonoBehaviour:
   <Mode>k__BackingField: 0
   <DistanceType>k__BackingField: 0
   <NoiseType>k__BackingField: 5
-  <OctaveNumber>k__BackingField: 7
-  <Redistribution>k__BackingField: 1
+  <OctaveNumber>k__BackingField: 8
+  <Redistribution>k__BackingField: 1.92
   <IslandRatio>k__BackingField: 0
-  <Scale>k__BackingField: 1
-  <ScaleElevation>k__BackingField: 1
-  <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+  <Scale>k__BackingField: 1.48
+  <ScaleElevation>k__BackingField: 0.64
+  <Offset>k__BackingField: {x: 0, y: 0.1, z: 0}
   <Ridge>k__BackingField: 0
   <OctaveDependentAmplitude>k__BackingField: 0
   <ElevationLimit>k__BackingField: 0
-  <ElevationLimitHeights>k__BackingField: {x: 0, y: 0}
+  <ElevationLimitHeights>k__BackingField: {x: 0, y: 1.2}
   <BasicTerraces>k__BackingField: 0
   <BasicTerracesHeight>k__BackingField: 0
-  <CustomTerraces>k__BackingField: 1
-  <CustomTerracesDescription>k__BackingField:
-  - {x: 0.1, y: 0.05}
-  - {x: 0.5, y: 0.5}
+  <CustomTerraces>k__BackingField: 0
+  <CustomTerracesDescription>k__BackingField: []
   <Absolute>k__BackingField: 0
   <Invert>k__BackingField: 0
   <Octaves>k__BackingField:
@@ -1506,7 +1505,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892445837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 375, y: 14.3, z: 375}
+  m_LocalPosition: {x: 375, y: -14.3, z: 375}
   m_LocalScale: {x: 80, y: 80, z: 80}
   m_ConstrainProportionsScale: 1
   m_Children: []

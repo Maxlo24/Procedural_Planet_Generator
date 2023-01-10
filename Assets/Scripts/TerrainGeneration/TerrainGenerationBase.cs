@@ -92,8 +92,9 @@ public class TerrainGenerationBase : MonoBehaviour
 
     public void GenerateCraters()
     {
-        CraterGeneration.GenerateCraters(ref RenderTexture, Terrain.terrainData.heightmapResolution);
+        CraterGeneration.GenerateCraters(ref RenderTexture, ref RenderTextureCopy, Terrain.terrainData.heightmapResolution);
         RedrawTerrain();
+        Graphics.Blit(RenderTexture, RenderTextureCopy);
     }
 
     public void ErodeTerrain()
