@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee06522732b04b04c86fa17118d49e75, type: 3}
+  m_Name: RedMountains
+  m_EditorClassIdentifier: 
+  main: {r: 0.6320754, g: 0.30550992, b: 0.2713154, a: 1}
+  sediment: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
+  dirt: {r: 0.4056604, g: 0.19708973, b: 0.21727496, a: 1}
+  sand: {r: 0.4811321, g: 0.3236788, b: 0.28822535, a: 1}
+  CompatibleVegetation:
+  - {fileID: 11400000, guid: 9b70d22c822811947abe4de29d8dfc01, type: 2}
+  - {fileID: 11400000, guid: d4307f315468744449ed26538d5381c3, type: 2}
+  materialPreset: {fileID: 2100000, guid: b02fb9e5610de614eb79a8808ac694bf, type: 2}
