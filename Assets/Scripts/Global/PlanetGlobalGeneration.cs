@@ -69,18 +69,27 @@ public class PlanetGlobalGeneration : MonoBehaviour
             int r = Random.Range(0, 2);
             //if (r == 0) temperature = -25;
             //else temperature = 100;
-            //temperature = 100;
+            temperature = 100;
 
-            //raining = false;
+            raining = false;
 
             humidity = 0;
             Sky.material.SetFloat("_Alpha", 0);
+
+            RenderSettings.ambientLight = Color.black;
+            RenderSettings.ambientIntensity = 0.0f;
+
+
 
         }
         else
         {
             RenderSettings.fog = true;
             Sky.material.SetFloat("_Alpha", atmosphere / 3f);
+            RenderSettings.ambientLight = Color.white;
+
+            RenderSettings.ambientIntensity = atmosphere/ 3.0f + 1;
+
 
         }
 
