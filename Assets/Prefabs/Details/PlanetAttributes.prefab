@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4888062320017412241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4888062320017412246}
+  - component: {fileID: 4888062320017412244}
+  - component: {fileID: 4888062320017412247}
+  m_Layer: 0
+  m_Name: PlanetAttributes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4888062320017412246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4888062320017412241}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3007.1826, y: -3775.238, z: -19.138748}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4888062320017412244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4888062320017412241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591f96cc699a7b8478ad4d3debd32581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atmosphere: 1
+  humidity: 0
+  temperature: -25
+  clouds: 0
+  raining: 1
+  liquid: {fileID: 0}
+  Sky: {fileID: 0}
+--- !u!114 &4888062320017412247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4888062320017412241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33582b0bd946baa4fbd7adc2125fd3b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeCrustPalette: 3
+  activeVegetationPalette: 1
+  activeSkybox: 2
+  activePlanetMaterial: {fileID: 2100000, guid: b02fb9e5610de614eb79a8808ac694bf,
+    type: 2}
+  crustColorPalettes:
+  - {fileID: 11400000, guid: c9de9b56ea1a64b4199b9ab92eb0a362, type: 2}
+  - {fileID: 11400000, guid: b194e26988a3f5e44a24e09c7a92975a, type: 2}
+  - {fileID: 11400000, guid: 7eecc924f90e74b4c8b86288848dd0d6, type: 2}
+  - {fileID: 11400000, guid: 5f66373b759bfb047b9e9ab6dcc025b3, type: 2}
+  vegetalColorPalettes:
+  - {fileID: 11400000, guid: 9b70d22c822811947abe4de29d8dfc01, type: 2}
+  - {fileID: 11400000, guid: d4307f315468744449ed26538d5381c3, type: 2}
+  skyboxes:
+  - {fileID: 2100000, guid: 8401881fcb9afd34eb383fc90bbbbddc, type: 2}
+  - {fileID: 2100000, guid: b13109bc4674dd24ebc04b7c12437ad6, type: 2}
+  - {fileID: 2100000, guid: 95ebf50189f880e4aa17c4fdba9007aa, type: 2}
+  liveUpdate: 0

@@ -74,7 +74,8 @@ public class PlanetGlobalGeneration : MonoBehaviour
             raining = false;
 
             humidity = 0;
-            Sky.material.SetFloat("_Alpha", 0);
+
+            if (Sky != null) Sky.material.SetFloat("_Alpha", 0);
 
             RenderSettings.ambientLight = Color.black;
             RenderSettings.ambientIntensity = 0.0f;
@@ -85,7 +86,8 @@ public class PlanetGlobalGeneration : MonoBehaviour
         else
         {
             RenderSettings.fog = true;
-            Sky.material.SetFloat("_Alpha", atmosphere / 3f);
+            RenderSettings.fogColor = new Color(226, 226, 226, 255.0f)/255;
+            if (Sky != null) Sky.material.SetFloat("_Alpha", atmosphere / 3f);
             RenderSettings.ambientLight = Color.white;
 
             RenderSettings.ambientIntensity = atmosphere/ 3.0f + 1;
