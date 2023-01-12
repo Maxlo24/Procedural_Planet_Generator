@@ -266,7 +266,7 @@ public class PlanetCreator : MonoBehaviour
         {
             this.gameObject.AddComponent<MeshRenderer>().sharedMaterial = new Material(shader);
         }
-        meshFilter.mesh = mesh;
+        this.gameObject.GetComponent<MeshFilter>().mesh = mesh; ;
 
     }
 

@@ -7,20 +7,18 @@ using UnityEngine;
 public class Icosahedron : MonoBehaviour
 {
     [Header("Resolution")]
-    [Range(0, 7)][SerializeField] private int subdivisions = 1;
+    [Range(0, 8)][SerializeField] private int subdivisions = 1;
     // scale of the icosahedron (default 1)
     [Header("Scale")]
     [Range(1, 10)][SerializeField] private float scale = 1;
 
-    [Header("Graphics")]
-    [SerializeField] private Shader shader;
+    [Header("Noise")]
+    public NoiseLayer[] noiseLayers;
 
     public Mesh sphereMesh;
     public MeshFilter meshFilter;
 
     public IcosahedronGenerator icosahedron;
-
-    [SerializeField]  NoiseSettings noiseSettings;
 
 
     private void Start()
@@ -36,6 +34,8 @@ public class Icosahedron : MonoBehaviour
         int[] indices = new int[vertexCount];
 
         Vector3[] vertices = new Vector3[vertexCount];
+        // print size of vertices
+        Debug.Log("vertices size: " + vertices.Length);
         Vector3[] normals = new Vector3[vertexCount];
 
         for (int i = 0; i < icosahedron.Polygons.Count; i++)
@@ -63,7 +63,7 @@ public class Icosahedron : MonoBehaviour
     {
 
 
-        icosahedron = new IcosahedronGenerator(noiseSettings);
+        icosahedron = new IcosahedronGenerator(noiseLayers);
         icosahedron.Initialize();
         // créer sphere 
 
@@ -83,7 +83,7 @@ public class Icosahedron : MonoBehaviour
         }
         if (meshRenderer == null)
         {
-            this.gameObject.AddComponent<MeshRenderer>().sharedMaterial = new Material(shader);
+            this.gameObject.AddComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Standard"));
         }
 
 
@@ -95,10 +95,18 @@ public class Icosahedron : MonoBehaviour
         {
             icosahedron.Vertices[i] = icosahedron.Vertices[i]*(1+ icosahedron.ComputeNoise(icosahedron.Vertices[i]));
         }
+
+        Shader shader = Shader.Find("Shader Graphs/PlanetShader");
+        Material material = new Material(shader);
+        material.SetFloat("_Ratio", scale);
+        this.gameObject.GetComponent<MeshRenderer>().sharedMaterial = material;
+        genMesh();
+
         icosahedron.Rescale(scale);
 
         genMesh();
-        meshFilter.mesh = sphereMesh;
+        sphereMesh.RecalculateNormals();
+        this.gameObject.GetComponent<MeshFilter>().mesh = sphereMesh;
 
     }
 
@@ -131,6 +139,6 @@ public class Icosahedron : MonoBehaviour
                     lastScale = scale;
                     UpdateMesh();
                 }*/
-        UpdateMesh();
+        // UpdateMesh();
     }
 }
