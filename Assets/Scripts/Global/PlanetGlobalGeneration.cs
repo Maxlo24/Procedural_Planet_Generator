@@ -5,17 +5,21 @@ using UnityEngine;
 public class PlanetGlobalGeneration : MonoBehaviour
 {
     [Range(0, 3)]
-    [SerializeField] private int atmosphere = 3;
+    [SerializeField] public int atmosphere = 3;
     [Range(0, 100)]
-    [SerializeField] private int humidity = 50;
+    [SerializeField] public int humidity = 50;
     [Range(-25, 100)]
-    [SerializeField] private float temperature = 25.0f;
+    [SerializeField] public float temperature = 25.0f;
 
-    [SerializeField] private bool clouds = true;
-    [SerializeField] private bool raining = true;
+    [SerializeField] public bool clouds = true;
+    [SerializeField] public bool raining = true;
 
     [SerializeField] private Liquid liquid;
-    [SerializeField] private MeshRenderer Sky;
+
+    [SerializeField] private CloudManager cloudGenerator;
+
+
+    public float fogIntensity;
 
 
 
@@ -34,6 +38,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
     private void OnValidate()
     {
         UpdateAttributes();
+
     }
 
 
@@ -42,13 +47,12 @@ public class PlanetGlobalGeneration : MonoBehaviour
         atmosphere = Random.Range(0, 4);
         humidity = Random.Range(0, 101);
         temperature = Random.Range(-25, 101);
-        //clouds = Random.Range(0, 2) == 1;
+        clouds = Random.Range(0, 4) != 0;
         raining = Random.Range(0, 2) == 1;
         
 
         
         UpdateAttributes();
-
         GetComponent< ColorStyle > ().SetRandomPalette();
 
     }
@@ -72,10 +76,9 @@ public class PlanetGlobalGeneration : MonoBehaviour
             temperature = 100;
 
             raining = false;
+            clouds = false;
 
             humidity = 0;
-
-            if (Sky != null) Sky.material.SetFloat("_Alpha", 0);
 
             RenderSettings.ambientLight = Color.black;
             RenderSettings.ambientIntensity = 0.0f;
@@ -85,9 +88,9 @@ public class PlanetGlobalGeneration : MonoBehaviour
         }
         else
         {
+            
             RenderSettings.fog = true;
-            RenderSettings.fogColor = new Color(226, 226, 226, 255.0f)/255;
-            if (Sky != null) Sky.material.SetFloat("_Alpha", atmosphere / 3f);
+            RenderSettings.fogColor = new Color(189, 234, 255, 255.0f)/255f;
             RenderSettings.ambientLight = Color.white;
 
             RenderSettings.ambientIntensity = atmosphere/ 3.0f + 1;
@@ -115,12 +118,17 @@ public class PlanetGlobalGeneration : MonoBehaviour
             liquid.UpdateTemperature(temperature);
         }
 
-        RenderSettings.fogDensity = humidity * atmosphere/ 150000f;
+        RenderSettings.fogDensity = humidity * atmosphere/ 200000f;
+
+        fogIntensity = humidity * atmosphere / 400f;
         //RenderSettings.fogDensity = humidity / 65000f;
 
         //Sky.material.SetColor("_Color", new Color(156, 243, 253, 255 / (4 - atmosphere)));
 
-   
+        cloudGenerator.UpdateClouds();
+        GetComponent<ColorStyle>().UpdateStyle();
+
+
 
     }
 }

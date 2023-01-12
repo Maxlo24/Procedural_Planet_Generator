@@ -121,7 +121,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Height_frequency: 0.5
-    - _Ice_crack: 10
+    - _Ice_crack: 4.23
     - _Intensity: 10
     - _Metallic: 0
     - _Normal_strength: 0.5
@@ -133,7 +133,7 @@ Material:
     - _ReceiveShadows: 1
     - _Refraction_speed: 0
     - _Refraction_strength: 13.52
-    - _Smoothness: 0.531
+    - _Smoothness: 0.6
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 0.1
@@ -155,7 +155,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Deep_color: {r: 0, g: 0, b: 0, a: 0.45490196}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Foam_color: {r: 0.7076807, g: 0.8773585, b: 0.8639665, a: 0.72156864}
+    - _Foam_color: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 0.72156864}
     - _Foam_scale: {r: 1000, g: 1000, b: 0, a: 0}
     - _Refraction_scale: {r: 10, g: 10, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

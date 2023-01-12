@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sky
-  m_Shader: {fileID: -6465566751694194690, guid: 894a38894683ccc4fb8b588ad203f0b8,
+  m_Shader: {fileID: -6465566751694194690, guid: 764fb3038982bc544906f7a7a43695b7,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -81,6 +81,10 @@ Material:
     m_Floats:
     - _Alpha: 1
     - _AlphaClip: 0
+    - _AtmosphereThickness: 1.27
+    - _Atmosphere_factor: 10
+    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueOffset: 0
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -91,6 +95,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _EnvironmentReflections: 1
+    - _Exposure: 0.66
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -104,16 +109,35 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
+    - _SunDisk: 2
+    - _SunSize: 0.067
+    - _SunSizeConvergence: 5
     - _Surface: 1
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
+    - _Atmosphere_color: {r: 0.45692414, g: 0.6113188, b: 0.6415094, a: 0}
     - _BaseColor: {r: 0.61209506, g: 0.95336896, b: 0.99056596, a: 1}
     - _Color: {r: 0.61209506, g: 0.95336896, b: 0.99056596, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _GroundColor: {r: 0.36899996, g: 0.34899998, b: 0.34099993, a: 1}
     - _Main_color: {r: 1.2601022, g: 2.0890884, b: 2.5442061, a: 0}
+    - _SkyTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &3159718120600209875
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
 --- !u!114 &6580579466244288823
 MonoBehaviour:
   m_ObjectHideFlags: 11
