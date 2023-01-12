@@ -25,6 +25,8 @@ public class ColorStyle : MonoBehaviour
 
     [SerializeField] private bool liveUpdate = false;
 
+    public float fog_ratio;
+
 
     private void Update()
     {
@@ -80,8 +82,15 @@ public class ColorStyle : MonoBehaviour
         activePlanetMaterial.SetColor("_Healthy_grass", activeVegetation.healthy);
         activePlanetMaterial.SetColor("_Dry_grass", activeVegetation.dry);
 
-        RenderSettings.skybox = skyboxes[activeSkybox];
+
+        Material skybox = skyboxes[activeSkybox];
         
+        float fogIntensity = GetComponent<PlanetGlobalGeneration>().fogIntensity;
+        skybox.SetFloat("_FogIntensity", fogIntensity* fog_ratio);
+
+        RenderSettings.skybox = skybox;
+
+
     }
 
 }

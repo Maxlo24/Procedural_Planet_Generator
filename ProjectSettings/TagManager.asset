@@ -9,6 +9,7 @@ TagManager:
   - GenerationManager
   - CinemachineTarget
   - Terrain
+  - PlanetAttributes
   layers:
   - Default
   - TransparentFX
