@@ -12,8 +12,14 @@ public class Icosahedron : MonoBehaviour
     [Header("Scale")]
     [Range(1, 10)][SerializeField] private float scale = 1;
 
+    public enum PlanetType { Earth, Desert };
+    [Header("Planet Type")]
+    public PlanetType planetType;
+
     [Header("Noise")]
     public NoiseLayer[] noiseLayers;
+
+
 
     public Mesh sphereMesh;
     public MeshFilter meshFilter;
@@ -96,8 +102,20 @@ public class Icosahedron : MonoBehaviour
             icosahedron.Vertices[i] = icosahedron.Vertices[i]*(1+ icosahedron.ComputeNoise(icosahedron.Vertices[i]));
         }
 
-        Shader shader = Shader.Find("Shader Graphs/PlanetShader");
-        Material material = new Material(shader);
+
+        // if planet type is earth : get earth shader. If desert: get desert shader
+        Shader planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
+        if (planetType == PlanetType.Earth)
+        {
+            planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
+        }
+        else if (planetType == PlanetType.Desert)
+        {
+            planetShader = Shader.Find("Shader Graphs/DesertShader");
+        }
+
+        /*Shader shader = Shader.Find("Shader Graphs/EarthLikeShader");*/
+        Material material = new Material(planetShader);
         material.SetFloat("_Ratio", scale);
         this.gameObject.GetComponent<MeshRenderer>().sharedMaterial = material;
         genMesh();
