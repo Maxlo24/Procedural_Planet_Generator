@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace sc.terrain.vegetationspawner
 {
-    public partial class VegetationSpawner
+    public partial class VegetationSpawner //HERE
     {
         public void RefreshGrassPrototypes()
         {

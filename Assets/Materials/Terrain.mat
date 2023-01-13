@@ -241,7 +241,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HeightTransition: 0
-    - _Humidity: 0.61
+    - _Humidity: 0.8
     - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
@@ -265,14 +265,14 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _Snow_Smoothness: 10
     - _Snow_intensity: 1
-    - _Snow_level: 99
+    - _Snow_level: 250
     - _Snow_randomness: 19.2
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Strength: 1
     - _Surface: 0
-    - _Temperature: 19.8
-    - _Texture_scale: 56
+    - _Temperature: 50
+    - _Texture_scale: 120
     - _Textures_scale: 150
     - _Transition_width: 0.103
     - _Uniformity: 0
@@ -281,10 +281,10 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Beach_color: {r: 0.4245283, g: 0.35867712, b: 0.33441615, a: 1}
+    - _Beach_color: {r: 0.5754717, g: 0.5263174, b: 0.3936009, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Deposit_color: {r: 0.06132078, g: 1, b: 0.9256559, a: 0}
-    - _Dirt_color: {r: 0.5411765, g: 0.4666667, b: 0.31764707, a: 1}
+    - _Dirt_color: {r: 0.5686275, g: 0.5254902, b: 0.41960788, a: 1}
     - _Dry_grass: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DustColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -293,7 +293,7 @@ Material:
     - _Healthy_grass: {r: 0.5991456, g: 0.8301887, b: 0.78271025, a: 1}
     - _MainColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
     - _Noise: {r: 100, g: 0.8, b: 0, a: 0}
-    - _Rock_color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+    - _Rock_color: {r: 0.69803923, g: 0.6431373, b: 0.46274513, a: 1}
     - _Scale: {r: 1, g: 1, b: 0, a: 0}
     - _Sediment_color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
     - _Snow_color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}

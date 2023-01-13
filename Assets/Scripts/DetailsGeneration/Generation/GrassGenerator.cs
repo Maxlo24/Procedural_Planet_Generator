@@ -2,20 +2,31 @@ using sc.terrain.vegetationspawner;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static sc.terrain.vegetationspawner.SpawnerBase;
+using static UnityEditor.Progress;
 
 
 public class GrassGenerator : MonoBehaviour
 {
     [SerializeField] private Terrain terrain;
 
+    //[SerializeField] private Grass[] grassAssets;
+
+    //public DetailPrototype grass_prototype;
+
 
     [HideInInspector] public Vector2 slopeAngleRange = new Vector2(0f, 60f);
     [HideInInspector] public Vector2 altitudeRange = new Vector2(0f, 100f);
+    [HideInInspector] public Vector2 heightRange = new Vector2(0f, 100f);
+    [HideInInspector] public Vector2 widthRange = new Vector2(0f, 100f);
+    
 
     [Range(0,100)]
     [SerializeField] private int grassDensity = 50;
     [Range(1, 5)]
     [SerializeField] private int nbrPerPatch = 1;
+    [SerializeField] private float noiseScale = 1f;
+
 
     private int count = 0;
 
@@ -87,6 +98,60 @@ public class GrassGenerator : MonoBehaviour
         //detailPrototypes[0] = detailPrototype;
         //terrain.terrainData.detailPrototypes = detailPrototypes;
     }
+
+
+    public void UpdateGrassPrototypes(GrassAsset[] grassAssets)
+    {
+
+        //Grass item = new Grass();
+
+        List<DetailPrototype> grassPrototypeCollection = new List<DetailPrototype>();
+        int index = 0;
+        foreach (GrassAsset item in grassAssets)
+        {
+            //item.index = index;
+
+            DetailPrototype detailPrototype = new DetailPrototype();
+
+            GenerateGrassPrototype(item, detailPrototype);
+
+            grassPrototypeCollection.Add(detailPrototype);
+
+            index++;
+        }
+        if (grassPrototypeCollection.Count > 0) terrain.terrainData.detailPrototypes = grassPrototypeCollection.ToArray();
+    }
+
+    private void GenerateGrassPrototype(GrassAsset item , DetailPrototype detail)
+    {
+
+
+        detail.healthyColor = item.useOriginalColor ? Color.white : item.healthyColor;
+        detail.dryColor = item.useOriginalColor ? Color.white : item.healthyColor;
+        detail.minHeight = heightRange.x;
+        detail.maxHeight = heightRange.y;
+
+        detail.minWidth = widthRange.x;
+        detail.maxWidth = widthRange.y;
+
+#if UNITY_2021_2_OR_NEWER
+        detail.noiseSeed = Random.Range(0, 100000);
+#endif
+        detail.noiseSpread = noiseScale;
+
+        //if (item.type == GrassType.Texture && item.billboard)
+        //{
+#if UNITY_2021_2_OR_NEWER
+        detail.useInstancing = false;
+#endif
+        detail.renderMode = DetailRenderMode.Grass;
+        detail.usePrototypeMesh = false;
+        detail.prototypeTexture = item.texture;
+        detail.prototype = null;
+        //}
+
+    }
+
 
 
 
