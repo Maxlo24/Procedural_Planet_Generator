@@ -16,6 +16,8 @@ public class CrustColorPalette : ScriptableObject
 
     [SerializeField] public Material materialPreset = null;
 
+    [SerializeField] public Color[] AtmospherColors = new Color[0];
+
     //public Color GetRandomColor()
     //{
     //    return colors[Random.Range(0, colors.Length)];
