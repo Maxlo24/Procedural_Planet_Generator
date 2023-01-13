@@ -12,4 +12,5 @@ public static class ShaderLib
     public static string GaussianBlurShader = "ComputeShaders/PostProcessing/GaussianBlur";
     public static string IslandProcessShader = "ComputeShaders/Lib/IslandProcess";
     public static string CraterShader = "ComputeShaders/Details/Craters";
+    public static string PolygonMapNoiseShader = "ComputeShaders/PolygonMap/PolygonMapNoise";
 }

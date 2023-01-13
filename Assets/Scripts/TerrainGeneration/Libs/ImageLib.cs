@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.IO;
 using System;
-using Unity.VisualScripting;
 
 public class ImageLib : MonoBehaviour
 {
@@ -165,7 +164,7 @@ public class ImageLib : MonoBehaviour
         return Kernel;
     }
 
-    public static RenderTexture CreateRenderTexture(int width, int height, RenderTextureFormat format)
+    public static RenderTexture CreateRenderTexture(int width, int height, RenderTextureFormat format = RenderTextureFormat.RFloat)
     {
         RenderTexture rt = new RenderTexture(width, height, 0, format);
         rt.enableRandomWrite = true;

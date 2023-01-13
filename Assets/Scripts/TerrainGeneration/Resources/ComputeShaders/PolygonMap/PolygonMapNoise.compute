@@ -1,0 +1,39 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Lib/DistancesShader.cginc"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/LibUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseLib.hlsl"
+
+RWTexture2D<float> Result;
+int resolution;
+
+float xOffset;
+float yOffset;
+float frequency;
+int noiseType = 0;
+
+float islandRatio = 0;
+int distanceType = 0;
+
+float threshold = 0.5;
+
+[numthreads(32,32,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    float x = float(id.x) / float(resolution);
+    float y = float(id.y) / float(resolution);
+    float h = noise((float2(x, y) + float2(xOffset, yOffset)) * frequency, noiseType);
+    float nx = x * 2 - 1;
+    float ny = y * 2 - 1;
+    h = h * (1 - islandRatio) + islandRatio * (h + (1 - Distance(nx, ny, distanceType))) / 2;
+    if (h > threshold)
+    {
+		h = 0.5;
+    }
+	else
+	{
+		h = 0;
+	}
+    Result[id.xy] = h;
+}

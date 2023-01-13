@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TerrainPostProcessing : MonoBehaviour
 {
-    [field: SerializeField, Range(0, 5)] public float Sigma { get; private set; } = 1f;
+    [field: SerializeField, Range(0, 10)] public float Sigma { get; private set; } = 1f;
     [field: SerializeField, Range(0, 1)] public float Weight { get; private set; } = 1f;
-    [field: SerializeField, Range(0, 8)] public int KernelRadius { get; private set; } = 1;
+    [field: SerializeField, Range(0, 25)] public int KernelRadius { get; private set; } = 1;
 
 
     public void SmoothTerrain(RenderTexture basicHeights, ref RenderTexture heights)
