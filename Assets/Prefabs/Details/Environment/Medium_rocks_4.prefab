@@ -137,7 +137,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8780629003237600712, guid: c5edc95e8708fe44380c6077a232f8ba,
         type: 3}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1001 &149857179597736945
 PrefabInstance:
   m_ObjectHideFlags: 0

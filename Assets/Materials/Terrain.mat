@@ -241,7 +241,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HeightTransition: 0
-    - _Humidity: 0.5
+    - _Humidity: 0.66
     - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
@@ -265,13 +265,13 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _Snow_Smoothness: 10
     - _Snow_intensity: 1
-    - _Snow_level: -125
+    - _Snow_level: 225
     - _Snow_randomness: 19.2
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Strength: 1
     - _Surface: 0
-    - _Temperature: -25
+    - _Temperature: 45
     - _Texture_scale: 120
     - _Textures_scale: 150
     - _Transition_width: 0.103
@@ -285,12 +285,12 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Deposit_color: {r: 0.06132078, g: 1, b: 0.9256559, a: 0}
     - _Dirt_color: {r: 0.4056604, g: 0.19708973, b: 0.21727496, a: 1}
-    - _Dry_grass: {r: 1, g: 0.6733075, b: 0.042452812, a: 1}
+    - _Dry_grass: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DustColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Erosion_color: {r: 0.314, g: 0.314, b: 0.314, a: 0}
     - _Grass_color: {r: 0.72116584, g: 0.7264151, b: 0.3255162, a: 0}
-    - _Healthy_grass: {r: 0.8238069, g: 1, b: 0.4009434, a: 1}
+    - _Healthy_grass: {r: 0.5991456, g: 0.8301887, b: 0.78271025, a: 1}
     - _MainColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
     - _Noise: {r: 100, g: 0.8, b: 0, a: 0}
     - _Rock_color: {r: 0.6320754, g: 0.30550992, b: 0.2713154, a: 1}
