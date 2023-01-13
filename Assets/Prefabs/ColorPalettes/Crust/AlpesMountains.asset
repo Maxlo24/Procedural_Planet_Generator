@@ -21,3 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4307f315468744449ed26538d5381c3, type: 2}
   - {fileID: 11400000, guid: 9b70d22c822811947abe4de29d8dfc01, type: 2}
   materialPreset: {fileID: 2100000, guid: b02fb9e5610de614eb79a8808ac694bf, type: 2}
+  AtmospherColors:
+  - {r: 0.7607843, g: 0.8956236, b: 1, a: 0}
+  - {r: 0.65882355, g: 0.91891795, b: 1, a: 0}
+  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 1, g: 0.8332902, b: 0.5990566, a: 0}

@@ -14,6 +14,8 @@ public class ColorStyle : MonoBehaviour
     [SerializeField] public int activeVegetationPalette = 0;
     [Range(0, 3)]
     [SerializeField] public int activeSkybox = 0;
+    [Range(0, 3)]
+    [SerializeField] public int activeAtmosphere = 0;
 
     [HideInInspector] public Material activePlanetMaterial = null;
 
@@ -47,6 +49,7 @@ public class ColorStyle : MonoBehaviour
         activeVegetationPalette = Random.Range(0, vegetalColorPalettes.Length);
 
         activeSkybox = Random.Range(0, skyboxes.Length);
+        activeAtmosphere = Random.Range(0, crustColorPalettes[activeCrustPalette].AtmospherColors.Length);
 
         RenderSettings.skybox.SetFloat("_Rotation", Random.Range(0, 360));
 
@@ -89,6 +92,11 @@ public class ColorStyle : MonoBehaviour
         skybox.SetFloat("_FogIntensity", fogIntensity* fog_ratio);
 
         RenderSettings.skybox = skybox;
+
+        if (activeAtmosphere >= activeCrust.AtmospherColors.Length) activeAtmosphere = activeCrust.AtmospherColors.Length - 1;
+
+        RenderSettings.fogColor = activeCrust.AtmospherColors[activeAtmosphere];
+
 
 
     }
