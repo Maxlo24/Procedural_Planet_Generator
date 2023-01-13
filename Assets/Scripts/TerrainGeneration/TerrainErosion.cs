@@ -43,18 +43,15 @@ public class TerrainErosion : MonoBehaviour
         RenderTexture depositTexture = ImageLib.CopyRenderTexture(depositText);
 
         RenderTexture lowRes;
-        RenderTexture lowResCopy;
+
         if (Power2ResolutionDivisor == 0)
         {
             lowRes = heights;
-            lowResCopy = lowRes;
         }
         else
         {
             lowRes = ImageLib.CreateRenderTexture((heights.width >> Power2ResolutionDivisor) + 1, (heights.height >> Power2ResolutionDivisor) + 1, RenderTextureFormat.RFloat);
-            lowResCopy = ImageLib.CreateRenderTexture(lowRes.width, lowRes.height, RenderTextureFormat.RFloat);
             Graphics.Blit(heights, lowRes);
-            Graphics.Blit(lowRes, lowResCopy);
         }
 
         ComputeShader erosionShader = Resources.Load<ComputeShader>(ShaderLib.ErosionShader);
@@ -142,19 +139,8 @@ public class TerrainErosion : MonoBehaviour
         startPosBuffer.Release();
         brushWeightBuffer.Release();
 
-        //if (Power2ResolutionDivisor != 0)
-        //{
-        //    DifferenceErosion(ref lowRes, lowResCopy);
-        //    RenderTexture highResDiff = ImageLib.CreateRenderTexture(heights.width, heights.height, RenderTextureFormat.RFloat);
-        //    Graphics.Blit(lowRes, highResDiff);
-        //    UpscaleErosion(ref heights, highResDiff);
-        //}
-        //else
-        {
-            Graphics.Blit(lowRes, heights);
-            SmoothErosion(ref heights, Power2ResolutionDivisor);
-
-        }
+        Graphics.Blit(lowRes, heights);
+        SmoothErosion(ref heights, Power2ResolutionDivisor);
 
         return new ErodeResult(erosionTexture, depositTexture);
     }
