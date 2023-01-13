@@ -1,13 +1,12 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
-RWTexture2D<float> heights;
+//RWTexture2D<float> heights;
 RWTexture2D<float> normalHeights;
 int sizeX, sizeY;
 
 StructuredBuffer<float> kernel;
 int kernelRadius = 1;
-float weight = 1;
 
 int2 clamp(int2 value, int2 minV, int2 maxV) {
 	return int2(min(max(value.x, minV.x), maxV.x), min(max(value.y, minV.y), maxV.y));
@@ -23,7 +22,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 
 	if (coord.x - kernelRadius < 0 || coord.x + kernelRadius >= sizeX || coord.y - kernelRadius < 0 || coord.y + kernelRadius >= sizeY)
 	{
-		normalHeights[coord] = heights[coord];
+		//normalHeights[coord] = heights[coord];
 		return;
 	}
 	
@@ -31,10 +30,10 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 	{
 		for (int j = -kernelRadius; j <= kernelRadius; j++)
 		{
-			float height = heights[coord + int2(i,j)];
+			float height = normalHeights[coord + int2(i,j)];
 			texel += height * kernel[(i + kernelRadius) * (2 * kernelRadius + 1) + (j + kernelRadius)];
 		}
 	}
 
-	normalHeights[id.xy] = texel * (1 - weight) + normalHeights[id.xy] * weight;
+	normalHeights[id.xy] = texel;
 }

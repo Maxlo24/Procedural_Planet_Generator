@@ -1,0 +1,11 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+RWTexture2D<float> result;
+RWTexture2D<float> imageToDiff;
+
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	result[id.xy] = result[id.xy] - imageToDiff[id.xy];
+}

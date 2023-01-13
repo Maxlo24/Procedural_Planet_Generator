@@ -20,10 +20,9 @@ public class TerrainPostProcessing : MonoBehaviour
         kernelBuffer.SetData(kernelArray);
         smoothShader.SetBuffer(kernel, "kernel", kernelBuffer);
 
-        smoothShader.SetTexture(kernel, "heights", basicHeights);
+        //smoothShader.SetTexture(kernel, "heights", basicHeights);
         smoothShader.SetTexture(kernel, "normalHeights", heights);
 
-        smoothShader.SetFloat("weight", Weight);
         smoothShader.SetInt("kernelRadius", KernelRadius);
         smoothShader.SetInt("sizeX", basicHeights.width);
         smoothShader.SetInt("sizeY", basicHeights.height);
@@ -31,5 +30,14 @@ public class TerrainPostProcessing : MonoBehaviour
 
         // release buffer
         kernelBuffer.Release();
+
+        ComputeShader weightedShader = Resources.Load<ComputeShader>(ShaderLib.WeightedShader);
+        int kernel1 = weightedShader.FindKernel("CSMain");
+
+        weightedShader.SetTexture(kernel1, "result", heights);
+        weightedShader.SetTexture(kernel1, "toWeight", basicHeights);
+        weightedShader.SetFloat("weight", Weight);
+        weightedShader.Dispatch(kernel1, basicHeights.width / 32 + 1, basicHeights.height / 32 + 1, 1);
+
     }
 }

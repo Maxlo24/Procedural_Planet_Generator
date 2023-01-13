@@ -10,6 +10,8 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public Terrain Terrain { get; private set; }
     [field: SerializeField] public List<Noise> Noises { get; private set; }
     [field: SerializeField] public GameObject NoisesGameObject { get; private set; }
+    [field: SerializeField] public List<TerrainErosion> Erosions { get; private set; }
+    [field: SerializeField] public GameObject ErosionsGameObject { get; private set; }
     [field: SerializeField] public TerrainProcessing TerrainProcessing { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public CraterGeneration CraterGeneration { get; private set; }
@@ -99,23 +101,57 @@ public class TerrainGenerationBase : MonoBehaviour
 
     public void ErodeTerrain()
     {
-        ErodeResult erosionResult = TerrainErosion.Erode(ref RenderTexture, ErosionTextureCopy, DepositTextureCopy);
-        RedrawTerrain();
+        FillErosions();
 
-        if (TerrainErosion.GenerateErosionTexture)
+        foreach (TerrainErosion erosion in Erosions)
         {
-            Graphics.Blit(erosionResult.ErosionTexture, ErosionTextureCopy);
-            Graphics.Blit(erosionResult.DepositTexture, DepositTextureCopy);
-            RenderTexture temporaryErosion = ImageLib.CopyRenderTexture(ErosionTextureCopy);
-            RenderTexture temporaryDeposit = ImageLib.CopyRenderTexture(DepositTextureCopy);
+            if (erosion.Enabled)
+            {
+                for (int i = 0; i < erosion.RepetitionCount; i++)
+                {
 
-            ImageLib.NormalizeRenderTexture(ref temporaryErosion);
-            ImageLib.NormalizeRenderTexture(ref temporaryDeposit);
-            Graphics.Blit(temporaryErosion, ErosionTexture);
-            Graphics.Blit(temporaryDeposit, DepositTexture);
-            temporaryErosion.Release();
-            temporaryDeposit.Release();
+                    ErodeResult erosionResult = erosion.Erode(ref RenderTexture, ErosionTextureCopy, DepositTextureCopy);
+
+                    if (TerrainErosion.GenerateErosionTexture)
+                    {
+                        Graphics.Blit(erosionResult.ErosionTexture, ErosionTextureCopy);
+                        Graphics.Blit(erosionResult.DepositTexture, DepositTextureCopy);
+                        RenderTexture temporaryErosion = ImageLib.CopyRenderTexture(ErosionTextureCopy);
+                        RenderTexture temporaryDeposit = ImageLib.CopyRenderTexture(DepositTextureCopy);
+
+                        ImageLib.NormalizeRenderTexture(ref temporaryErosion);
+                        ImageLib.NormalizeRenderTexture(ref temporaryDeposit);
+                        Graphics.Blit(temporaryErosion, ErosionTexture);
+                        Graphics.Blit(temporaryDeposit, DepositTexture);
+                        temporaryErosion.Release();
+                        temporaryDeposit.Release();
+                    }
+
+                    RedrawTerrain();
+                }
+            }
         }
+
+        //ErodeResult erosionResult = TerrainErosion.Erode(ref RenderTexture, ErosionTextureCopy, DepositTextureCopy);
+        //RenderTexture lowRes = ImageLib.CreateRenderTexture(RenderTexture.width / 32 + 1, RenderTexture.height / 32 + 1, RenderTextureFormat.RFloat);
+        //Graphics.Blit(RenderTexture, lowRes);
+        //Graphics.Blit(lowRes, RenderTexture);
+        //RedrawTerrain();
+
+        //if (TerrainErosion.GenerateErosionTexture)
+        //{
+        //    Graphics.Blit(erosionResult.ErosionTexture, ErosionTextureCopy);
+        //    Graphics.Blit(erosionResult.DepositTexture, DepositTextureCopy);
+        //    RenderTexture temporaryErosion = ImageLib.CopyRenderTexture(ErosionTextureCopy);
+        //    RenderTexture temporaryDeposit = ImageLib.CopyRenderTexture(DepositTextureCopy);
+
+        //    ImageLib.NormalizeRenderTexture(ref temporaryErosion);
+        //    ImageLib.NormalizeRenderTexture(ref temporaryDeposit);
+        //    Graphics.Blit(temporaryErosion, ErosionTexture);
+        //    Graphics.Blit(temporaryDeposit, DepositTexture);
+        //    temporaryErosion.Release();
+        //    temporaryDeposit.Release();
+        //}
     }
 
     public void Smooth()
@@ -151,6 +187,19 @@ public class TerrainGenerationBase : MonoBehaviour
             if (noise.enabled)
             {
                 Noises.Add(noise);
+            }
+        }
+    }
+
+    public void FillErosions()
+    {
+        // Fill Noises with all enabled components of type Noise in NoisesGameObject
+        Erosions = new List<TerrainErosion>();
+        foreach (TerrainErosion erosion in ErosionsGameObject.GetComponents<TerrainErosion>())
+        {
+            if (erosion.enabled)
+            {
+                Erosions.Add(erosion);
             }
         }
     }
