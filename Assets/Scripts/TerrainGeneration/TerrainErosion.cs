@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public struct ErodeResult
 {
@@ -35,21 +36,25 @@ public class TerrainErosion : MonoBehaviour
     [field: SerializeField] public bool ErodeEnabled { get; private set; } = true;
     [field: SerializeField] public bool ErosionMapUsed { get; private set; } = false;
     [field: SerializeField] public bool GenerateErosionTexture { get; private set; } = false;
-    
+
     public ErodeResult Erode(ref RenderTexture heights, RenderTexture erosionText, RenderTexture depositText)
     {
         RenderTexture erosionTexture = ImageLib.CopyRenderTexture(erosionText);
         RenderTexture depositTexture = ImageLib.CopyRenderTexture(depositText);
 
         RenderTexture lowRes;
+        RenderTexture lowResCopy;
         if (Power2ResolutionDivisor == 0)
         {
             lowRes = heights;
+            lowResCopy = lowRes;
         }
         else
         {
             lowRes = ImageLib.CreateRenderTexture((heights.width >> Power2ResolutionDivisor) + 1, (heights.height >> Power2ResolutionDivisor) + 1, RenderTextureFormat.RFloat);
+            lowResCopy = ImageLib.CreateRenderTexture(lowRes.width, lowRes.height, RenderTextureFormat.RFloat);
             Graphics.Blit(heights, lowRes);
+            Graphics.Blit(lowRes, lowResCopy);
         }
 
         ComputeShader erosionShader = Resources.Load<ComputeShader>(ShaderLib.ErosionShader);
@@ -137,9 +142,68 @@ public class TerrainErosion : MonoBehaviour
         startPosBuffer.Release();
         brushWeightBuffer.Release();
 
-        Graphics.Blit(lowRes, heights);
+        //if (Power2ResolutionDivisor != 0)
+        //{
+        //    DifferenceErosion(ref lowRes, lowResCopy);
+        //    RenderTexture highResDiff = ImageLib.CreateRenderTexture(heights.width, heights.height, RenderTextureFormat.RFloat);
+        //    Graphics.Blit(lowRes, highResDiff);
+        //    UpscaleErosion(ref heights, highResDiff);
+        //}
+        //else
+        {
+            Graphics.Blit(lowRes, heights);
+            SmoothErosion(ref heights, Power2ResolutionDivisor);
+
+        }
 
         return new ErodeResult(erosionTexture, depositTexture);
+    }
+
+    private void DifferenceErosion(ref RenderTexture result, RenderTexture original)
+    {
+        ComputeShader diffShader = Resources.Load<ComputeShader>(ShaderLib.DiffShader);
+        int kernel = diffShader.FindKernel("CSMain");
+
+        diffShader.SetTexture(kernel, "result", result);
+        diffShader.SetTexture(kernel, "imageToDiff", original);
+
+        diffShader.Dispatch(kernel, result.width / 32 + 1, result.height / 32 + 1, 1);
+    }
+
+    private void UpscaleErosion(ref RenderTexture result, RenderTexture diff)
+    {
+        ComputeShader upscaleShader = Resources.Load<ComputeShader>(ShaderLib.UpscaleErosionShader);
+        int kernel = upscaleShader.FindKernel("CSMain");
+
+        upscaleShader.SetTexture(kernel, "result", result);
+        upscaleShader.SetTexture(kernel, "diff", diff);
+
+        upscaleShader.SetInt("resDivider", (int)Mathf.Pow(2, Power2ResolutionDivisor));
+
+        upscaleShader.Dispatch(kernel, result.width / 32, result.height / 32, 1);
+    }
+
+    private void SmoothErosion(ref RenderTexture result, int KernelRadius = 3)
+    {
+        ComputeShader smoothShader = Resources.Load<ComputeShader>(ShaderLib.GaussianBlurShader);
+        int kernel = smoothShader.FindKernel("CSMain");
+
+        // Create Gaussian kernel with Kernel Radius and Sigma and convert it to a compute buffer
+        float[] kernelArray = ImageLib.Create2DGaussianKernel(Power2ResolutionDivisor, 1f);
+        ComputeBuffer kernelBuffer = new ComputeBuffer(kernelArray.Length, sizeof(float));
+        kernelBuffer.SetData(kernelArray);
+        smoothShader.SetBuffer(kernel, "kernel", kernelBuffer);
+
+        smoothShader.SetTexture(kernel, "heights", result);
+        smoothShader.SetTexture(kernel, "normalHeights", result);
+
+        smoothShader.SetInt("kernelRadius", Power2ResolutionDivisor);
+        smoothShader.SetInt("sizeX", result.width);
+        smoothShader.SetInt("sizeY", result.height);
+        smoothShader.Dispatch(kernel, result.width / 32 + 1, result.height / 32 + 1, 1);
+
+        // release buffer
+        kernelBuffer.Release();
     }
 
 }
