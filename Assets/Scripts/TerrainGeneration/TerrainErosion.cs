@@ -15,6 +15,9 @@ public struct ErodeResult
 
 public class TerrainErosion : MonoBehaviour
 {
+    [field: SerializeField] public bool Enabled { get; private set; }
+    [field: SerializeField, Range(1, 10)] public int RepetitionCount { get; private set; } = 1;
+    [field: SerializeField, Range(0, 5)] public int Power2ResolutionDivisor { get; private set; } = 0;
     [field: SerializeField] public int Seed { get; private set; } = 0;
     [field: SerializeField, Range(0, 10)] public int BorderSize { get; private set; } = 5;
     [field: SerializeField, Range(0, 1000000)] public int IterationNumber { get; private set; } = 70000;
@@ -38,12 +41,23 @@ public class TerrainErosion : MonoBehaviour
         RenderTexture erosionTexture = ImageLib.CopyRenderTexture(erosionText);
         RenderTexture depositTexture = ImageLib.CopyRenderTexture(depositText);
 
+        RenderTexture lowRes;
+        if (Power2ResolutionDivisor == 0)
+        {
+            lowRes = heights;
+        }
+        else
+        {
+            lowRes = ImageLib.CreateRenderTexture((heights.width >> Power2ResolutionDivisor) + 1, (heights.height >> Power2ResolutionDivisor) + 1, RenderTextureFormat.RFloat);
+            Graphics.Blit(heights, lowRes);
+        }
+
         ComputeShader erosionShader = Resources.Load<ComputeShader>(ShaderLib.ErosionShader);
         int kernel = erosionShader.FindKernel("CSMain");
 
         /** Hydraulic Erosion Simulation **/
-        int sizeX = heights.width;
-        int sizeY = heights.height;
+        int sizeX = lowRes.width;
+        int sizeY = lowRes.height;
 
         Vector2[] StartPos = new Vector2[IterationNumber];
 
@@ -75,7 +89,7 @@ public class TerrainErosion : MonoBehaviour
             brushWeightsArray[i] /= weightSum;
         }
 
-        erosionShader.SetTexture(kernel, "heights", heights);
+        erosionShader.SetTexture(kernel, "heights", lowRes);
         erosionShader.SetTexture(kernel, "erosion", erosionTexture);
         erosionShader.SetTexture(kernel, "deposit", depositTexture);
 
@@ -122,6 +136,8 @@ public class TerrainErosion : MonoBehaviour
         /** Generate Erosion texture **/
         startPosBuffer.Release();
         brushWeightBuffer.Release();
+
+        Graphics.Blit(lowRes, heights);
 
         return new ErodeResult(erosionTexture, depositTexture);
     }
