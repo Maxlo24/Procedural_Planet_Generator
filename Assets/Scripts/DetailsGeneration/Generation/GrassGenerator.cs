@@ -23,9 +23,11 @@ public class GrassGenerator : MonoBehaviour
 
     [Range(0,100)]
     [SerializeField] private int grassDensity = 50;
-    [Range(1, 5)]
+    [Range(1, 10)]
     [SerializeField] private int nbrPerPatch = 1;
     [SerializeField] private float noiseScale = 1f;
+
+    public GrassAsset[] grassAssets;
 
 
     private int count = 0;
@@ -49,40 +51,59 @@ public class GrassGenerator : MonoBehaviour
     public void SpawnGrass()
     {
         //LoadTerrain();
-        AddGrassDetail();
+        //AddGrassDetail();
 
+        int index = 0;
+        foreach (GrassAsset grass in grassAssets)
+        {
+
+            int[,] map = new int[terrain.terrainData.detailWidth, terrain.terrainData.detailHeight];
+
+            for (int u = 0; u < terrain.terrainData.detailWidth; u++)
+            {
+                for (int v = 0; v < terrain.terrainData.detailHeight; v++)
+                {
+
+                    Vector3 wpos = terrain.DetailToWorld(v, u);
+
+                    Vector2 UVpos = terrain.GetNormalizedPosition(wpos);
+
+
+                    if (Random.Range(0, 100) > grass.density) continue;
+
+                    float altitude;
+                    terrain.SampleHeight(UVpos, out _, out altitude, out _);
+                    if (altitude < altitudeRange.x || altitude > altitudeRange.y) continue;
+
+                    float distanceToLimit = Mathf.Min(altitude - altitudeRange.x, 5f);
+
+                    if (Random.Range(0, 5) > distanceToLimit) continue;
+
+
+                    float slopeAngle = terrain.GetSlope(UVpos);
+                    if (slopeAngle < slopeAngleRange.x || slopeAngle > slopeAngleRange.y) continue;
+
+                    count += nbrPerPatch;
+                    map[u, v] = nbrPerPatch;
+
+                }
+            }
+
+            terrain.terrainData.SetDetailLayer(0, 0, index, map);
+            index++;
+        }
+    }
+
+    public void ClearGrass()
+    {
         int[,] map = new int[terrain.terrainData.detailWidth, terrain.terrainData.detailHeight];
 
-
-        for (int u = 0; u < terrain.terrainData.detailWidth; u++)
+        for (int i = 0; i < terrain.terrainData.detailPrototypes.Length; i++)
         {
-            for (int v = 0; v < terrain.terrainData.detailHeight; v++)
-            {
-
-                Vector3 wpos = terrain.DetailToWorld(v, u);
-
-                Vector2 UVpos = terrain.GetNormalizedPosition(wpos);
-
-               
-                if (Random.Range(0, 100) > grassDensity) continue;
-
-                float altitude;
-                terrain.SampleHeight(UVpos, out _, out altitude, out _);
-                if (altitude < altitudeRange.x || altitude > altitudeRange.y) continue;
-
-                float slopeAngle = terrain.GetSlope(UVpos);
-                if (slopeAngle < slopeAngleRange.x || slopeAngle > slopeAngleRange.y) continue;
-
-                count += nbrPerPatch;
-                map[u, v] = nbrPerPatch;
-
-            }
+            terrain.terrainData.SetDetailLayer(0, 0, i, map);
         }
-
-        terrain.terrainData.SetDetailLayer(0, 0, 0, map);
-
     }
-    
+
     public void AddGrassDetail()
     {
         DetailPrototype[] detailPrototypes = terrain.terrainData.detailPrototypes;
@@ -99,8 +120,14 @@ public class GrassGenerator : MonoBehaviour
         //terrain.terrainData.detailPrototypes = detailPrototypes;
     }
 
+    public void UpdateGrassAssets(GrassAsset[] newGrassAssets)
+    {
+        grassAssets = newGrassAssets;
+        UpdateGrassPrototypes();
+    }
+    
 
-    public void UpdateGrassPrototypes(GrassAsset[] grassAssets)
+    public void UpdateGrassPrototypes()
     {
 
         //Grass item = new Grass();
@@ -124,15 +151,26 @@ public class GrassGenerator : MonoBehaviour
 
     private void GenerateGrassPrototype(GrassAsset item , DetailPrototype detail)
     {
+        
 
+        if (item.useOriginalColor)
+        {
+            detail.healthyColor = Color.white;
+            detail.dryColor = Color.white;
+        }
+        else
+        {
+            detail.healthyColor = item.healthyColor;
+            detail.dryColor = item.dryColor;
+        }
 
-        detail.healthyColor = item.useOriginalColor ? Color.white : item.healthyColor;
-        detail.dryColor = item.useOriginalColor ? Color.white : item.healthyColor;
-        detail.minHeight = heightRange.x;
-        detail.maxHeight = heightRange.y;
+        //= item.useOriginalColor ? Color.white : item.healthyColor;
+        //detail.dryColor = item.useOriginalColor ? Color.white : item.dryColor;
+        detail.minHeight = heightRange.x * item.sizeMultiplyer.y;
+        detail.maxHeight = heightRange.y * item.sizeMultiplyer.y;
 
-        detail.minWidth = widthRange.x;
-        detail.maxWidth = widthRange.y;
+        detail.minWidth = widthRange.x * item.sizeMultiplyer.x;
+        detail.maxWidth = widthRange.y * item.sizeMultiplyer.x;
 
 #if UNITY_2021_2_OR_NEWER
         detail.noiseSeed = Random.Range(0, 100000);

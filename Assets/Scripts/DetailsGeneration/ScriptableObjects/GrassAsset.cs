@@ -9,6 +9,8 @@ public class GrassAsset : ScriptableObject
     public Texture2D texture;
     public Vector2 sizeMultiplyer = new Vector2(1, 1);
 
+    [Range(0, 100)]
+    public float density = 50f;
     public Color healthyColor;
     public Color dryColor;
     

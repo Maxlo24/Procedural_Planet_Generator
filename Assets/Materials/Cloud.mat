@@ -112,7 +112,7 @@ Material:
     - _Metallic: 0
     - _Noise_scale: 0.04
     - _OcclusionStrength: 1
-    - _Opacity: 0.2
+    - _Opacity: 0.1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0

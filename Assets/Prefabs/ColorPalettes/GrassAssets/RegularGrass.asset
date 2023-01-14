@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf21425d0f1381446a5a8f7e2c69bf50, type: 3}
   m_Name: RegularGrass
   m_EditorClassIdentifier: 
-  texture: {fileID: 0}
-  sizeMultiplyer: {x: 1, y: 1}
-  healthyColor: {r: 0, g: 0, b: 0, a: 0}
-  dryColor: {r: 0, g: 0, b: 0, a: 0}
-  acquatic: 0
+  texture: {fileID: 2800000, guid: 409c39177d5ac5545bede68eed1c290b, type: 3}
+  sizeMultiplyer: {x: 2, y: 1}
+  density: 100
+  healthyColor: {r: 0.24705882, g: 0.27450982, b: 0.21176471, a: 0}
+  dryColor: {r: 0.11372549, g: 0.12156863, b: 0.11372549, a: 0}
+  leavingAltitude: {x: 1, y: 1}
   useOriginalColor: 0

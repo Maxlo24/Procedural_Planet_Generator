@@ -122,7 +122,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
             liquid.UpdateTemperature(temperature);
         }
 
-        RenderSettings.fogDensity = humidity * atmosphere/ 200000f;
+        RenderSettings.fogDensity = humidity * atmosphere/ 150000f;
 
         fogIntensity = humidity * atmosphere / 400f;
         //RenderSettings.fogDensity = humidity / 65000f;
