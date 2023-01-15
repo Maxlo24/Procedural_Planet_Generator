@@ -10,6 +10,8 @@ public class PlanetGlobalGeneration : MonoBehaviour
     [SerializeField] public int humidity = 50;
     [Range(-25, 100)]
     [SerializeField] public float temperature = 25.0f;
+    [Range(0, 100)]
+    [SerializeField] public int vegetation = 50;
 
     [SerializeField] public bool clouds = true;
     [SerializeField] public bool raining = true;
@@ -47,6 +49,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
         atmosphere = Random.Range(0, 4);
         humidity = Random.Range(0, 101);
         temperature = Random.Range(-25, 101);
+        vegetation = Random.Range(0, 101);
         clouds = Random.Range(0, 4) != 0;
         raining = Random.Range(0, 2) == 1;
         
@@ -101,6 +104,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
         Material planetMaterial = GetComponent<ColorStyle>().activePlanetMaterial;
         planetMaterial.SetFloat("_Humidity", humidity/100f);
+        planetMaterial.SetFloat("_Vegetation", vegetation / 100f);
 
         planetMaterial.SetFloat("_Temperature", temperature);
 
@@ -118,7 +122,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
             liquid.UpdateTemperature(temperature);
         }
 
-        RenderSettings.fogDensity = humidity * atmosphere/ 200000f;
+        RenderSettings.fogDensity = humidity * atmosphere/ 150000f;
 
         fogIntensity = humidity * atmosphere / 400f;
         //RenderSettings.fogDensity = humidity / 65000f;

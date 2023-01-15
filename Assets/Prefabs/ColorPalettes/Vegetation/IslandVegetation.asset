@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e449906066a9afd4abd09a250db54975, type: 3}
   m_Name: IslandVegetation
   m_EditorClassIdentifier: 
-  healthy: {r: 0.8238069, g: 1, b: 0.4009434, a: 1}
-  dry: {r: 0.32373622, g: 0.7075472, b: 0.35325202, a: 1}
+  healthy: {r: 0.87528765, g: 1, b: 0.4764151, a: 1}
+  dry: {r: 0.6427055, g: 0.6603774, b: 0.51397294, a: 1}
   wood: {r: 0.29411766, g: 0.18431373, b: 0.10980392, a: 1}
   flowers: []

@@ -77,22 +77,27 @@ public class GenerationManager : MonoBehaviour
     public void ClipToFloor()
     {
 
-        GameObject[] details = GameObject.FindGameObjectsWithTag("Details");
+        GameObject[] details = GameObject.FindGameObjectsWithTag("SmallDetail");
 
         RaycastHit hit;
 
         foreach (var detail in details)
         {
 
-            MeshCollider collider = detail.GetComponent<MeshCollider>();
+            Collider collider = detail.GetComponent<Collider>();
 
-            if (collider == null) continue;
+            //if (collider == null) continue;
+
+            //if (collider == null) collider = detail.GetComponent<SphereCollider>();
 
 
 
-            Bounds bbox = collider.bounds;
 
-            Vector3[] boxCorners = GetBoundingBoxBottomCorners(bbox);
+
+
+            //Bounds bbox = collider.bounds;
+
+            //Vector3[] boxCorners = GetBoundingBoxBottomCorners(bbox);
 
             if (collider != null)
             {
@@ -100,40 +105,40 @@ public class GenerationManager : MonoBehaviour
             }
 
 
-            //foreach (Vector3 corner in boxCorners)
+            ////foreach (Vector3 corner in boxCorners)
+            ////{
+            ////    Debug.DrawRay(corner, Vector3.down * 2, Color.red);
+            ////}
+            ////Debug.Log(boxCorners[0]);
+
+            //float minAltitude = bbox.center.y;
+
+            //foreach (var corner in boxCorners)
             //{
-            //    Debug.DrawRay(corner, Vector3.down * 2, Color.red);
+
+            //    Vector3 rayOrigin = corner + Vector3.up * 10;
+
+            //    //Debug.DrawRay(rayOrigin, Vector3.down * 4, Color.red);
+
+            //    if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 1000, 1 << 6))
+            //    {
+            //        if (hit.point.y < minAltitude)
+            //        {
+            //            minAltitude = hit.point.y;
+            //        }
+            //    }
             //}
-            //Debug.Log(boxCorners[0]);
 
-            float minAltitude = bbox.center.y;
-
-            foreach (var corner in boxCorners)
-            {
-
-                Vector3 rayOrigin = corner + Vector3.up * 10;
-
-                //Debug.DrawRay(rayOrigin, Vector3.down * 4, Color.red);
-
-                if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 1000, 1 << 6))
-                {
-                    if (hit.point.y < minAltitude)
-                    {
-                        minAltitude = hit.point.y;
-                    }
-                }
-            }
-
-            detail.transform.position = new Vector3(detail.transform.position.x, minAltitude, detail.transform.position.z);
+            //detail.transform.position = new Vector3(detail.transform.position.x, minAltitude, detail.transform.position.z);
 
 
             //Debug.Log(bbox.size);
 
 
-            //if (Physics.Raycast(detail.transform.position + new Vector3(0, 1, 0), Vector3.down, out hit, 5, 1<<6))
-            //{
-            //    detail.transform.position = hit.point;
-            //}
+            if (Physics.Raycast(detail.transform.position + Vector3.up *2 , Vector3.down, out hit, 20, 1 << 6))
+            {
+                detail.transform.position = hit.point;
+            }
 
             if (collider != null)
             {

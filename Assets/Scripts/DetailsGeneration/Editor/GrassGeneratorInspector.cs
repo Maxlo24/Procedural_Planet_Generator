@@ -17,6 +17,8 @@ public class GrassGeneratorInspector : Editor
 
         DrawRangeSlider(new GUIContent("Slope angle"), ref grassGenerator.slopeAngleRange, 0, 90);
         DrawRangeSlider(new GUIContent("Altitude"), ref grassGenerator.altitudeRange, 0, 100);
+        DrawRangeSlider(new GUIContent("Height"), ref grassGenerator.heightRange, 0, 2);
+        DrawRangeSlider(new GUIContent("Width"), ref grassGenerator.widthRange, 0, 2);
 
 
         GUILayout.Space(10);
@@ -24,6 +26,14 @@ public class GrassGeneratorInspector : Editor
         {
             ((GrassGenerator)target).SpawnGrass();
         }
+
+        if (GUILayout.Button("Update prototypes"))
+        {
+            ((GrassGenerator)target).UpdateGrassPrototypes();
+        }
+
+        
+
         //GUILayout.Space(10);
         //GUILayout.BeginHorizontal();
 
@@ -36,10 +46,10 @@ public class GrassGeneratorInspector : Editor
         //{
         //    ((GenerationManager)target).ClipToFloor();
         //}
-        //if (GUILayout.Button("Clear"))
-        //{
-        //    ((GenerationManager)target).Clear();
-        //}
+        if (GUILayout.Button("Clear"))
+        {
+            ((GrassGenerator)target).ClearGrass();
+        }
 
         //GUILayout.EndHorizontal();
     }

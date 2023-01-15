@@ -62,11 +62,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Dirt_normal:
-        m_Texture: {fileID: 2800000, guid: 21aa1cc2f78ff504788f19297b8d8f62, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7f12407c374d40e49899f9cab23e5cc0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Dirt_texture:
-        m_Texture: {fileID: 2800000, guid: 8fcea73a15f8e824f985fdee9d848cb9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 89ee248f3f8054548b2cbf49274c5540, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -78,11 +78,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Grass_normal:
-        m_Texture: {fileID: 2800000, guid: 496e38a077ecaf74ea6eb40cdde5e913, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7e28e32cf872e1e4b804bbe33f1b612c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Grass_texture:
-        m_Texture: {fileID: 2800000, guid: dc1a08a7cb64eaf4795395ceb94bceee, type: 3}
+        m_Texture: {fileID: 2800000, guid: bb8549324f6331240b306b8ecb2e697f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -138,11 +138,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Rock_normal:
-        m_Texture: {fileID: 2800000, guid: e4f1bbef3d8bdea46bc23ba20c9ab18d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 98b4ee744ae41e343a3e6f5e84f71f71, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Rock_texture:
-        m_Texture: {fileID: 2800000, guid: 1368ead630dc6b54ea5de76ccc3e9a2c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7f316f91b1033294db619c1c980a91ce, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTextures_2aa9781326554707993f35b4546a10e8_Normaltexture_2971450874:
@@ -241,7 +241,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HeightTransition: 0
-    - _Humidity: 0.61
+    - _Humidity: 0.68
     - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
@@ -256,6 +256,9 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Sea_level: 0
+    - _Separation_smoothness: 1
+    - _Separation_width: 20
+    - _Slope_separation: 0.657
     - _Slope_transition: 35
     - _Smoothness: 2
     - _Smoothness0: 0.5
@@ -265,26 +268,27 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _Snow_Smoothness: 10
     - _Snow_intensity: 1
-    - _Snow_level: 99
+    - _Snow_level: 400
     - _Snow_randomness: 19.2
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Strength: 1
     - _Surface: 0
-    - _Temperature: 19.8
-    - _Texture_scale: 56
+    - _Temperature: 8.4
+    - _Texture_scale: 0.2
     - _Textures_scale: 150
     - _Transition_width: 0.103
     - _Uniformity: 0
+    - _Vegetation: 0.9
     - _Wind_speed: 0.05
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Beach_color: {r: 0.4245283, g: 0.35867712, b: 0.33441615, a: 1}
+    - _Beach_color: {r: 0.4811321, g: 0.3236788, b: 0.28822535, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Deposit_color: {r: 0.06132078, g: 1, b: 0.9256559, a: 0}
-    - _Dirt_color: {r: 0.5411765, g: 0.4666667, b: 0.31764707, a: 1}
+    - _Dirt_color: {r: 0.4056604, g: 0.19708973, b: 0.21727496, a: 1}
     - _Dry_grass: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DustColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -293,7 +297,7 @@ Material:
     - _Healthy_grass: {r: 0.5991456, g: 0.8301887, b: 0.78271025, a: 1}
     - _MainColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
     - _Noise: {r: 100, g: 0.8, b: 0, a: 0}
-    - _Rock_color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+    - _Rock_color: {r: 0.6320754, g: 0.30550992, b: 0.2713154, a: 1}
     - _Scale: {r: 1, g: 1, b: 0, a: 0}
     - _Sediment_color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
     - _Snow_color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}

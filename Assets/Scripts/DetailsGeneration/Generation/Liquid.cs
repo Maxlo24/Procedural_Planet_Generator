@@ -26,9 +26,15 @@ public class Liquid : MonoBehaviour
         gameObject.SetActive(true);
 
         if (temperature < SolidFormThreshold)
+        {
             GetComponent<MeshRenderer>().material = SolidForm;
+            GetComponent<Collider>().enabled = true;
+        }
         else if (temperature < LiquidFormThreshold)
+        {
             GetComponent<MeshRenderer>().material = LiquidForm;
+            GetComponent<Collider>().enabled = false;
+        }
         else
             //GetComponent<MeshRenderer>().material = FusiForm;
             gameObject.SetActive(false);
