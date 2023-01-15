@@ -132,26 +132,6 @@ public class TerrainGenerationBase : MonoBehaviour
             }
         }
 
-        //ErodeResult erosionResult = TerrainErosion.Erode(ref RenderTexture, ErosionTextureCopy, DepositTextureCopy);
-        //RenderTexture lowRes = ImageLib.CreateRenderTexture(RenderTexture.width / 32 + 1, RenderTexture.height / 32 + 1, RenderTextureFormat.RFloat);
-        //Graphics.Blit(RenderTexture, lowRes);
-        //Graphics.Blit(lowRes, RenderTexture);
-        //RedrawTerrain();
-
-        //if (TerrainErosion.GenerateErosionTexture)
-        //{
-        //    Graphics.Blit(erosionResult.ErosionTexture, ErosionTextureCopy);
-        //    Graphics.Blit(erosionResult.DepositTexture, DepositTextureCopy);
-        //    RenderTexture temporaryErosion = ImageLib.CopyRenderTexture(ErosionTextureCopy);
-        //    RenderTexture temporaryDeposit = ImageLib.CopyRenderTexture(DepositTextureCopy);
-
-        //    ImageLib.NormalizeRenderTexture(ref temporaryErosion);
-        //    ImageLib.NormalizeRenderTexture(ref temporaryDeposit);
-        //    Graphics.Blit(temporaryErosion, ErosionTexture);
-        //    Graphics.Blit(temporaryDeposit, DepositTexture);
-        //    temporaryErosion.Release();
-        //    temporaryDeposit.Release();
-        //}
     }
 
     public void Smooth()

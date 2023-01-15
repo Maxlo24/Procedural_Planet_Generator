@@ -30,6 +30,18 @@ public class CraterGeneration : MonoBehaviour
             ElevationRange = elevationRange;
         }
     }
+
+    public CraterGeneration(CraterPreset preset, int seed)
+    {
+        System.Random prng = new System.Random(seed);
+        Seed = seed;
+        Number = prng.Next(preset.CraterCount.x, preset.CraterCount.y);
+        RadiusRange = preset.RadiusRange;
+        SecondaryRadiusRange = preset.SecondaryRadiusOffsetLimits;
+        ThirdRadiusRange = preset.ThirdRadiusOffsetLimits;
+        DepthRange = preset.DepthRange;
+        ElevationRange = preset.ElevationRange;
+    }
     
     public void GenerateCraters(ref RenderTexture rt, ref RenderTexture rtCopy, int terrainRes)
     {
