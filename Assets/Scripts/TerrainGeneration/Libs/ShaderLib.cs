@@ -10,6 +10,7 @@ public static class ShaderLib
     public static string MultiplyShader = "ComputeShaders/Lib/Multiply";
     public static string DiffShader = "ComputeShaders/Lib/Diff";
     public static string ErosionShader = "ComputeShaders/Erosion/Erosion";
+    public static string ThermalErosionShader = "ComputeShaders/Erosion/ThermalErosion";
     public static string UpscaleErosionShader = "ComputeShaders/Erosion/UpscaleErosion";
     public static string GaussianBlurShader = "ComputeShaders/PostProcessing/GaussianBlur";
     public static string WeightedShader = "ComputeShaders/PostProcessing/WeightedImages";
