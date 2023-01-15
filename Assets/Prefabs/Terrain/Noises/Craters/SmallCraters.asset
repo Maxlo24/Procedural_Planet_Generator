@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SmallCraters
   m_EditorClassIdentifier: Assembly-CSharp::CratersPreset
   Name: 
-  CraterCount: {x: 4, y: 8}
+  CraterCount: {x: 1, y: 4}
   RadiusRange: {x: 150, y: 250}
   SecondaryRadiusOffsetLimits: {x: 40, y: 60}
   ThirdRadiusOffsetLimits: {x: 40, y: 60}

@@ -8,5 +8,6 @@ public class TerrainGen : ScriptableObject
     [SerializeField] public string Name;
     [SerializeField] public List<SingleNoise> Noises;
     [SerializeField] public List<ErosionPreset> Erosions;
+    [SerializeField] public ThermalErosionPreset ThermalErosion;
     [SerializeField] public List<CraterPreset> Craters;
 }

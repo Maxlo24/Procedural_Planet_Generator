@@ -1,0 +1,82 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+RWTexture2D<float> heights;
+
+StructuredBuffer<float2> initialPositions;
+
+int width, height;
+float cellSize;
+float terrainHeight;
+int erosionLifeTime;;
+float strength;
+float minTanAngle;
+float maxTanAngle;
+
+bool inBounds(int x, int y)
+{
+	return x >= 0 && x < width && y >= 0 && y < height;
+}
+
+int2 lowestNeighbour(int2 coord)
+{
+	int2 lowestCoord = coord;
+	float lowestHeight = heights[coord];
+
+	int2 coordx1 = coord + int2(1, 0);
+	int2 coordx_1 = coord + int2(-1, 0);
+	int2 coordy1 = coord + int2(0, 1);
+	int2 coordy_1 = coord + int2(0, -1);
+
+	if (inBounds(coordx1.x, coordx1.y) && heights[coordx1] < lowestHeight)
+	{
+		lowestCoord = coordx1;
+		lowestHeight = heights[coordx1];
+	}
+	if (inBounds(coordx_1.x, coordx_1.y) && heights[coordx_1] < lowestHeight)
+	{
+		lowestCoord = coordx_1;
+		lowestHeight = heights[coordx_1];
+	}
+	if (inBounds(coordy1.x, coordy1.y) && heights[coordy1] < lowestHeight)
+	{
+		lowestCoord = coordy1;
+		lowestHeight = heights[coordy1];
+	}
+	if (inBounds(coordy_1.x, coordy_1.y) && heights[coordy_1] < lowestHeight)
+	{
+		lowestCoord = coordy_1;
+		lowestHeight = heights[coordy_1];
+	}
+	return lowestCoord;
+}
+
+[numthreads(256,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	int2 coord = initialPositions[id.x].xy;
+
+	float zd = 1.0 / (float)width;
+
+	for (int i = 0; i < erosionLifeTime; i++)
+	{
+		float height = heights[coord];
+		 int2 lowestCoord = lowestNeighbour(coord);
+		
+		 if (lowestCoord.x == coord.x && lowestCoord.y == coord.y)
+			return;
+		
+		float lowestHeight = heights[lowestCoord];
+		
+		float diff = height - lowestHeight;
+		float tanAngle = diff * terrainHeight / cellSize;
+		if (tanAngle > minTanAngle && tanAngle < maxTanAngle)
+		{
+			float sediment = strength * diff * tanAngle;
+			heights[coord] -= sediment;
+			heights[lowestCoord] += sediment;
+		}
+
+		coord = lowestCoord;
+	}
+}

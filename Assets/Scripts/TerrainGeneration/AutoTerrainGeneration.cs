@@ -53,6 +53,16 @@ public class AutoTerrainGeneration : MonoBehaviour
         nulltexture.Release();
     }
 
+    public void ThermalErosion()
+    {
+        int seed = (Seed < 0) ? UnityEngine.Random.Range(0, int.MaxValue) : Seed;
+
+        if (TerrainGeneration.ThermalErosion == null)
+            return;
+        ThermalErosion thermalErosion = new ThermalErosion(TerrainGeneration.ThermalErosion, seed);
+        thermalErosion.Erode(ref RenderTexture, Terrain);
+    }
+
     public void ErodeTerrain()
     {
         int seed = (Seed < 0) ? UnityEngine.Random.Range(0, int.MaxValue) : Seed;
@@ -83,6 +93,7 @@ public class AutoTerrainGeneration : MonoBehaviour
     {
         GenerateTerrain();
         GenerateCraters();
+        ThermalErosion();
         ErodeTerrain();
         RedrawTerrain();
     }
