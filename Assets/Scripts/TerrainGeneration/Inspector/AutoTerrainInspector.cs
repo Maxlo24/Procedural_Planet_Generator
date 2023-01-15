@@ -18,6 +18,11 @@ public class AutoTerrainInspector : Editor
             terrain.GenerateCraters();
             terrain.RedrawTerrain();
         }
+        if (GUILayout.Button("Thermal Erosion"))
+        {
+            terrain.ThermalErosion();
+            terrain.RedrawTerrain();
+        }
         if (GUILayout.Button("Erode Terrain"))
         {
             terrain.ErodeTerrain();

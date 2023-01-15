@@ -17,6 +17,10 @@ public class GPUTerrainInspector : Editor
         {
             terrain.GenerateCraters();
         }
+        if (GUILayout.Button("Thermal Erosion"))
+        {
+            terrain.RunThermalErosion();
+        }
         if (GUILayout.Button("Erode Terrain"))
         {
             terrain.ErodeTerrain();

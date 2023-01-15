@@ -14,6 +14,7 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public GameObject ErosionsGameObject { get; private set; }
     [field: SerializeField] public TerrainProcessing TerrainProcessing { get; private set; }
     [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
+    [field: SerializeField] public ThermalErosion ThermalErosion { get; private set; }
     [field: SerializeField] public CraterGeneration CraterGeneration { get; private set; }
     [field: SerializeField] public TerrainPostProcessing TerrainPostProcessing { get; private set; }
     [field: SerializeField] public HeightMapsAddition HeightMapsAddition { get; private set; }
@@ -97,6 +98,12 @@ public class TerrainGenerationBase : MonoBehaviour
         CraterGeneration.GenerateCraters(ref RenderTexture, ref RenderTextureCopy, Terrain.terrainData.heightmapResolution);
         RedrawTerrain();
         Graphics.Blit(RenderTexture, RenderTextureCopy);
+    }
+
+    public void RunThermalErosion()
+    {
+        ThermalErosion.Erode(ref RenderTexture, Terrain);
+        RedrawTerrain();
     }
 
     public void ErodeTerrain()
