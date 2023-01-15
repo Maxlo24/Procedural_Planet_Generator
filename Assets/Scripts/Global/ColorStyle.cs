@@ -99,7 +99,9 @@ public class ColorStyle : MonoBehaviour
 
         RenderSettings.fogColor = activeCrust.AtmospherColors[activeAtmosphere];
 
-        grassGenerator.UpdateGrassPrototypes();
+        if (grassGenerator != null) grassGenerator.UpdateGrassPrototypes();
+
+        //grassGenerator.UpdateGrassPrototypes();
 
     }
 
