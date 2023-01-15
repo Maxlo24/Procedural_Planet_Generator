@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: AlpesVegetation
   m_EditorClassIdentifier: 
   healthy: {r: 0.40264195, g: 0.5283019, b: 0.3314347, a: 1}
-  dry: {r: 0.9803922, g: 1, b: 0.5529412, a: 1}
+  dry: {r: 0.34436265, g: 0.3490566, b: 0.24203454, a: 1}
   wood: {r: 0.29411766, g: 0.18431373, b: 0.10980392, a: 1}
   flowers: []

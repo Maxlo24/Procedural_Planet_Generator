@@ -21,7 +21,7 @@ public class RocksGenerator : MonoBehaviour
     [SerializeField] private int elementDensity = 50;
 
     [Header("Scale")]
-    [SerializeField] private Vector3 _scaleRandomness = Vector3.one;
+    [SerializeField] private Vector2 _scaleRandomness = new Vector2(1f, 1f);
     [SerializeField] private Vector3 _rotationRandomness = new Vector3(0, 1, 0);
 
     private float _randomRotation = 1.0f;
@@ -88,11 +88,16 @@ public class RocksGenerator : MonoBehaviour
                 GameObject spawnedObject = Instantiate(randomObject, spawnPosition, transform.rotation);
 
 
-                spawnedObject.transform.localScale = new Vector3(
-                    spawnedObject.transform.localScale.x * Random.Range(1 / (1 + _scaleRandomness.x), (1 + _scaleRandomness.x)),
-                    spawnedObject.transform.localScale.y * Random.Range(1 / (1 + _scaleRandomness.y), (1 + _scaleRandomness.y)),
-                    spawnedObject.transform.localScale.z * Random.Range(1 / (1 + _scaleRandomness.z), (1 + _scaleRandomness.z))
-                );
+                float newScale = Random.Range(_scaleRandomness.x, _scaleRandomness.y);
+
+
+                spawnedObject.transform.localScale = spawnedObject.transform.localScale * newScale;
+
+                //spawnedObject.transform.localScale = new Vector3(
+                //    spawnedObject.transform.localScale.x * newMainScale),
+                //    spawnedObject.transform.localScale.y * newMainScale),
+                //    spawnedObject.transform.localScale.z * newMainScale)
+                //);
 
                 spawnedObject.transform.Rotate(new Vector3(
                     Random.Range(-_randomRotation, _randomRotation) * 180 * _rotationRandomness.x,
@@ -101,7 +106,7 @@ public class RocksGenerator : MonoBehaviour
                 ));
                 
                 spawnedObject.transform.parent = spawnRoot;
-                spawnedObject.GetComponent<DetailEntity>().ActivateSpawner();
+                //spawnedObject.GetComponent<DetailEntity>().ActivateSpawner();
 
                 count++;
                 if (count > MaxCount) break;

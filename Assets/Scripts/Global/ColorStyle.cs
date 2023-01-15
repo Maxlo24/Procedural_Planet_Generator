@@ -27,6 +27,8 @@ public class ColorStyle : MonoBehaviour
 
     [SerializeField] private bool liveUpdate = false;
 
+
+    public GrassGenerator grassGenerator;
     public float fog_ratio;
 
 
@@ -97,8 +99,19 @@ public class ColorStyle : MonoBehaviour
 
         RenderSettings.fogColor = activeCrust.AtmospherColors[activeAtmosphere];
 
+        grassGenerator.UpdateGrassPrototypes();
 
+    }
 
+    public Vector3 GetGrassColor()
+    {
+        VegetalColorPalette activeVegetation = vegetalColorPalettes[this.activeVegetationPalette];
+
+        Vector3 color = new Vector3(activeVegetation.healthy.r, activeVegetation.healthy.g, activeVegetation.healthy.b);
+        //color /= 255f;
+        //Debug.Log("Color: " + color);
+
+        return color;
     }
 
 }

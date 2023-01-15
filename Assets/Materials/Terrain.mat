@@ -62,11 +62,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Dirt_normal:
-        m_Texture: {fileID: 2800000, guid: 21aa1cc2f78ff504788f19297b8d8f62, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7f12407c374d40e49899f9cab23e5cc0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Dirt_texture:
-        m_Texture: {fileID: 2800000, guid: 8fcea73a15f8e824f985fdee9d848cb9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 89ee248f3f8054548b2cbf49274c5540, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -78,11 +78,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Grass_normal:
-        m_Texture: {fileID: 2800000, guid: 496e38a077ecaf74ea6eb40cdde5e913, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7e28e32cf872e1e4b804bbe33f1b612c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Grass_texture:
-        m_Texture: {fileID: 2800000, guid: dc1a08a7cb64eaf4795395ceb94bceee, type: 3}
+        m_Texture: {fileID: 2800000, guid: bb8549324f6331240b306b8ecb2e697f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -138,11 +138,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Rock_normal:
-        m_Texture: {fileID: 2800000, guid: 420bf3fd2d838694391e273e8ef1a99f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 98b4ee744ae41e343a3e6f5e84f71f71, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Rock_texture:
-        m_Texture: {fileID: 2800000, guid: 7ed17950679a36d46826bf1baa38b271, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7f316f91b1033294db619c1c980a91ce, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTextures_2aa9781326554707993f35b4546a10e8_Normaltexture_2971450874:
@@ -241,7 +241,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HeightTransition: 0
-    - _Humidity: 1
+    - _Humidity: 0.68
     - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
@@ -274,12 +274,12 @@ Material:
     - _SrcBlend: 1
     - _Strength: 1
     - _Surface: 0
-    - _Temperature: 55.9
-    - _Texture_scale: 0.4
+    - _Temperature: 8.4
+    - _Texture_scale: 0.2
     - _Textures_scale: 150
     - _Transition_width: 0.103
     - _Uniformity: 0
-    - _Vegetation: 0.79
+    - _Vegetation: 0.9
     - _Wind_speed: 0.05
     - _WorkflowMode: 1
     - _ZWrite: 1

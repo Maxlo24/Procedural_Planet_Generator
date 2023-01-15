@@ -160,8 +160,35 @@ public class GrassGenerator : MonoBehaviour
         }
         else
         {
-            detail.healthyColor = item.healthyColor;
-            detail.dryColor = item.dryColor;
+
+            GameObject planetAttributes = GameObject.FindGameObjectWithTag("PlanetAttributes");
+            ColorStyle colorStyle = planetAttributes.GetComponent<ColorStyle>();
+
+            Vector3 grassColor = colorStyle.GetGrassColor();
+
+            //Debug.Log("Grass Color: " + grassColor);
+
+
+            Vector3 multiplyer = new Vector3(item.multiplyer.r, item.multiplyer.g, item.multiplyer.b);
+            multiplyer /= 255f;
+
+            
+            Vector3 newColor = Vector3.Scale(grassColor, multiplyer);
+
+            detail.healthyColor = new Color(newColor.x, newColor.y, newColor.z, 255);
+
+            //newColor = new Vector3(item.dryColor.r, item.dryColor.g, item.dryColor.b);
+            //newColor /= 255f;
+            //newColor = Vector3.Scale(newColor, multiplyer);
+
+
+            detail.dryColor = new Color(newColor.x, newColor.y, newColor.z, 255);
+
+
+            //detail.healthyColor = new Color32(, item.healthyColor.g, item.healthyColor.b, 255);
+            //detail.dryColor = new Color32(item.dryColor.r, item.dryColor.g, item.dryColor.b, 255);
+            //detail.healthyColor = Color.black;
+            //detail.dryColor = Color.black;
         }
 
         //= item.useOriginalColor ? Color.white : item.healthyColor;

@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: RegularGrass
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: 409c39177d5ac5545bede68eed1c290b, type: 3}
-  sizeMultiplyer: {x: 2, y: 1}
+  sizeMultiplyer: {x: 1.5, y: 1}
   density: 100
-  healthyColor: {r: 0.24705882, g: 0.27450982, b: 0.21176471, a: 0}
-  dryColor: {r: 0.11372549, g: 0.12156863, b: 0.11372549, a: 0}
+  healthyColor:
+    serializedVersion: 2
+    rgba: 4291351705
+  dryColor:
+    serializedVersion: 2
+    rgba: 4291351705
+  multiplyer:
+    serializedVersion: 2
+    rgba: 4279842858
   leavingAltitude: {x: 1, y: 1}
   useOriginalColor: 0

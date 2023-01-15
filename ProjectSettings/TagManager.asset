@@ -10,6 +10,7 @@ TagManager:
   - CinemachineTarget
   - Terrain
   - PlanetAttributes
+  - SmallDetail
   layers:
   - Default
   - TransparentFX

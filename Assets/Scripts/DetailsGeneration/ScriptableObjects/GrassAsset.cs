@@ -11,8 +11,9 @@ public class GrassAsset : ScriptableObject
 
     [Range(0, 100)]
     public float density = 50f;
-    public Color healthyColor;
-    public Color dryColor;
+    public Color32 healthyColor;
+    public Color32 dryColor;
+    public Color32 multiplyer;
     
     //public bool aquatic = false
     public Vector2 leavingAltitude = new Vector2(1, 1);

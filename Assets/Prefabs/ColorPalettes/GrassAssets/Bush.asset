@@ -15,7 +15,14 @@ MonoBehaviour:
   texture: {fileID: 2800000, guid: a45825649470a7b45a56ecd6a9fdae69, type: 3}
   sizeMultiplyer: {x: 3, y: 5}
   density: 1
-  healthyColor: {r: 0.2784314, g: 0.34901962, b: 0.21960784, a: 0}
-  dryColor: {r: 0.1254902, g: 0.13333334, b: 0.11764706, a: 0}
+  healthyColor:
+    serializedVersion: 2
+    rgba: 13161625
+  dryColor:
+    serializedVersion: 2
+    rgba: 13161625
+  multiplyer:
+    serializedVersion: 2
+    rgba: 1454883
   leavingAltitude: {x: 1, y: 1}
   useOriginalColor: 0
