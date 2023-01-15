@@ -1,6 +1,17 @@
 using System;
 using UnityEngine;
-using static UnityEngine.UI.Image;
+
+public enum Resolution
+{
+    _32 = 32,
+    _64 = 64,
+    _128 = 128,
+    _256 = 256,
+    _512 = 512,
+    _1024 = 1024,
+    _2048 = 2048,
+    _4096 = 4096,
+}
 
 public struct ErodeResult
 {
@@ -18,7 +29,7 @@ public class TerrainErosion : MonoBehaviour
 {
     [field: SerializeField] public bool Enabled { get; private set; }
     [field: SerializeField, Range(1, 10)] public int RepetitionCount { get; private set; } = 1;
-    [field: SerializeField, Range(0, 5)] public int Power2ResolutionDivisor { get; private set; } = 0;
+    [field: SerializeField] public Resolution Resolution { get; private set; } = Resolution._1024;
     [field: SerializeField] public int Seed { get; private set; } = 0;
     [field: SerializeField, Range(0, 10)] public int BorderSize { get; private set; } = 5;
     [field: SerializeField, Range(0, 1000000)] public int IterationNumber { get; private set; } = 70000;
@@ -36,6 +47,30 @@ public class TerrainErosion : MonoBehaviour
     [field: SerializeField] public bool ErodeEnabled { get; private set; } = true;
     [field: SerializeField] public bool ErosionMapUsed { get; private set; } = false;
     [field: SerializeField] public bool GenerateErosionTexture { get; private set; } = false;
+    [field: SerializeField] public bool SmoothResult { get; private set; } = false;
+
+    public TerrainErosion(ErosionPreset erosionPreset, int seed)
+    {
+        Enabled = true;
+        RepetitionCount = erosionPreset.RepetitionCount;
+        Resolution = erosionPreset.Resolution;
+        Seed = seed;
+        BorderSize = 0;
+        IterationNumber = erosionPreset.IterationCount;
+        DropletLifeTime = erosionPreset.DropletLifeTime;
+        Acceleration = erosionPreset.Acceleration;
+        Drag = erosionPreset.Drag;
+        BrushSize = 0;
+        InitialVelocity = erosionPreset.InitialVelocity;
+        InitialWater = erosionPreset.InitialWater;
+        SedimentCapacityFactor = erosionPreset.SedimentCapacityFactor;
+        DepositRatio = erosionPreset.DepositRatio;
+        ErosionRatio = erosionPreset.ErosionRatio;
+        EvaporationRatio = erosionPreset.EvaporationRatio;
+        Gravity = erosionPreset.Gravity;
+        ErodeEnabled = erosionPreset.ErodeEnabled;
+        GenerateErosionTexture = erosionPreset.GenerateErosionTexture;
+    }
 
     public ErodeResult Erode(ref RenderTexture heights, RenderTexture erosionText, RenderTexture depositText)
     {
@@ -43,14 +78,17 @@ public class TerrainErosion : MonoBehaviour
         RenderTexture depositTexture = ImageLib.CopyRenderTexture(depositText);
 
         RenderTexture lowRes;
-
-        if (Power2ResolutionDivisor == 0)
+        if (((int)Resolution + 1) > heights.width)
+        {
+            return new ErodeResult(erosionTexture, depositTexture);
+        }
+        else if (((int)Resolution + 1) == heights.width)
         {
             lowRes = heights;
         }
         else
         {
-            lowRes = ImageLib.CreateRenderTexture((heights.width >> Power2ResolutionDivisor) + 1, (heights.height >> Power2ResolutionDivisor) + 1, RenderTextureFormat.RFloat);
+            lowRes = ImageLib.CreateRenderTexture((int)Resolution + 1, (int)Resolution + 1, RenderTextureFormat.RFloat);
             Graphics.Blit(heights, lowRes);
         }
 
@@ -133,14 +171,16 @@ public class TerrainErosion : MonoBehaviour
         erosionShader.SetBool("erosionMapUsed", ErosionMapUsed);
         erosionShader.SetBool("generateErosionTexture", GenerateErosionTexture);
 
-        erosionShader.Dispatch(kernel, IterationNumber / 256, 1, 1);
+        erosionShader.Dispatch(kernel, IterationNumber / 128, 1, 1);
 
         /** Generate Erosion texture **/
         startPosBuffer.Release();
         brushWeightBuffer.Release();
 
         Graphics.Blit(lowRes, heights);
-        SmoothErosion(ref heights, Power2ResolutionDivisor);
+
+        if (SmoothResult)
+            SmoothErosion(ref heights, heights.width / (int)Resolution);
 
         return new ErodeResult(erosionTexture, depositTexture);
     }
@@ -164,7 +204,7 @@ public class TerrainErosion : MonoBehaviour
         upscaleShader.SetTexture(kernel, "result", result);
         upscaleShader.SetTexture(kernel, "diff", diff);
 
-        upscaleShader.SetInt("resDivider", (int)Mathf.Pow(2, Power2ResolutionDivisor));
+        upscaleShader.SetInt("resDivider", (int)Mathf.Pow(2, result.width / (int)Resolution));
 
         upscaleShader.Dispatch(kernel, result.width / 32, result.height / 32, 1);
     }
@@ -175,7 +215,7 @@ public class TerrainErosion : MonoBehaviour
         int kernel = smoothShader.FindKernel("CSMain");
 
         // Create Gaussian kernel with Kernel Radius and Sigma and convert it to a compute buffer
-        float[] kernelArray = ImageLib.Create2DGaussianKernel(Power2ResolutionDivisor, 1f);
+        float[] kernelArray = ImageLib.Create2DGaussianKernel(result.width / (int)Resolution, 1f);
         ComputeBuffer kernelBuffer = new ComputeBuffer(kernelArray.Length, sizeof(float));
         kernelBuffer.SetData(kernelArray);
         smoothShader.SetBuffer(kernel, "kernel", kernelBuffer);
@@ -183,7 +223,7 @@ public class TerrainErosion : MonoBehaviour
         smoothShader.SetTexture(kernel, "heights", result);
         smoothShader.SetTexture(kernel, "normalHeights", result);
 
-        smoothShader.SetInt("kernelRadius", Power2ResolutionDivisor);
+        smoothShader.SetInt("kernelRadius", result.width / (int)Resolution);
         smoothShader.SetInt("sizeX", result.width);
         smoothShader.SetInt("sizeY", result.height);
         smoothShader.Dispatch(kernel, result.width / 32 + 1, result.height / 32 + 1, 1);

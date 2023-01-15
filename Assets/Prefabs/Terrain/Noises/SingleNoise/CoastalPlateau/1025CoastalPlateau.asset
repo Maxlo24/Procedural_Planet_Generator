@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b077a909b9f2a314a9b91a16ab6e1e2d, type: 3}
+  m_Name: 1025CoastalPlateau
+  m_EditorClassIdentifier: 
+  Name: 
+  Noises:
+  - {fileID: 11400000, guid: 3e9c05eb865c4fe40ace3b2b5053cac6, type: 2}
+  - {fileID: 11400000, guid: 243cf136e9dc1af43abb517a7d025abe, type: 2}
+  - {fileID: 11400000, guid: a3ce03fbbbfa67b41acf07e6681042ce, type: 2}
+  - {fileID: 11400000, guid: b67f0f7cdcbb9ea4bb5876c90f410072, type: 2}
+  Erosions:
+  - {fileID: 11400000, guid: bdc40509c7742ca43b382d7a182e4cdd, type: 2}
+  - {fileID: 11400000, guid: f1cd2c1c78fdeb1429d49176395a8e3b, type: 2}

@@ -20,7 +20,7 @@ public class Noise : MonoBehaviour
     [field: SerializeField, Range(1, 20)] public int OctaveNumber { get; private set; } = 8;                  // Number of octaves
     [field: SerializeField, Range(0, 20)] public float Redistribution { get; private set; } = 1f;
     [field: SerializeField, Range(-2, 2)] public float IslandRatio { get; private set; } = 0f;
-    [field: SerializeField, Range(0, 20)] public float Scale { get; private set; } = 1f;
+    [field: SerializeField, Range(0, 100)] public float Scale { get; private set; } = 1f;
     [field: SerializeField, Range(0, 4)] public float ScaleElevation { get; private set; } = 1f;
     [field: SerializeField] public Vector3 Offset { get; private set; }
 
@@ -44,6 +44,55 @@ public class Noise : MonoBehaviour
 
 
     [field: SerializeField] public List<Octave> Octaves { get; private set; }
+
+    public Noise(SingleNoise single, int seed)
+    {
+        System.Random prng = new System.Random(seed);
+        Enabled = true;
+        Name = single.Name;
+        Mode = single.Mode;
+        DistanceType = single.DistanceType;
+        NoiseType = single.NoiseType;
+        OctaveNumber = prng.Next(single.OctaveNumberLimits.x, single.OctaveNumberLimits.y);
+        Redistribution = RandomLib.NextFloat(prng, single.RedistributionLimits.x, single.RedistributionLimits.y);
+        IslandRatio = RandomLib.NextFloat(prng, single.IslandRatioLimits.x, single.IslandRatioLimits.y);
+        Scale = RandomLib.NextFloat(prng, single.ScaleLimits.x, single.ScaleLimits.y);
+        ScaleElevation = RandomLib.NextFloat(prng, single.ScaleElevationLimits.x, single.ScaleElevationLimits.y);
+        Offset = new Vector3(RandomLib.NextFloat(prng, single.XZOffsetLimits.x, single.XZOffsetLimits.y),
+        RandomLib.NextFloat(prng, single.YOffsetLimits.x, single.YOffsetLimits.y),
+        RandomLib.NextFloat(prng, single.XZOffsetLimits.x, single.XZOffsetLimits.y));
+        Ridge = single.Ridge;
+        OctaveDependentAmplitude = single.OctaveDependentAmplitude;
+        ElevationLimit = single.ElevationLimit;
+        ElevationLimitHeights = new Vector2(RandomLib.NextFloat(prng, single.MinElevationLimits.x, single.MinElevationLimits.y),
+            RandomLib.NextFloat(prng, single.MaxElevationLimits.x, single.MaxElevationLimits.y));
+
+        BasicTerraces = false;
+        CustomTerraces = single.CustomTerraces;
+        
+        if (CustomTerraces)
+        {
+            CustomTerracesDescription = new List<Vector2>();
+            int CustomTerracesCount = prng.Next(single.TerracesCountLimits.x, single.TerracesCountLimits.y);
+            float height = 0;
+            for (int i = 0; i < CustomTerracesCount; i++)
+            {
+                height += RandomLib.NextFloat(prng, single.TerracesOffsetLimits.x, single.TerracesOffsetLimits.y);
+                float size = RandomLib.NextFloat(prng, single.TerracesSizeLimits.x, single.TerracesSizeLimits.y);
+                CustomTerracesDescription.Add(new Vector2(height, size));
+                height += size;
+            }
+
+            AddNoise = single.AddNoise;
+            if (AddNoise)
+            {
+                NoiseFrequency = RandomLib.NextFloat(prng, single.NoiseFrequencyLimits.x, single.NoiseFrequencyLimits.y);
+                NoiseAmplitude = RandomLib.NextFloat(prng, single.NoiseAmplitudeyLimits.x, single.NoiseAmplitudeyLimits.y);
+            }
+        }
+
+        Octaves = new List<Octave>();
+    }
 
     public void FillOctaves(int octaveNumber = 10)
     {
@@ -85,12 +134,12 @@ public class Noise : MonoBehaviour
         }
         return ScaleElevation * (elevation + Offset.y);
     }
-    
+
     public void SortTerraces()
     {
         CustomTerracesDescription.Sort((x, y) => x.x.CompareTo(y.x));
     }
-    
+
     public List<Vector2> GetCustomTerraces()
     {
         if (CustomTerraces && CustomTerracesDescription.Count > 0)
@@ -142,6 +191,7 @@ public class Noise : MonoBehaviour
         if (this.Octaves.Count == 0)
         {
             this.FillOctaves();
+            Debug.Log("Octaves were not filled, filling them now");
         }
 
         ComputeBuffer octaveBuffer = new ComputeBuffer(this.Octaves.Count, 8);
@@ -189,5 +239,27 @@ public class Noise : MonoBehaviour
         }
 
         renderTexture = rt;
+    }
+
+    public void SummarizeAttributes()
+    {
+        Debug.Log("OctaveNumber: " + OctaveNumber);
+        Debug.Log("Offset: " + Offset);
+        Debug.Log("Scale: " + Scale);
+        Debug.Log("ScaleElevation: " + ScaleElevation);
+        Debug.Log("Redistribution: " + Redistribution);
+        Debug.Log("IslandRatio: " + IslandRatio);
+        Debug.Log("Ridge: " + Ridge);
+        Debug.Log("OctaveDependentAmplitude: " + OctaveDependentAmplitude);
+        Debug.Log("Absolute: " + Absolute);
+        Debug.Log("Invert: " + Invert);
+        Debug.Log("DistanceType: " + DistanceType);
+        Debug.Log("NoiseType: " + NoiseType);
+        Debug.Log("Mode: " + Mode);
+        Debug.Log("ElevationLimit: " + ElevationLimit);
+        Debug.Log("ElevationLimitHeights: " + ElevationLimitHeights);
+        Debug.Log("BasicTerraces: " + BasicTerraces);
+        Debug.Log("BasicTerracesHeight: " + BasicTerracesHeight);
+        
     }
 }
