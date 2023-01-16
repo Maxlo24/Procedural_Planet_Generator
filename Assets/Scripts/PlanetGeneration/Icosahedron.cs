@@ -7,12 +7,12 @@ using UnityEngine;
 public class Icosahedron : MonoBehaviour
 {
     [Header("Resolution")]
-    [Range(0, 8)][SerializeField] private int subdivisions = 1;
+    [Range(0, 7)][SerializeField] private int subdivisions = 1;
     // scale of the icosahedron (default 1)
     [Header("Scale")]
     [Range(1, 10)][SerializeField] private float scale = 1;
 
-    public enum PlanetType { Earth, Desert };
+    public enum PlanetType { Earth, Desert, Volcanic, Ice  };
     [Header("Planet Type")]
     public PlanetType planetType;
 
@@ -41,7 +41,6 @@ public class Icosahedron : MonoBehaviour
 
         Vector3[] vertices = new Vector3[vertexCount];
         // print size of vertices
-        Debug.Log("vertices size: " + vertices.Length);
         Vector3[] normals = new Vector3[vertexCount];
 
         for (int i = 0; i < icosahedron.Polygons.Count; i++)
@@ -56,13 +55,14 @@ public class Icosahedron : MonoBehaviour
             vertices[i * 3 + 1] = icosahedron.Vertices[poly.vertices[1]];
             vertices[i * 3 + 2] = icosahedron.Vertices[poly.vertices[2]];
 
-            normals[i * 3 + 0] = icosahedron.Vertices[poly.vertices[0]];
+/*            normals[i * 3 + 0] = icosahedron.Vertices[poly.vertices[0]];
             normals[i * 3 + 1] = icosahedron.Vertices[poly.vertices[1]];
-            normals[i * 3 + 2] = icosahedron.Vertices[poly.vertices[2]];
+            normals[i * 3 + 2] = icosahedron.Vertices[poly.vertices[2]];*/
         }
         sphereMesh.vertices = vertices;
-        sphereMesh.normals = normals;
+        // sphereMesh.normals = normals;
         sphereMesh.SetTriangles(indices, 0);
+        sphereMesh.RecalculateNormals();
     }
     
     public void UpdateMesh()
@@ -105,25 +105,32 @@ public class Icosahedron : MonoBehaviour
 
         // if planet type is earth : get earth shader. If desert: get desert shader
         Shader planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
-        if (planetType == PlanetType.Earth)
+
+        switch (planetType)
         {
-            planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
-        }
-        else if (planetType == PlanetType.Desert)
-        {
-            planetShader = Shader.Find("Shader Graphs/DesertShader");
+            case PlanetType.Earth:
+                planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
+                break;
+            case PlanetType.Desert:
+                planetShader = Shader.Find("Shader Graphs/DesertShader");
+                break;
+            case PlanetType.Volcanic:
+                planetShader = Shader.Find("Shader Graphs/VolcanicShader");
+                break;
+            case PlanetType.Ice:
+                planetShader = Shader.Find("Shader Graphs/IceShader");
+                break;
         }
 
         /*Shader shader = Shader.Find("Shader Graphs/EarthLikeShader");*/
         Material material = new Material(planetShader);
         material.SetFloat("_Ratio", scale);
         this.gameObject.GetComponent<MeshRenderer>().sharedMaterial = material;
-        genMesh();
 
         icosahedron.Rescale(scale);
 
         genMesh();
-        sphereMesh.RecalculateNormals();
+        
         this.gameObject.GetComponent<MeshFilter>().mesh = sphereMesh;
 
     }
