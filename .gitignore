@@ -70,3 +70,13 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Assets/Materials/Rocks/Rock1.mat
+Assets/Materials/Rocks/Rock2.mat
+Assets/Materials/Rocks/Rock3.mat
+Assets/Materials/Rocks/Rock4.mat
+Assets/Materials/Rocks/Rock5.mat
+Assets/Materials/Rocks/Rock6.mat
+Assets/Materials/Skyboxes/Skybox1.mat
+Assets/Materials/Skyboxes/Skybox2.mat
+Assets/Materials/Skyboxes/Skybox3.mat
+Assets/Materials/Terrain.mat
