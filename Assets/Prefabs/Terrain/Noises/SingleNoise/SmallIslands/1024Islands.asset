@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b077a909b9f2a314a9b91a16ab6e1e2d, type: 3}
-  m_Name: PeacefulGround
+  m_Name: 1024Islands
   m_EditorClassIdentifier: 
-  Name: testTerrain
+  Name: Islands
   Noises:
-  - {fileID: 11400000, guid: dd047c95065d4414d823a87b96d0245b, type: 2}
+  - {fileID: 11400000, guid: 728a668395dca6340bac019913e222c4, type: 2}
   Erosions:
   - {fileID: 11400000, guid: bdc40509c7742ca43b382d7a182e4cdd, type: 2}
-  - {fileID: 11400000, guid: 3a00ffdb73f417f4e831eeafbe87927f, type: 2}
+  - {fileID: 11400000, guid: f1cd2c1c78fdeb1429d49176395a8e3b, type: 2}
   ThermalErosion: {fileID: 11400000, guid: e5ddf0d6d6b16294faecf43cc8a981bc, type: 2}
-  Craters:
-  - {fileID: 11400000, guid: 51f6d6ca7eabb0242b9bbdb30b7dbc3f, type: 2}
+  Craters: []
   PostProcessing: {fileID: 11400000, guid: 5047bf6c9e26e644c9106efbf6d52734, type: 2}

@@ -27,6 +27,10 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	int2 pos = positionI + id.xy - int2(thirdRadius, thirdRadius);
 	float dist = length(pos - positionI);
 
+	// test bounds
+	if (pos.x < 0 || pos.x >= sizeX || pos.y < 0 || pos.y >= sizeY)
+		return;
+
 	if (dist < radius)
 	{
 		float w = pow(dist / radius, 2);

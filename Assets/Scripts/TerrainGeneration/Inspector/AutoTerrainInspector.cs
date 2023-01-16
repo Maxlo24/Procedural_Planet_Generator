@@ -28,6 +28,11 @@ public class AutoTerrainInspector : Editor
             terrain.ErodeTerrain();
             terrain.RedrawTerrain();
         }
+        if (GUILayout.Button("PostProcessing"))
+        {
+            terrain.PostProcessing();
+            terrain.RedrawTerrain();
+        }
         if (GUILayout.Button("Generate Entire Map"))
         {
             terrain.GenerateEntireMap();

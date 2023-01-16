@@ -4,6 +4,7 @@ public class CraterGeneration : MonoBehaviour
 {
     [field: SerializeField] public int Seed { get; private set; } = 0;
     [field: SerializeField] public int Number { get; private set; } = 0;
+    [field: SerializeField] public bool InBounds { get; private set; } = true;
     [field: SerializeField] public Vector2 RadiusRange { get; private set; } = new Vector2(2, 5);
     [field: SerializeField] public Vector2 SecondaryRadiusRange { get; private set; } = new Vector2(2, 5);
     [field: SerializeField] public Vector2 ThirdRadiusRange { get; private set; } = new Vector2(2, 5);
@@ -36,6 +37,7 @@ public class CraterGeneration : MonoBehaviour
         System.Random prng = new System.Random(seed);
         Seed = seed;
         Number = prng.Next(preset.CraterCount.x, preset.CraterCount.y);
+        InBounds = preset.InBounds;
         RadiusRange = preset.RadiusRange;
         SecondaryRadiusRange = preset.SecondaryRadiusOffsetLimits;
         ThirdRadiusRange = preset.ThirdRadiusOffsetLimits;
@@ -97,7 +99,11 @@ public class CraterGeneration : MonoBehaviour
             secondaryRadiusOffset[i] = RandomLib.NextFloat(prng, SecondaryRadiusRange.x, SecondaryRadiusRange.y);
             thirdRadiusOffset[i] = RandomLib.NextFloat(prng, ThirdRadiusRange.x, ThirdRadiusRange.y);
             int radiusInt = (int)radius[i] + TerrainBorder;
-            positions[i] = GetRandomPosition(radiusInt, radiusInt, sizeX - radiusInt, sizeY - radiusInt, prng);
+            if (InBounds)
+               positions[i] = GetRandomPosition(radiusInt, radiusInt, sizeX - radiusInt, sizeY - radiusInt, prng);
+            else
+                positions[i] = GetRandomPosition(0, 0, sizeX, sizeY, prng);
+            
             depth[i] = RandomLib.NextFloat(prng, DepthRange.x, DepthRange.y);
             elevationRange[i] = RandomLib.NextFloat(prng, ElevationRange.x, ElevationRange.y);
         }

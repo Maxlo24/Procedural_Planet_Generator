@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4a24e9eb7fb9504b9ace6c0c6bb15b6, type: 3}
+  m_Name: RidgeScotland
+  m_EditorClassIdentifier: 
+  Name: 
+  Mode: 0
+  DistanceType: 0
+  NoiseType: 3
+  OctaveNumberLimits: {x: 3, y: 5}
+  RedistributionLimits: {x: 0.65, y: 0.8}
+  IslandRatioLimits: {x: 0, y: 0.1}
+  ScaleLimits: {x: 4, y: 5.5}
+  ScaleElevationLimits: {x: 0.06, y: 0.07}
+  XZOffsetLimits: {x: -9999, y: 9999}
+  YOffsetLimits: {x: 0, y: 0}
+  Ridge: 0
+  OctaveDependentAmplitude: 1
+  ElevationLimit: 0
+  MinElevationLimits: {x: 0, y: 0}
+  MaxElevationLimits: {x: 0, y: 0}
+  CustomTerraces: 0
+  TerracesCountLimits: {x: 0, y: 2}
+  TerracesOffsetLimits: {x: 0.2, y: 0.7}
+  TerracesSizeLimits: {x: 0.05, y: 0.2}
+  AddNoise: 0
+  NoiseFrequencyLimits: {x: 0, y: 0}
+  NoiseAmplitudeyLimits: {x: 0, y: 0}

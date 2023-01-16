@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fcb5ac59fc2120429872bee46e17756, type: 3}
-  m_Name: SmallCraters
+  m_Name: BigCraters
   m_EditorClassIdentifier: Assembly-CSharp::CratersPreset
   Name: 
-  CraterCount: {x: 30, y: 50}
-  RadiusRange: {x: 20, y: 50}
-  SecondaryRadiusOffsetLimits: {x: 10, y: 20}
-  ThirdRadiusOffsetLimits: {x: 10, y: 20}
-  DepthRange: {x: 1.8, y: 2.2}
-  ElevationRange: {x: 0.4, y: 0.7}
+  CraterCount: {x: 1, y: 4}
+  RadiusRange: {x: 150, y: 250}
+  SecondaryRadiusOffsetLimits: {x: 40, y: 60}
+  ThirdRadiusOffsetLimits: {x: 40, y: 60}
+  DepthRange: {x: 4.2, y: 5.5}
+  ElevationRange: {x: 1, y: 1.5}
