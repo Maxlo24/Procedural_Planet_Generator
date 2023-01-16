@@ -26,6 +26,7 @@ public class ColorStyle : MonoBehaviour
 
 
     [SerializeField] private bool liveUpdate = false;
+    [SerializeField] private bool grass = false;
 
 
     public GrassGenerator grassGenerator;
@@ -105,15 +106,19 @@ public class ColorStyle : MonoBehaviour
         if (activeAtmosphere >= activeCrust.AtmospherColors.Length) activeAtmosphere = activeCrust.AtmospherColors.Length - 1;
 
         RenderSettings.fogColor = activeCrust.AtmospherColors[activeAtmosphere];
-
+        
         if (grassGenerator != null)
         {
             if (previousActiveVegetationPalette != activeVegetationPalette) grassGenerator.UpdateGrassPrototypes();
         }
         previousActiveVegetationPalette = activeVegetationPalette;
 
-        if (planetAttributs.atmosphere == 0) grassGenerator.ClearGrass();
-        else grassGenerator.SpawnGrass();
+        if (grass)
+        {
+            if (planetAttributs.atmosphere == 0) grassGenerator.ClearGrass();
+            else grassGenerator.SpawnGrass();
+            
+        }
 
 
         //grassGenerator.UpdateGrassPrototypes();
