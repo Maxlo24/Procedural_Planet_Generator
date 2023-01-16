@@ -27,23 +27,6 @@ public class Icosahedron : MonoBehaviour
     public IcosahedronGenerator icosahedron;
 
 
-    [SerializeField]
-    private Gradient exampleGradient = new Gradient
-    {
-        alphaKeys = new[]
-       {
-            new GradientAlphaKey(0, 0f),
-            new GradientAlphaKey(1, 1f)
-        },
-
-        colorKeys = new[]
-       {
-            new GradientColorKey(Color.red, 0f),
-            new GradientColorKey(Color.cyan, 0.5f),
-            new GradientColorKey(Color.green, 1f)
-        }
-    };
-
 
     private void Start()
     {
@@ -122,9 +105,10 @@ public class Icosahedron : MonoBehaviour
 
 
         // if planet type is earth : get earth shader. If desert: get desert shader
-        Shader planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
+        // Shader planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
+        Shader planetShader = Shader.Find("Shader Graphs/PlanetTerrain");
 
-        switch (planetType)
+/*        switch (planetType)
         {
             case PlanetType.Earth:
                 planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
@@ -138,7 +122,7 @@ public class Icosahedron : MonoBehaviour
             case PlanetType.Ice:
                 planetShader = Shader.Find("Shader Graphs/IceShader");
                 break;
-        }
+        }*/
 
         /*Shader shader = Shader.Find("Shader Graphs/EarthLikeShader");*/
         Material material = new Material(planetShader);
