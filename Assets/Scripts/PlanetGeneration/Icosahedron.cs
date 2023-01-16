@@ -27,6 +27,24 @@ public class Icosahedron : MonoBehaviour
     public IcosahedronGenerator icosahedron;
 
 
+    [SerializeField]
+    private Gradient exampleGradient = new Gradient
+    {
+        alphaKeys = new[]
+       {
+            new GradientAlphaKey(0, 0f),
+            new GradientAlphaKey(1, 1f)
+        },
+
+        colorKeys = new[]
+       {
+            new GradientColorKey(Color.red, 0f),
+            new GradientColorKey(Color.cyan, 0.5f),
+            new GradientColorKey(Color.green, 1f)
+        }
+    };
+
+
     private void Start()
     {
 
