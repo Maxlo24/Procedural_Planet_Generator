@@ -19,5 +19,9 @@ MonoBehaviour:
   medium:
   - {fileID: 100012, guid: 1ee76940f560f654fbbe86776c26942b, type: 3}
   - {fileID: 100012, guid: 0c076a1a077b8b04aaa5c16a2af6d4fe, type: 3}
+  - {fileID: 4091423247538773862, guid: 9cf772e87f42efd49b8ecd0b1a86d234, type: 3}
+  - {fileID: 4091423247538773862, guid: d204366c7e66d0f4cadf4c378fb25e38, type: 3}
+  - {fileID: 4091423247538773862, guid: 7c34c9d768d85fc4fb0b2d507f4da806, type: 3}
   large:
-  - {fileID: 4091423247538773862, guid: 60c98dca6c2f58848af8a9e140039a19, type: 3}
+  - {fileID: 4091423247538773862, guid: 3fe97c657951bc64aa245992e6e744cc, type: 3}
+  - {fileID: 4091423247538773862, guid: f950d9b2ded5d774d88417afe77239a3, type: 3}

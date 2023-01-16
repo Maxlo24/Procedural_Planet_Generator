@@ -1,6 +1,7 @@
 using sc.terrain.vegetationspawner;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using static sc.terrain.vegetationspawner.SpawnerBase;
 using static UnityEditor.Progress;
@@ -31,6 +32,7 @@ public class GrassGenerator : MonoBehaviour
 
 
     private int count = 0;
+    private bool spawned;
 
     private void LoadTerrain()
     {
@@ -50,6 +52,8 @@ public class GrassGenerator : MonoBehaviour
 
     public void SpawnGrass()
     {
+        if (spawned) return;
+
         //LoadTerrain();
         //AddGrassDetail();
 
@@ -92,6 +96,8 @@ public class GrassGenerator : MonoBehaviour
             terrain.terrainData.SetDetailLayer(0, 0, index, map);
             index++;
         }
+
+        spawned = true;
     }
 
     public void ClearGrass()
@@ -102,6 +108,9 @@ public class GrassGenerator : MonoBehaviour
         {
             terrain.terrainData.SetDetailLayer(0, 0, i, map);
         }
+
+        spawned = false;
+        count = 0;
     }
 
     public void AddGrassDetail()

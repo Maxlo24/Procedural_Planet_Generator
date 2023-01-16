@@ -137,6 +137,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Rock_displacement:
+        m_Texture: {fileID: 2800000, guid: a3bb7a8692b285e4dabbee40530a0214, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Rock_normal:
         m_Texture: {fileID: 2800000, guid: 98b4ee744ae41e343a3e6f5e84f71f71, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -145,11 +149,27 @@ Material:
         m_Texture: {fileID: 2800000, guid: 7f316f91b1033294db619c1c980a91ce, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTextures_0db5e858d35c435aa33fb4fa995ec2e2_Displacement_2324016629:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTextures_2aa9781326554707993f35b4546a10e8_Normaltexture_2971450874:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTextures_43fbe074ada64b968b27aa177ea6d56b_Displacement_2324016629:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTextures_4ac6bbeac1c24e62983c1bf27398a98b_Normaltexture_2971450874:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTextures_4e2a445d995c4184a8af6648d920ee24_Displacement_2324016629:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTextures_7773b050cfbb42f79dd4d5d4fa9a471a_Displacement_2324016629:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -241,7 +261,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HeightTransition: 0
-    - _Humidity: 0.68
+    - _Humidity: 0.93
     - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
@@ -268,39 +288,39 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _Snow_Smoothness: 10
     - _Snow_intensity: 1
-    - _Snow_level: 400
+    - _Snow_level: 1000
     - _Snow_randomness: 19.2
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Strength: 1
     - _Surface: 0
-    - _Temperature: 8.4
+    - _Temperature: 100
     - _Texture_scale: 0.2
     - _Textures_scale: 150
     - _Transition_width: 0.103
     - _Uniformity: 0
-    - _Vegetation: 0.9
+    - _Vegetation: 0.79
     - _Wind_speed: 0.05
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Beach_color: {r: 0.4811321, g: 0.3236788, b: 0.28822535, a: 1}
+    - _Beach_color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Deposit_color: {r: 0.06132078, g: 1, b: 0.9256559, a: 0}
-    - _Dirt_color: {r: 0.4056604, g: 0.19708973, b: 0.21727496, a: 1}
-    - _Dry_grass: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Dirt_color: {r: 0.32156864, g: 0.28235295, b: 0.22352943, a: 1}
+    - _Dry_grass: {r: 0.34436265, g: 0.3490566, b: 0.24203454, a: 1}
     - _DustColor: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Erosion_color: {r: 0.314, g: 0.314, b: 0.314, a: 0}
     - _Grass_color: {r: 0.72116584, g: 0.7264151, b: 0.3255162, a: 0}
-    - _Healthy_grass: {r: 0.5991456, g: 0.8301887, b: 0.78271025, a: 1}
+    - _Healthy_grass: {r: 0.40264195, g: 0.5283019, b: 0.3314347, a: 1}
     - _MainColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
     - _Noise: {r: 100, g: 0.8, b: 0, a: 0}
-    - _Rock_color: {r: 0.6320754, g: 0.30550992, b: 0.2713154, a: 1}
+    - _Rock_color: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
     - _Scale: {r: 1, g: 1, b: 0, a: 0}
-    - _Sediment_color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
-    - _Snow_color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+    - _Sediment_color: {r: 0.74509805, g: 0.74509805, b: 0.74509805, a: 1}
+    - _Snow_color: {r: 0.4279548, g: 0.5257679, b: 0.5566038, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7517056022234436585
