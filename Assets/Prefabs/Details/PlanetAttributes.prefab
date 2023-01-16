@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a00c6a4e2aa023743ade632c140dbcf3, type: 2}
+  - {fileID: 2100000, guid: a307915c9af79fe48a7074e57dc8e07b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,7 +94,7 @@ MeshCollider:
   m_GameObject: {fileID: 8907588404404511677}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -4993,14 +4993,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atmosphere: 3
-  humidity: 80
-  temperature: 50
-  vegetation: 50
-  clouds: 1
-  raining: 1
+  humidity: 74
+  temperature: -9
+  vegetation: 18
+  clouds: 0
+  raining: 0
   liquid: {fileID: 8907588404404511672}
   cloudGenerator: {fileID: 8907588404470575421}
-  fogIntensity: 0.6
+  fogIntensity: 0.555
+  snowLevel: 1000
 --- !u!114 &8907588404721271226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5015,8 +5016,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeCrustPalette: 2
   activeVegetationPalette: 0
-  activeSkybox: 1
-  activeAtmosphere: 3
+  activeSkybox: 0
+  activeAtmosphere: 0
   activePlanetMaterial: {fileID: 2100000, guid: b02fb9e5610de614eb79a8808ac694bf,
     type: 2}
   crustColorPalettes:
@@ -5033,5 +5034,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1cf6f4c6e6e0518419839d3f5448dd99, type: 2}
   - {fileID: 2100000, guid: 8fcebb2f17ad47c46b6b668a462c3936, type: 2}
   liveUpdate: 0
+  grass: 0
   grassGenerator: {fileID: 0}
-  fog_ratio: 1.5
+  materialsToUpdate: []
+  fog_ratio: 0

@@ -76,14 +76,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _Mask: 2
-    - _Parallax: 0.031
+    - _Parallax: 0.532
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0.2
     - _Snow_level: 1000
     m_Colors:
-    - _Rock_color: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
-    - _Snow_color: {r: 0.28813633, g: 0.34437042, b: 0.3490566, a: 1}
+    - _Rock_color: {r: 0.6320754, g: 0.30550992, b: 0.2713154, a: 1}
+    - _Snow_color: {r: 0.7546102, g: 0.772399, b: 0.7735849, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5045340058493247764
 MonoBehaviour:

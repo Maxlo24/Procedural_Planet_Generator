@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4efafa97cb395b499517af8dd0cc33b, type: 3}
   m_Name: HighResPlanet
   m_EditorClassIdentifier: 
-  vegetation: {fileID: 0}
+  vegetation: {fileID: 11400000, guid: 54818595467f5cd41b65f5da6668fe83, type: 2}
   stone: {fileID: 0}
   rock: {fileID: 11400000, guid: 63506f916080eb049b59e216eedbff48, type: 2}
   rampe: {fileID: 0}
