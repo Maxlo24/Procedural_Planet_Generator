@@ -19,9 +19,12 @@ public class PlanetGlobalGeneration : MonoBehaviour
     [SerializeField] private Liquid liquid;
 
     [SerializeField] private CloudManager cloudGenerator;
+    
 
 
     public float fogIntensity;
+
+    [HideInInspector] public float snowLevel;
 
 
 
@@ -82,6 +85,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
             clouds = false;
 
             humidity = 0;
+            vegetation = 0;
 
             RenderSettings.ambientLight = Color.black;
             RenderSettings.ambientIntensity = 0.0f;
@@ -110,12 +114,15 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
         if (raining)
         {
-            planetMaterial.SetFloat("_Snow_level", temperature * 5f);
+            snowLevel = temperature * 5f;
         }
         else
         {
-            planetMaterial.SetFloat("_Snow_level", 400);
+            snowLevel = 1000;
         }
+
+        planetMaterial.SetFloat("_Snow_level", snowLevel);
+
 
         if (liquid != null)
         {
@@ -131,7 +138,6 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
         cloudGenerator.UpdateClouds();
         GetComponent<ColorStyle>().UpdateStyle();
-
 
 
     }

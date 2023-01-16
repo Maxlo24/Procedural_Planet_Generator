@@ -29,7 +29,13 @@ public class ColorStyle : MonoBehaviour
 
 
     public GrassGenerator grassGenerator;
+    [SerializeField] private Material[] materialsToUpdate;
+
+
+
     public float fog_ratio;
+
+    private int previousActiveVegetationPalette = 0;
 
 
     private void Update()
@@ -54,7 +60,6 @@ public class ColorStyle : MonoBehaviour
         activeAtmosphere = Random.Range(0, crustColorPalettes[activeCrustPalette].AtmospherColors.Length);
 
         RenderSettings.skybox.SetFloat("_Rotation", Random.Range(0, 360));
-
 
 
         UpdateStyle();
@@ -89,8 +94,10 @@ public class ColorStyle : MonoBehaviour
 
 
         Material skybox = skyboxes[activeSkybox];
-        
-        float fogIntensity = GetComponent<PlanetGlobalGeneration>().fogIntensity;
+
+        PlanetGlobalGeneration planetAttributs = GetComponent<PlanetGlobalGeneration>();
+
+        float fogIntensity = planetAttributs.fogIntensity;
         skybox.SetFloat("_FogIntensity", fogIntensity* fog_ratio);
 
         RenderSettings.skybox = skybox;
@@ -99,9 +106,33 @@ public class ColorStyle : MonoBehaviour
 
         RenderSettings.fogColor = activeCrust.AtmospherColors[activeAtmosphere];
 
-        if (grassGenerator != null) grassGenerator.UpdateGrassPrototypes();
+        if (grassGenerator != null)
+        {
+            if (previousActiveVegetationPalette != activeVegetationPalette) grassGenerator.UpdateGrassPrototypes();
+        }
+        previousActiveVegetationPalette = activeVegetationPalette;
+
+        if (planetAttributs.atmosphere == 0) grassGenerator.ClearGrass();
+        else grassGenerator.SpawnGrass();
+
 
         //grassGenerator.UpdateGrassPrototypes();
+
+        foreach (Material mat in materialsToUpdate)
+        {
+            mat.SetFloat("_Snow_level", planetAttributs.snowLevel);
+
+
+            mat.SetColor("_Rock_color", activeCrust.main);
+            //mat.SetColor("_Sediment_color", activeCrust.sediment);
+            //mat.SetColor("_Dirt_color", activeCrust.dirt);
+            //mat.SetColor("_Beach_color", activeCrust.sand);
+
+        }
+
+
+        
+
 
     }
 
