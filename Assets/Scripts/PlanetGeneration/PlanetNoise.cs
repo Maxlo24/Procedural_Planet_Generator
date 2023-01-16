@@ -31,7 +31,7 @@ Some changes by Sebastian Lague for use in a tutorial series.
 */
 
 using System;
-public class Noise
+public class PlanetNoise
 {
     #region Values
     /// Initial permutation table
@@ -84,12 +84,12 @@ public class Noise
     };
     #endregion
 
-    public Noise()
+    public PlanetNoise()
     {
         Randomize(0);
     }
 
-    public Noise(int seed)
+    public PlanetNoise(int seed)
     {
         Randomize(seed);
     }
