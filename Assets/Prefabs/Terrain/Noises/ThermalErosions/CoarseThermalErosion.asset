@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a19074076fe3484478742e3fa4af7a1b, type: 3}
-  m_Name: BasicThermalErosion
+  m_Name: CoarseThermalErosion
   m_EditorClassIdentifier: 
   Name: 
-  RepetitionCount: 1
-  IterationCount: 3039450
+  RepetitionCount: 2
   LifeTime: 500
-  Strength: 0.05
+  Strength: 0.463
   MinTanAngle: 0
-  MaxTanAngle: 71
+  MaxTanAngle: 66.5

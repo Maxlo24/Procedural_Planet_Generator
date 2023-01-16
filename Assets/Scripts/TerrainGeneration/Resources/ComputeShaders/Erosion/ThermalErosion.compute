@@ -15,7 +15,7 @@ float maxTanAngle;
 
 bool inBounds(int x, int y)
 {
-	return x >= 0 && x < width && y >= 0 && y < height;
+	return x >= 0 && x < width&& y >= 0 && y < height;
 }
 
 int2 lowestNeighbour(int2 coord)
@@ -51,28 +51,28 @@ int2 lowestNeighbour(int2 coord)
 	return lowestCoord;
 }
 
-[numthreads(256,1,1)]
-void CSMain (uint3 id : SV_DispatchThreadID)
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
 {
-	int2 coord = initialPositions[id.x].xy;
+	int2 coord = id.xy;
 
 	float zd = 1.0 / (float)width;
 
 	for (int i = 0; i < erosionLifeTime; i++)
 	{
 		float height = heights[coord];
-		 int2 lowestCoord = lowestNeighbour(coord);
-		
-		 if (lowestCoord.x == coord.x && lowestCoord.y == coord.y)
+		int2 lowestCoord = lowestNeighbour(coord);
+
+		if (lowestCoord.x == coord.x && lowestCoord.y == coord.y)
 			return;
-		
+
 		float lowestHeight = heights[lowestCoord];
-		
+
 		float diff = height - lowestHeight;
 		float tanAngle = diff * terrainHeight / cellSize;
 		if (tanAngle > minTanAngle && tanAngle < maxTanAngle)
 		{
-			float sediment = strength * diff * tanAngle;
+			float sediment = strength * diff * min(1, tanAngle);
 			heights[coord] -= sediment;
 			heights[lowestCoord] += sediment;
 		}
