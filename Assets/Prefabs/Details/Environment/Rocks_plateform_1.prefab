@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9e7a931e5020f4fa82f0303b0a792c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visibleRadius: 400
 --- !u!64 &-7626889791293545444
 MeshCollider:
   m_ObjectHideFlags: 0

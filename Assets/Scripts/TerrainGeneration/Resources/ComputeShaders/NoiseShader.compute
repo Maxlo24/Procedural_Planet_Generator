@@ -1,0 +1,97 @@
+#pragma kernel CSMain
+
+// include hlsl file
+CGPROGRAM
+#include "HLSLSupport.cginc"
+ENDCG
+
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Lib/DistancesShader.cginc"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/LibUtils.hlsl"
+#include "Assets/Scripts/TerrainGeneration/Resources/ComputeShaders/Noises/NoiseLib.hlsl"
+
+struct Octave {
+	float frequency;
+	float amplitude;
+};
+
+RWTexture2D<float> height;
+int resolution;
+
+RWStructuredBuffer<Octave> octaves;
+int octaveCount = 1;
+
+float redistribution = 1;
+float islandRatio = 0;
+
+float xOffset;
+float yOffset;
+float elevationOffset;
+float scale;
+float scaleElevation;
+
+bool ridge;
+bool octaveDependentAmplitude;
+
+bool absolute;
+bool invert;
+
+int distanceType = 0;
+
+int noiseType = 0;
+
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	float x = float(id.x) / float(resolution);
+	float y = float(id.y) / float(resolution);
+
+	float h = 0.0;
+	float amplitude = 2.0;
+	float sumPersistency = 0.0;
+
+	for (int i = 0; i < octaveCount; i++)
+	{
+		float sumElevation = 1.0;
+		
+		if (octaveDependentAmplitude && h != 0)
+		{
+			sumElevation = h;
+		}
+		
+		float amplitude = octaves[i].amplitude;
+		float frequency = octaves[i].frequency;
+		
+		sumPersistency += amplitude;
+		float h_I = noise((float2(x, y) + float2(xOffset, yOffset)) * frequency * scale, noiseType);
+		
+		if (absolute)
+		{
+			h_I = abs(h_I);
+		}
+
+		if (invert)
+		{
+			h_I = - h_I;
+		}
+		
+		if (ridge)
+		{
+			h_I = Ridge(h_I);
+		}
+		h += sumElevation * amplitude * h_I;
+	}
+
+	h = h / sumPersistency;
+
+	h = Remap(h, float2(-1.0, 1.0), float2(0.0, 1.0));
+
+	
+	h = pow(h, redistribution);
+	float nx = x * 2 - 1;
+	float ny = y * 2 - 1;
+	h = h * (1 - islandRatio) + islandRatio * (h + (1 - Distance(nx, ny, distanceType))) / 2;
+
+	h = scaleElevation * (h + elevationOffset);
+
+	height[id.xy] += h;
+}

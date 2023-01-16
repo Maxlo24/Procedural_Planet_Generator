@@ -7,6 +7,10 @@ TagManager:
   - DetailSpawner
   - Details
   - GenerationManager
+  - CinemachineTarget
+  - Terrain
+  - PlanetAttributes
+  - SmallDetail
   layers:
   - Default
   - TransparentFX

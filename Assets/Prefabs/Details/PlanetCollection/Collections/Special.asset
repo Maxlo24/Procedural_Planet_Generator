@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Special
   m_EditorClassIdentifier: 
   small: []
-  medium: []
-  large:
+  medium:
   - {fileID: 8689857518449345738, guid: 38c782ec729f41b42a585ee6d308b34c, type: 3}
+  large: []

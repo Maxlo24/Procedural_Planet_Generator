@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public enum DistanceType
@@ -46,7 +47,22 @@ public class DistanceLib
     {
         return Mathf.Min(1, Mathf.Abs(x) + Mathf.Abs(y));
     }
-    
 
+    public static float[] BakedCurveToFloatArray(AnimationCurve curve, int size = 100)
+    {
+        // Calculate the length of the curve in pixels
+        float first = curve.keys.First().time;
+        
+        float last = curve.keys.Last().time;
 
+        // Create a new array of floats
+        float[] curveArray = new float[size];
+
+        // Loop through the curve and add the values to the array
+        for (int i = 0; i < size; i++)
+        {
+            curveArray[i] = curve.Evaluate(Mathf.Lerp(first, last, (float)i / (float) (size - 1)));
+        }
+        return curveArray;
+    }
 }

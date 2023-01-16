@@ -2,10 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ApplicationMode
+{
+    ADDITION,
+    MULTIPLICATION
+};
+
 public enum NoiseType
 {
     PERLIN,
-    RIDGE
+    SIMPLEX,
+    BILLOW,
+    RIDGE,
+    VALUE,
+    VORONOI,
+    WORLEY,
+    FRACTALBROWNIAN
 }
 
 public class NoiseLib

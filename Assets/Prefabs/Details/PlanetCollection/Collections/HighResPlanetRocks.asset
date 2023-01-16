@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66aabced8b1ba1045ad605d32d925255, type: 3}
+  m_Name: HighResPlanetRocks
+  m_EditorClassIdentifier: 
+  small:
+  - {fileID: 100010, guid: 76075d4f24491b84eb0b4ac914362e3f, type: 3}
+  - {fileID: 100012, guid: dceeca3e930a413458913fd2f889e527, type: 3}
+  - {fileID: 100012, guid: 059c81de61f2d4e4cbe522492d0181da, type: 3}
+  medium:
+  - {fileID: 100012, guid: 1ee76940f560f654fbbe86776c26942b, type: 3}
+  - {fileID: 100012, guid: 0c076a1a077b8b04aaa5c16a2af6d4fe, type: 3}
+  - {fileID: 4091423247538773862, guid: 9cf772e87f42efd49b8ecd0b1a86d234, type: 3}
+  - {fileID: 4091423247538773862, guid: d204366c7e66d0f4cadf4c378fb25e38, type: 3}
+  - {fileID: 4091423247538773862, guid: 7c34c9d768d85fc4fb0b2d507f4da806, type: 3}
+  large:
+  - {fileID: 4091423247538773862, guid: 3fe97c657951bc64aa245992e6e744cc, type: 3}
+  - {fileID: 4091423247538773862, guid: f950d9b2ded5d774d88417afe77239a3, type: 3}

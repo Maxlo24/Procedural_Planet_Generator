@@ -1,11 +1,29 @@
 {
   "dependencies": {
+    "com.jimmycushnie.noisynodes": {
+      "version": "https://github.com/JimmyCushnie/Noisy-Nodes.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.shadergraph": "7.1.8"
+      },
+      "hash": "1f212c268860dc1dc260bbd60d03246908508b79"
+    },
     "com.unity.burst": {
       "version": "1.7.3",
       "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.cinemachine": {
+      "version": "2.8.9",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.31"
       },
       "url": "https://packages.unity.com"
     },
@@ -48,6 +66,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.4.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.mathematics": {

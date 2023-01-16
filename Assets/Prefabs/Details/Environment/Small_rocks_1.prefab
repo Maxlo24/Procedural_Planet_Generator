@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8780629003237600712}
   - component: {fileID: 4212864595793202888}
   - component: {fileID: -835873245506977972}
+  - component: {fileID: 6933024821630808067}
   m_Layer: 6
   m_Name: Small_rocks_1
   m_TagString: Details
@@ -101,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9e7a931e5020f4fa82f0303b0a792c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visibleRadius: 250
 --- !u!64 &-835873245506977972
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -115,6 +117,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 389598468134261245, guid: 6acc0219d6ca30b4caf61d075a6e0a48, type: 3}
+--- !u!205 &6933024821630808067
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7123555510897839133}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.14866352, y: 1.3501214, z: 0.024485707}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.009562834
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8780629003237600712}
+  m_Enabled: 0
 --- !u!1001 &891073860043381263
 PrefabInstance:
   m_ObjectHideFlags: 0

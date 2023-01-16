@@ -1,0 +1,545 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4359465877146722436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4359465877146722456}
+  - component: {fileID: 4359465877146722457}
+  - component: {fileID: 4359465877146722458}
+  - component: {fileID: 4359465877146722462}
+  - component: {fileID: 4359465877146722461}
+  - component: {fileID: 4359465877146722451}
+  - component: {fileID: 4359465877146722450}
+  - component: {fileID: 4359465877146722460}
+  - component: {fileID: 4359465877146722459}
+  m_Layer: 6
+  m_Name: Terrain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &4359465877146722456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4359465878570276870}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!218 &4359465877146722457
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: 23e5d2fd0a3f5cf489218f07929b7f47, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 0
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_StaticShadowCaster: 0
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 2100000, guid: f6ff015456dc74c49b2bc30437969738, type: 2}
+  m_BakeLightProbesForTrees: 0
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0256
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+--- !u!154 &4359465877146722458
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 23e5d2fd0a3f5cf489218f07929b7f47, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!114 &4359465877146722462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b803252f29fab489600d37040df4a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Seed>k__BackingField: 0
+  <BorderSize>k__BackingField: 7
+  <IterationNumber>k__BackingField: 115617
+  <DropletLifeTime>k__BackingField: 500
+  <Acceleration>k__BackingField: 50
+  <Drag>k__BackingField: 0.2
+  <BrushSize>k__BackingField: 0
+  <InitialVelocity>k__BackingField: 3
+  <InitialWater>k__BackingField: 0.2
+  <SedimentCapacityFactor>k__BackingField: 27.5
+  <DepositRatio>k__BackingField: 0.04
+  <ErosionRatio>k__BackingField: 0.087
+  <EvaporationRatio>k__BackingField: 0.02
+  <Gravity>k__BackingField: 20
+  <ErodeEnabled>k__BackingField: 1
+  <ErosionMapUsed>k__BackingField: 0
+  <GenerateErosionTexture>k__BackingField: 0
+--- !u!114 &4359465877146722461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1d12c4a80ee304c927a1a541bcdf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Width>k__BackingField: 230
+  <Offset>k__BackingField: {x: 0, y: 0}
+  <ElevationOffset>k__BackingField: 0.1
+  <ElevationRatio>k__BackingField: 0.93
+  <MinRadiusWeight>k__BackingField: 0
+  <RadiusWeight>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5046258
+      value: 0.22627263
+      inSlope: 1.047764
+      outSlope: 1.047764
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &4359465877146722451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 397ea48e9f508dd4ab2ded0833620bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IslandProcess>k__BackingField: 0
+  <IslandRatio>k__BackingField: 0.18
+  <DistanceCurve>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00793457
+      value: 0.39437866
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.57022893
+      value: 0.53083694
+      inSlope: 0.50560594
+      outSlope: 0.50560594
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  <ElevationOffset>k__BackingField: -0.03
+--- !u!114 &4359465877146722450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8040b28741fb329409dc587807d20103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Seed>k__BackingField: 76
+  <Number>k__BackingField: 4
+  <RadiusRange>k__BackingField: {x: 110, y: 139.6}
+  <SecondaryRadiusRange>k__BackingField: {x: 13.5, y: 30.8}
+  <ThirdRadiusRange>k__BackingField: {x: 26.2, y: 36}
+  <DepthRange>k__BackingField: {x: 0.6, y: 1}
+  <ElevationRange>k__BackingField: {x: 0.2, y: 0.3}
+  <TerrainBorder>k__BackingField: 0
+--- !u!114 &4359465877146722460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adae56e5b740b8b4da093b3cf8f172b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Sigma>k__BackingField: 3.92
+  <Weight>k__BackingField: 0.595
+  <KernelRadius>k__BackingField: 5
+--- !u!114 &4359465877146722459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465877146722436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13407ba1656bdc944a1e086269da6df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Terrain>k__BackingField: {fileID: 4359465877146722457}
+  <Noises>k__BackingField:
+  - {fileID: 4359465878570276891}
+  - {fileID: 4359465878570276868}
+  - {fileID: 4359465878570276869}
+  - {fileID: 4359465878570276890}
+  <NoisesGameObject>k__BackingField: {fileID: 4359465878570276871}
+  <TerrainProcessing>k__BackingField: {fileID: 4359465877146722451}
+  <TerrainErosion>k__BackingField: {fileID: 4359465877146722462}
+  <CraterGeneration>k__BackingField: {fileID: 4359465877146722450}
+  <TerrainPostProcessing>k__BackingField: {fileID: 4359465877146722460}
+  <HeightMapsAddition>k__BackingField: {fileID: 4359465877146722461}
+  RenderTexture: {fileID: 0}
+  ErosionTexture: {fileID: 8400000, guid: 70166aa5d2cffea4e9a498febc5b3948, type: 2}
+  DepositTexture: {fileID: 8400000, guid: ef3d21e159049dd40a67103742eb1871, type: 2}
+  <TerrainNameToSave>k__BackingField: Terrain1
+  <TerrainNameToAdd>k__BackingField: Terrain
+  <LiveUpdate>k__BackingField: 0
+--- !u!1 &4359465878570276871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4359465878570276870}
+  - component: {fileID: 4359465878570276891}
+  - component: {fileID: 4359465878570276868}
+  - component: {fileID: 4359465878570276869}
+  - component: {fileID: 4359465878570276890}
+  m_Layer: 0
+  m_Name: Noises
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4359465878570276870
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465878570276871}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4359465877146722456}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4359465878570276891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465878570276871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Enabled>k__BackingField: 0
+  <Name>k__BackingField: 'Noise 1 '
+  <Mode>k__BackingField: 0
+  <DistanceType>k__BackingField: 0
+  <NoiseType>k__BackingField: 2
+  <OctaveNumber>k__BackingField: 11
+  <Redistribution>k__BackingField: 1
+  <IslandRatio>k__BackingField: 0
+  <Scale>k__BackingField: 1.4
+  <ScaleElevation>k__BackingField: 1.13
+  <Offset>k__BackingField: {x: 4.73, y: -0.5, z: 0}
+  <Ridge>k__BackingField: 0
+  <OctaveDependentAmplitude>k__BackingField: 0
+  <ElevationLimit>k__BackingField: 1
+  <ElevationLimitHeights>k__BackingField: {x: 0.4, y: 1}
+  <BasicTerraces>k__BackingField: 0
+  <BasicTerracesHeight>k__BackingField: 0
+  <CustomTerraces>k__BackingField: 1
+  <CustomTerracesDescription>k__BackingField:
+  - {x: 0.6, y: 0.1}
+  - {x: 0.9, y: 0.2}
+  <AddNoise>k__BackingField: 0
+  <NoiseFrequency>k__BackingField: 0
+  <NoiseAmplitude>k__BackingField: 0
+  <Absolute>k__BackingField: 0
+  <Invert>k__BackingField: 0
+  <Octaves>k__BackingField:
+  - frequency: 1
+    amplitude: 1
+  - frequency: 2
+    amplitude: 0.5
+  - frequency: 4
+    amplitude: 0.25
+  - frequency: 8
+    amplitude: 0.125
+  - frequency: 16
+    amplitude: 0.0625
+  - frequency: 32
+    amplitude: 0.03125
+  - frequency: 64
+    amplitude: 0.015625
+  - frequency: 128
+    amplitude: 0.0078125
+  - frequency: 256
+    amplitude: 0.00390625
+  - frequency: 512
+    amplitude: 0.001953125
+--- !u!114 &4359465878570276868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465878570276871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Enabled>k__BackingField: 0
+  <Name>k__BackingField: Noise
+  <Mode>k__BackingField: 0
+  <DistanceType>k__BackingField: 0
+  <NoiseType>k__BackingField: 5
+  <OctaveNumber>k__BackingField: 8
+  <Redistribution>k__BackingField: 2.1
+  <IslandRatio>k__BackingField: 0
+  <Scale>k__BackingField: 2.6
+  <ScaleElevation>k__BackingField: 0.4
+  <Offset>k__BackingField: {x: 9.95, y: -0.25, z: 1.59}
+  <Ridge>k__BackingField: 0
+  <OctaveDependentAmplitude>k__BackingField: 0
+  <ElevationLimit>k__BackingField: 1
+  <ElevationLimitHeights>k__BackingField: {x: 0, y: 1.2}
+  <BasicTerraces>k__BackingField: 0
+  <BasicTerracesHeight>k__BackingField: 0
+  <CustomTerraces>k__BackingField: 0
+  <CustomTerracesDescription>k__BackingField: []
+  <AddNoise>k__BackingField: 0
+  <NoiseFrequency>k__BackingField: 0
+  <NoiseAmplitude>k__BackingField: 0
+  <Absolute>k__BackingField: 0
+  <Invert>k__BackingField: 0
+  <Octaves>k__BackingField:
+  - frequency: 1
+    amplitude: 1
+  - frequency: 2
+    amplitude: 0.5
+  - frequency: 4
+    amplitude: 0.25
+  - frequency: 8
+    amplitude: 0.125
+  - frequency: 16
+    amplitude: 0.0625
+  - frequency: 32
+    amplitude: 0.03125
+  - frequency: 64
+    amplitude: 0.015625
+  - frequency: 128
+    amplitude: 0.0078125
+  - frequency: 256
+    amplitude: 0.00390625
+  - frequency: 512
+    amplitude: 0.001953125
+--- !u!114 &4359465878570276869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465878570276871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Enabled>k__BackingField: 0
+  <Name>k__BackingField: Noise
+  <Mode>k__BackingField: 1
+  <DistanceType>k__BackingField: 0
+  <NoiseType>k__BackingField: 1
+  <OctaveNumber>k__BackingField: 10
+  <Redistribution>k__BackingField: 1
+  <IslandRatio>k__BackingField: 0
+  <Scale>k__BackingField: 0.4
+  <ScaleElevation>k__BackingField: 0.17
+  <Offset>k__BackingField: {x: 8.86, y: -0.42, z: 116.81}
+  <Ridge>k__BackingField: 0
+  <OctaveDependentAmplitude>k__BackingField: 0
+  <ElevationLimit>k__BackingField: 1
+  <ElevationLimitHeights>k__BackingField: {x: 0, y: 0.29}
+  <BasicTerraces>k__BackingField: 0
+  <BasicTerracesHeight>k__BackingField: 0
+  <CustomTerraces>k__BackingField: 0
+  <CustomTerracesDescription>k__BackingField: []
+  <AddNoise>k__BackingField: 0
+  <NoiseFrequency>k__BackingField: 0
+  <NoiseAmplitude>k__BackingField: 0
+  <Absolute>k__BackingField: 0
+  <Invert>k__BackingField: 0
+  <Octaves>k__BackingField:
+  - frequency: 1
+    amplitude: 1
+  - frequency: 2
+    amplitude: 0.5
+  - frequency: 4
+    amplitude: 0.25
+  - frequency: 8
+    amplitude: 0.125
+  - frequency: 16
+    amplitude: 0.0625
+  - frequency: 32
+    amplitude: 0.03125
+  - frequency: 64
+    amplitude: 0.015625
+  - frequency: 128
+    amplitude: 0.0078125
+  - frequency: 256
+    amplitude: 0.00390625
+  - frequency: 512
+    amplitude: 0.001953125
+--- !u!114 &4359465878570276890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359465878570276871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dce808d71cc8044b3c3f5ae7b7e156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Enabled>k__BackingField: 1
+  <Name>k__BackingField: Noise
+  <Mode>k__BackingField: 0
+  <DistanceType>k__BackingField: 0
+  <NoiseType>k__BackingField: 5
+  <OctaveNumber>k__BackingField: 8
+  <Redistribution>k__BackingField: 1.92
+  <IslandRatio>k__BackingField: 0
+  <Scale>k__BackingField: 1.48
+  <ScaleElevation>k__BackingField: 0.71
+  <Offset>k__BackingField: {x: 0, y: -0.29, z: 0}
+  <Ridge>k__BackingField: 0
+  <OctaveDependentAmplitude>k__BackingField: 0
+  <ElevationLimit>k__BackingField: 0
+  <ElevationLimitHeights>k__BackingField: {x: 0, y: 1.2}
+  <BasicTerraces>k__BackingField: 0
+  <BasicTerracesHeight>k__BackingField: 0
+  <CustomTerraces>k__BackingField: 1
+  <CustomTerracesDescription>k__BackingField:
+  - {x: 0.64, y: 0.2}
+  <AddNoise>k__BackingField: 0
+  <NoiseFrequency>k__BackingField: 0
+  <NoiseAmplitude>k__BackingField: 0
+  <Absolute>k__BackingField: 0
+  <Invert>k__BackingField: 0
+  <Octaves>k__BackingField:
+  - frequency: 1
+    amplitude: 1
+  - frequency: 2
+    amplitude: 0.5
+  - frequency: 4
+    amplitude: 0.25
+  - frequency: 8
+    amplitude: 0.125
+  - frequency: 16
+    amplitude: 0.0625
+  - frequency: 32
+    amplitude: 0.03125
+  - frequency: 64
+    amplitude: 0.015625
+  - frequency: 128
+    amplitude: 0.0078125
+  - frequency: 256
+    amplitude: 0.00390625
+  - frequency: 512
+    amplitude: 0.001953125

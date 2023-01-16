@@ -6,6 +6,14 @@ public class DetailEntity : MonoBehaviour
 {
 
 
+    [SerializeField] private float visibleRadius = 100f;
+
+    void Start()
+    {
+        Optimizer optimizer = GameObject.FindGameObjectWithTag("GenerationManager").GetComponent<Optimizer>();
+        optimizer.objectsToOptimize.Add(new ItemActivator { gObject = gameObject, position = transform.position, activeRadius = visibleRadius });
+    }
+
     
     public void ActivateSpawner()
     {
