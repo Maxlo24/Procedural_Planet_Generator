@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fcb5ac59fc2120429872bee46e17756, type: 3}
+  m_Name: HugeCrater
+  m_EditorClassIdentifier: Assembly-CSharp::CratersPreset
+  Name: 
+  CraterCount: {x: 1, y: 1}
+  InBounds: 1
+  RadiusRange: {x: 300, y: 400}
+  SecondaryRadiusOffsetLimits: {x: 100, y: 150}
+  ThirdRadiusOffsetLimits: {x: 100, y: 150}
+  DepthRange: {x: 7, y: 9}
+  ElevationRange: {x: 1.95, y: 2.53}

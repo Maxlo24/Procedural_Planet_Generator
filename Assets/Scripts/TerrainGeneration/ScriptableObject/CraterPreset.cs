@@ -7,6 +7,7 @@ public class CraterPreset : ScriptableObject
 {
     [SerializeField] public string Name;
     [SerializeField] public Vector2Int CraterCount = new Vector2Int(0, 1);
+    [SerializeField] public bool InBounds = false;
     [SerializeField] public Vector2 RadiusRange = new Vector2(2, 5);
     [SerializeField] public Vector2 SecondaryRadiusOffsetLimits = new Vector2(2, 5);
     [SerializeField] public Vector2 ThirdRadiusOffsetLimits = new Vector2(2, 5);

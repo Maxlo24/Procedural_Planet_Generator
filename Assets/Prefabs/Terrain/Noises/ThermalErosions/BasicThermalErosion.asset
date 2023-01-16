@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   RepetitionCount: 1
-  IterationCount: 2000000
+  IterationCount: 3039450
   LifeTime: 500
-  Strength: 0.1
+  Strength: 0.05
   MinTanAngle: 0
-  MaxTanAngle: 89.99
+  MaxTanAngle: 71

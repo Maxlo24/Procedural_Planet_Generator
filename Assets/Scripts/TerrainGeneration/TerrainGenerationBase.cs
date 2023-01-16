@@ -143,7 +143,7 @@ public class TerrainGenerationBase : MonoBehaviour
 
     public void Smooth()
     {
-        TerrainPostProcessing.SmoothTerrain(RenderTextureCopy, ref RenderTexture);
+        TerrainPostProcessing.SmoothTerrain(ref RenderTexture, RenderTextureCopy);
         RedrawTerrain();
     }
 
