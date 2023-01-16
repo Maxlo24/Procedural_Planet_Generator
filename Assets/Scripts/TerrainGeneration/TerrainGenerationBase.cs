@@ -13,7 +13,6 @@ public class TerrainGenerationBase : MonoBehaviour
     [field: SerializeField] public List<TerrainErosion> Erosions { get; private set; }
     [field: SerializeField] public GameObject ErosionsGameObject { get; private set; }
     [field: SerializeField] public TerrainProcessing TerrainProcessing { get; private set; }
-    [field: SerializeField] public TerrainErosion TerrainErosion { get; private set; }
     [field: SerializeField] public ThermalErosion ThermalErosion { get; private set; }
     [field: SerializeField] public CraterGeneration CraterGeneration { get; private set; }
     [field: SerializeField] public TerrainPostProcessing TerrainPostProcessing { get; private set; }
@@ -119,7 +118,7 @@ public class TerrainGenerationBase : MonoBehaviour
 
                     ErodeResult erosionResult = erosion.Erode(ref RenderTexture, ErosionTextureCopy, DepositTextureCopy);
 
-                    if (TerrainErosion.GenerateErosionTexture)
+                    if (erosion.GenerateErosionTexture)
                     {
                         Graphics.Blit(erosionResult.ErosionTexture, ErosionTextureCopy);
                         Graphics.Blit(erosionResult.DepositTexture, DepositTextureCopy);

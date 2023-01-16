@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -34,6 +35,7 @@ public class AutoTerrainGeneration : MonoBehaviour
         
         foreach (SingleNoise noisePreset in TerrainGeneration.Noises)
         {
+            if (noisePreset == null) continue;
             Noise noise = new Noise(noisePreset, seed);
             noise.ApplyNoise(ref RenderTexture, Terrain);
         }
@@ -57,12 +59,14 @@ public class AutoTerrainGeneration : MonoBehaviour
     {
         int seed = (Seed < 0) ? UnityEngine.Random.Range(0, int.MaxValue) : Seed;
 
-        if (TerrainGeneration.ThermalErosion == null)
-            return;
-        ThermalErosion thermalErosion = new ThermalErosion(TerrainGeneration.ThermalErosion, seed);
-        for (int i = 0; i < TerrainGeneration.ThermalErosion.RepetitionCount; i++)
+        foreach (ThermalErosionPreset erosionPreset in TerrainGeneration.ThermalErosions)
         {
-            thermalErosion.Erode(ref RenderTexture, Terrain);
+            if (erosionPreset == null) continue;
+            ThermalErosion erosion = new ThermalErosion(erosionPreset, seed);
+            for (int i = 0; i < erosion.RepetitionCount; i++)
+            {
+                erosion.Erode(ref RenderTexture, Terrain);
+            }
         }
     }
 
@@ -72,6 +76,7 @@ public class AutoTerrainGeneration : MonoBehaviour
 
         foreach (ErosionPreset erosionPreset in TerrainGeneration.Erosions)
         {
+            if (erosionPreset == null) continue;
             TerrainErosion erosion = new TerrainErosion(erosionPreset, seed);
             for (int i = 0; i < erosion.RepetitionCount; i++)
             {
@@ -83,10 +88,9 @@ public class AutoTerrainGeneration : MonoBehaviour
     public void GenerateCraters()
     {
         int seed = (Seed < 0) ? UnityEngine.Random.Range(0, int.MaxValue) : Seed;
-        Debug.Log(TerrainGeneration.Craters.Count);
         foreach (CraterPreset craterPreset in TerrainGeneration.Craters)
         {
-            Debug.Log("Generating craters");
+            if (craterPreset == null) continue;
             CraterGeneration craterGeneration = new CraterGeneration(craterPreset, seed);
             craterGeneration.GenerateCraters(ref RenderTexture, ref RenderTextureCopy, Terrain.terrainData.heightmapResolution);
         }
