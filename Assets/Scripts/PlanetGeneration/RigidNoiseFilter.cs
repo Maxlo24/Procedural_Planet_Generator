@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RigidNoiseFilter : INoiseFilter
 {
-    Noise noise = new Noise();
+    PlanetNoise noise = new PlanetNoise();
     NoiseSettings settings;
 
 

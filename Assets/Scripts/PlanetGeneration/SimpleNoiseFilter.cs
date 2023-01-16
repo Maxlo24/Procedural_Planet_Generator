@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SimpleNoiseFilter : INoiseFilter
 {
-    Noise noise = new Noise();
+    PlanetNoise noise = new PlanetNoise();
     NoiseSettings settings;
 
 
