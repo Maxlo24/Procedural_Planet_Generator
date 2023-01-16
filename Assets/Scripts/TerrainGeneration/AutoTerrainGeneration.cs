@@ -60,7 +60,10 @@ public class AutoTerrainGeneration : MonoBehaviour
         if (TerrainGeneration.ThermalErosion == null)
             return;
         ThermalErosion thermalErosion = new ThermalErosion(TerrainGeneration.ThermalErosion, seed);
-        thermalErosion.Erode(ref RenderTexture, Terrain);
+        for (int i = 0; i < TerrainGeneration.ThermalErosion.RepetitionCount; i++)
+        {
+            thermalErosion.Erode(ref RenderTexture, Terrain);
+        }
     }
 
     public void ErodeTerrain()
@@ -89,12 +92,21 @@ public class AutoTerrainGeneration : MonoBehaviour
         }
     }
 
+    public void PostProcessing()
+    {
+        if (TerrainGeneration.PostProcessing == null)
+            return;
+        TerrainPostProcessing postProcessing = new TerrainPostProcessing(TerrainGeneration.PostProcessing);
+        postProcessing.SmoothTerrain(ref RenderTexture, null);
+    }
+
     public void GenerateEntireMap()
     {
         GenerateTerrain();
         GenerateCraters();
-        ThermalErosion();
         ErodeTerrain();
+        ThermalErosion();
+        PostProcessing();
         RedrawTerrain();
     }
 }

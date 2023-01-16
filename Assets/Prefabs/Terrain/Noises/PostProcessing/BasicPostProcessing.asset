@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a19074076fe3484478742e3fa4af7a1b, type: 3}
-  m_Name: BasicThermalErosion
+  m_Script: {fileID: 11500000, guid: 00a02a3386eeb3d4487de4ea2b8da8a0, type: 3}
+  m_Name: BasicPostProcessing
   m_EditorClassIdentifier: 
-  Name: 
-  RepetitionCount: 1
-  IterationCount: 3039450
-  LifeTime: 500
-  Strength: 0.05
-  MinTanAngle: 0
-  MaxTanAngle: 71
+  Name: Basic
+  Sigma: 0.61
+  KernelRadius: 1
+  ApplyWeight: 0
+  Weight: 0
