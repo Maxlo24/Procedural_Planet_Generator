@@ -12,10 +12,6 @@ public class Icosahedron : MonoBehaviour
     [Header("Scale")]
     [Range(1, 10)][SerializeField] private float scale = 1;
 
-    public enum PlanetType { Earth, Desert, Volcanic, Ice  };
-    [Header("Planet Type")]
-    public PlanetType planetType;
-
     [Header("Noise")]
     public NoiseLayer[] noiseLayers;
 
