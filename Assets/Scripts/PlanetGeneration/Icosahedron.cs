@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+
 public class Icosahedron : MonoBehaviour
 {
     [Header("Resolution")]
     [Range(0, 7)][SerializeField] private int subdivisions = 1;
     // scale of the icosahedron (default 1)
     [Header("Scale")]
-    [Range(1, 10)][SerializeField] private float scale = 1;
+    [Range(1, 10)][SerializeField] public float scale = 1;
 
     [Header("Noise")]
-    public NoiseLayer[] noiseLayers;
-
+    public NoiseLayer noiseLayers;
 
 
     public Mesh sphereMesh;
@@ -22,6 +23,10 @@ public class Icosahedron : MonoBehaviour
 
     public IcosahedronGenerator icosahedron;
 
+    public bool liveUpdate = false;
+
+    // random Vector3 named center
+    public Vector3 center;
 
 
     private void Start()
@@ -64,9 +69,9 @@ public class Icosahedron : MonoBehaviour
     
     public void UpdateMesh()
     {
-
-
-        icosahedron = new IcosahedronGenerator(noiseLayers);
+        // random vector3
+        center = new Vector3(UnityEngine.Random.Range(-1000, 1000), UnityEngine.Random.Range(-1000, 1000), UnityEngine.Random.Range(-1000, 1000));
+        icosahedron = new IcosahedronGenerator(noiseLayers.noiseSettings);
         icosahedron.Initialize();
         // créer sphere 
 
@@ -96,35 +101,27 @@ public class Icosahedron : MonoBehaviour
         // for each point in the icosahedron : call the noise filter
         for (int i = 0; i < icosahedron.Vertices.Count; i++)
         {
-            icosahedron.Vertices[i] = icosahedron.Vertices[i]*(1+ icosahedron.ComputeNoise(icosahedron.Vertices[i]));
+            icosahedron.Vertices[i] = icosahedron.Vertices[i] * (1 + icosahedron.ComputeNoise(icosahedron.Vertices[i],center));
+            if (noiseLayers.setMaxThreshold &&  (icosahedron.GetVertexHeight(i) >  scale * noiseLayers.maxThreshold))
+                {
+                // rescale icosahedron.Vertices[i] so that it is of norm scale * noiseLayers.maxThreshold
+                icosahedron.Vertices[i] = icosahedron.Vertices[i] * (scale * noiseLayers.maxThreshold / icosahedron.GetVertexHeight(i));
+            }
         }
+        
+            
 
 
         // if planet type is earth : get earth shader. If desert: get desert shader
         // Shader planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
-        Shader planetShader = Shader.Find("Shader Graphs/PlanetTerrain");
+ /*       Shader planetShader = Shader.Find("Shader Graphs/PlanetTerrain");
 
-/*        switch (planetType)
-        {
-            case PlanetType.Earth:
-                planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
-                break;
-            case PlanetType.Desert:
-                planetShader = Shader.Find("Shader Graphs/DesertShader");
-                break;
-            case PlanetType.Volcanic:
-                planetShader = Shader.Find("Shader Graphs/VolcanicShader");
-                break;
-            case PlanetType.Ice:
-                planetShader = Shader.Find("Shader Graphs/IceShader");
-                break;
-        }*/
 
-        /*Shader shader = Shader.Find("Shader Graphs/EarthLikeShader");*/
+        *//*Shader shader = Shader.Find("Shader Graphs/EarthLikeShader");*//*
         Material material = new Material(planetShader);
         material.SetFloat("_Ratio", scale);
         this.gameObject.GetComponent<MeshRenderer>().sharedMaterial = material;
-
+*/
         icosahedron.Rescale(scale);
 
         genMesh();
@@ -162,6 +159,10 @@ public class Icosahedron : MonoBehaviour
                     lastScale = scale;
                     UpdateMesh();
                 }*/
-        // UpdateMesh();
+
+        if (liveUpdate)
+        {
+            UpdateMesh();
+        }
     }
 }

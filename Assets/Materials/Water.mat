@@ -109,7 +109,7 @@ Material:
     - _DecalMeshViewBias: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Distance: -3
+    - _Distance: -3.14
     - _DrawOrder: 0
     - _DstBlend: 0
     - _EnvironmentReflections: 1
@@ -133,7 +133,7 @@ Material:
     - _ReceiveShadows: 1
     - _Refraction_speed: 0.01
     - _Refraction_strength: -0.99
-    - _Smoothness: 0.564
+    - _Smoothness: 0.918
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 0.1
@@ -141,7 +141,7 @@ Material:
     - _Strength: 15
     - _Surface: 0
     - _Tile_speed: 0.05
-    - _Transparency: 0.106
+    - _Transparency: 0
     - _Wave_amplitude: 0.0001
     - _Wave_speed: 5.64
     - _WorkflowMode: 1

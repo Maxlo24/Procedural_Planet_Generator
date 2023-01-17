@@ -19,7 +19,9 @@ public class PlanetGlobalGeneration : MonoBehaviour
     [SerializeField] private Liquid liquid;
 
     [SerializeField] private CloudManager cloudGenerator;
-    
+
+    [SerializeField] private PlanetGenerator planetGenerator;
+
 
 
     public float fogIntensity;
@@ -43,6 +45,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
     private void OnValidate()
     {
         UpdateAttributes();
+        
 
     }
 
@@ -60,6 +63,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
         
         UpdateAttributes();
         GetComponent< ColorStyle > ().SetRandomPalette();
+        
 
     }
 

@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class NoiseSettings
+[CreateAssetMenu(fileName = "NewNoise", menuName = "Scriptable objects/Planet/Noise", order = 0)]
+public class NoiseSettings : ScriptableObject
 {
+
+    public bool useFirstLayerAsMask = true;
     public enum FilterType { Simple, Rigid };
     public FilterType filterType;
     [Range(0, 1)]
@@ -21,9 +23,13 @@ public class NoiseSettings
 
     [Range(0, 2)]
     public float persistance = 0.5f;
-    public Vector3 center;
 
     [Range(0, 2)]
     public float seaThreshold = 0.5f;
+
+
+    public bool useMaxThreshold = false;
+    [Range(0, 10)]
+    public float maxThreshold = 0.5f;
 }
  

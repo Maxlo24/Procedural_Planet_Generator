@@ -33,7 +33,8 @@ public class ColorStyle : MonoBehaviour
     [SerializeField] private Material[] materialsToUpdate;
 
 
-
+    [SerializeField] private PlanetGenerator planetGenerator;
+    
     public float fog_ratio;
 
     private int previousActiveVegetationPalette = 0;
@@ -134,11 +135,7 @@ public class ColorStyle : MonoBehaviour
             //mat.SetColor("_Beach_color", activeCrust.sand);
 
         }
-
-
-        
-
-
+        planetGenerator.UpdateColors(activeCrust, activeVegetation);
     }
 
     public Vector3 GetGrassColor()
