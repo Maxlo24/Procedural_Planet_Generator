@@ -13,7 +13,7 @@ public class RigidNoiseFilter : INoiseFilter
     {
         this.settings = settings;
     }
-    public float Evaluate(Vector3 point)
+    public float Evaluate(Vector3 point, Vector3 center)
     {
         float noiseValue = 0;
         float frequency = settings.baseRoughness;
@@ -21,7 +21,7 @@ public class RigidNoiseFilter : INoiseFilter
         float weight = 1;
         for (int i = 0; i < settings.numLayers; i++)
         {
-            float v = 1 - Mathf.Abs(noise.Evaluate(point * frequency + settings.center));
+            float v = 1 - Mathf.Abs(noise.Evaluate(point * frequency + center));
             v *= weight * v;
             weight = v;
             
@@ -30,6 +30,10 @@ public class RigidNoiseFilter : INoiseFilter
             amplitude *= settings.persistance;
         }
         noiseValue = Mathf.Max(0, noiseValue - settings.seaThreshold);
+        if (settings.useMaxThreshold)
+        {
+            noiseValue = Mathf.Min(settings.maxThreshold, noiseValue);
+        }
         return noiseValue * settings.scale;
     }
 }

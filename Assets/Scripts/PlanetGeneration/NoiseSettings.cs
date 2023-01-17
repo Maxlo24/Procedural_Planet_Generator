@@ -23,9 +23,13 @@ public class NoiseSettings : ScriptableObject
 
     [Range(0, 2)]
     public float persistance = 0.5f;
-    public Vector3 center;
 
     [Range(0, 2)]
     public float seaThreshold = 0.5f;
+
+
+    public bool useMaxThreshold = false;
+    [Range(0, 10)]
+    public float maxThreshold = 0.5f;
 }
  

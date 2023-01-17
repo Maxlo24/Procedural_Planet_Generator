@@ -92,7 +92,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Additional_power: 318.03
+    - _Additional_power: 281.57
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -102,7 +102,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Displacement: 2
+    - _Displacement: -45.9
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _Fresnel_power: 0.02
@@ -110,9 +110,9 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise_scale: 0
+    - _Noise_scale: 3
     - _OcclusionStrength: 1
-    - _Opacity: 0.18
+    - _Opacity: 0
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0

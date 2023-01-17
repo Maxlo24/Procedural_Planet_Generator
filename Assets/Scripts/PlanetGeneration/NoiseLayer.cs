@@ -6,7 +6,11 @@ using UnityEngine;
 public class NoiseLayer : ScriptableObject
 {
     public NoiseSettings[] noiseSettings;
+    public bool setMaxThreshold = false;
+
+    [Range(0.5f, .80f)]
+    [SerializeField] public float maxThreshold = .6f;
 
 
-    
+
 }

@@ -143,8 +143,6 @@ public class PlanetGlobalGeneration : MonoBehaviour
         if (cloudGenerator != null) cloudGenerator.UpdateClouds();
         GetComponent<ColorStyle>().UpdateStyle();
 
-        planetGenerator.GeneratePlanet();
-
 
     }
 }

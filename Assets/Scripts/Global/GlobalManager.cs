@@ -11,7 +11,7 @@ public class GlobalManager : MonoBehaviour
 
     [Header("Solar system")]
     public GameObject solarSystem;
-
+    public PlanetGenerator planetGenerator;
 
     [Header("Map")]
     public GameObject map;
@@ -122,6 +122,9 @@ public class GlobalManager : MonoBehaviour
             temperatureText.text = "Temperature : " + planetGlobalGeneration.temperature.ToString() + "°C";
             humidityText.text = "Humidity : " + planetGlobalGeneration.humidity.ToString() + "%";
             vegetationText.text = "Vegetation : " + planetGlobalGeneration.vegetation.ToString() + "%";
+            planetGenerator.GeneratePlanet();
+
+            
 
 
 
@@ -150,7 +153,7 @@ public class GlobalManager : MonoBehaviour
                 map.SetActive(false);
                 colorStyle.fog_ratio = 0;
                 colorStyle.grass = false;
-                colorStyle.UpdateStyle();
+                // colorStyle.UpdateStyle();
 
                 starterAssetsInputs.cursorLocked = false;
 
@@ -211,7 +214,7 @@ public class GlobalManager : MonoBehaviour
 
         //planetGlobalGeneration.GeneratePlanet();
         colorStyle.grass = true;
-        colorStyle.UpdateStyle();
+        // colorStyle.UpdateStyle();
 
         generationManager.Generate();
 

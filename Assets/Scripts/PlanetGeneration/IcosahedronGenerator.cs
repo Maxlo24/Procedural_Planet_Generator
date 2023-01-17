@@ -12,7 +12,7 @@ public class IcosahedronGenerator
     public List<Vector3> Vertices { get => vertices; private set => vertices = value; }
 
     INoiseFilter[] noiseFilters;
-    NoiseSettings[] noiseSettings;
+    public NoiseSettings[] noiseSettings;
     // create constructor
     public IcosahedronGenerator(NoiseSettings[] noiseSettings)
     {
@@ -153,14 +153,14 @@ public class IcosahedronGenerator
         return distanceFromCenter;
     }
 
-    public float ComputeNoise(Vector3 point)
+    public float ComputeNoise(Vector3 point, Vector3 center)
     {
         float firstLayerValue = 0;
         float elevation = 0;
 
         if (noiseFilters.Length > 0)
         {
-            firstLayerValue = noiseFilters[0].Evaluate(point);
+            firstLayerValue = noiseFilters[0].Evaluate(point, center);
 
             elevation = firstLayerValue;
 
@@ -170,7 +170,7 @@ public class IcosahedronGenerator
         {
 
             float mask = (noiseSettings[i].useFirstLayerAsMask) ? firstLayerValue : 1;
-            elevation += noiseFilters[i].Evaluate(point) * mask;
+            elevation += noiseFilters[i].Evaluate(point, center) * mask;
 
         }
         return elevation;
