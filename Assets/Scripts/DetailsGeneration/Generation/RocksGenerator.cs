@@ -29,6 +29,31 @@ public class RocksGenerator : MonoBehaviour
     private int MaxCount = 10000;
 
 
+    public DetailsGenerationSequence generationSequence;
+
+
+    public void SpawnAll()
+    {
+
+        for (int i = 0; i < generationSequence.detailsGenerations.Length; i++)
+        {
+            _detailsType[0] = generationSequence.detailsGenerations[i].type;
+            _detailsSize = generationSequence.detailsGenerations[i].size;
+
+            elementDensity = generationSequence.detailsGenerations[i].density;
+            _scaleRandomness = generationSequence.detailsGenerations[i].sizeRange;
+
+            for (int j = 0; j < generationSequence.detailsGenerations[i].numberOfIterations; j++)
+            {
+                SpawnElements();
+            }
+
+        }
+
+
+    }
+
+
     public void SpawnElements()
     {
         //LoadTerrain();

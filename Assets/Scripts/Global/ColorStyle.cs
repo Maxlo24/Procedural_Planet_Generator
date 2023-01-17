@@ -26,7 +26,7 @@ public class ColorStyle : MonoBehaviour
 
 
     [SerializeField] private bool liveUpdate = false;
-    [SerializeField] private bool grass = false;
+    [SerializeField] public bool grass = false;
 
 
     public GrassGenerator grassGenerator;
@@ -116,7 +116,7 @@ public class ColorStyle : MonoBehaviour
         if (grass)
         {
             if (planetAttributs.atmosphere == 0) grassGenerator.ClearGrass();
-            else grassGenerator.SpawnGrass();
+            else grassGenerator.SpawnGrass(planetAttributs.snowLevel-10);
             
         }
 

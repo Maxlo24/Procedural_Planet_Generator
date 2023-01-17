@@ -2,7 +2,7 @@ using UnityEngine;
 using Assets.Scripts.DetailsGeneration;
 
 
-[CreateAssetMenu(fileName = "NewDetailsCollection", menuName = "Scriptable objects/DetailsCollection", order = 0)]
+[CreateAssetMenu(fileName = "NewDetailsCollection", menuName = "Scriptable objects/Details/DetailsCollection", order = 0)]
 public class DetailsCollection : ScriptableObject
 {
     [Header("Small")]

@@ -71,7 +71,8 @@ public class GenerationManager : MonoBehaviour
 
     public void Spwan()
     {
-        spawnRoot.ActivateSpawner();
+        //spawnRoot.ActivateSpawner();
+        GetComponent<RocksGenerator>().SpawnAll();
     }
 
     public void ClipToFloor()
@@ -153,6 +154,7 @@ public class GenerationManager : MonoBehaviour
     public void GenerateElements()
     {
        GetComponent<RocksGenerator>().SpawnElements();
+
 
     }
 

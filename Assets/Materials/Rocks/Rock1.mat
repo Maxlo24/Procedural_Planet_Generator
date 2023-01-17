@@ -80,9 +80,9 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0.293
-    - _Snow_level: 1000
+    - _Snow_level: 10.5
     m_Colors:
-    - _Rock_color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+    - _Rock_color: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
     - _Snow_color: {r: 0.7546102, g: 0.772399, b: 0.7735849, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5045340058493247764
