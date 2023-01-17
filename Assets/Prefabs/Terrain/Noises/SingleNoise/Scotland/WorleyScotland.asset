@@ -29,9 +29,9 @@ MonoBehaviour:
   MinElevationLimits: {x: 0, y: 0}
   MaxElevationLimits: {x: 0.13, y: 0.3}
   CustomTerraces: 1
-  TerracesCountLimits: {x: 2, y: 4}
-  TerracesOffsetLimits: {x: 0.01, y: 0.2}
-  TerracesSizeLimits: {x: 0.06, y: 0.12}
+  TerracesCountLimits: {x: 3, y: 6}
+  TerracesOffsetLimits: {x: 0.01, y: 0.12}
+  TerracesSizeLimits: {x: 0.07, y: 0.12}
   AddNoise: 1
   NoiseFrequencyLimits: {x: 0.7, y: 0.9}
-  NoiseAmplitudeyLimits: {x: 0.2, y: 0.3}
+  NoiseAmplitudeyLimits: {x: 0.05, y: 0.3}

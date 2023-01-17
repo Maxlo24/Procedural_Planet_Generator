@@ -38,6 +38,7 @@ public class AutoTerrainGeneration : MonoBehaviour
             if (noisePreset == null) continue;
             Noise noise = new Noise(noisePreset, seed);
             noise.ApplyNoise(ref RenderTexture, Terrain);
+            seed++;
         }
 
         if (RenderTextureCopy != null) RenderTextureCopy.Release();
@@ -91,8 +92,12 @@ public class AutoTerrainGeneration : MonoBehaviour
         foreach (CraterPreset craterPreset in TerrainGeneration.Craters)
         {
             if (craterPreset == null) continue;
+            Debug.Log("Generating crater: " + seed);
             CraterGeneration craterGeneration = new CraterGeneration(craterPreset, seed);
             craterGeneration.GenerateCraters(ref RenderTexture, ref RenderTextureCopy, Terrain.terrainData.heightmapResolution);
+            if (RenderTextureCopy != null) RenderTextureCopy.Release();
+            RenderTextureCopy = ImageLib.CopyRenderTexture(RenderTexture);
+            seed /= 2;
         }
     }
 

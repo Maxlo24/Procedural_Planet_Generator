@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b077a909b9f2a314a9b91a16ab6e1e2d, type: 3}
+  m_Name: Mars
+  m_EditorClassIdentifier: 
+  Name: Mars
+  Noises:
+  - {fileID: 11400000, guid: c3ca4c591478d4a4f8711f4ca1f2976e, type: 2}
+  - {fileID: 11400000, guid: 1541df70b8e77d946b0ba65226071782, type: 2}
+  - {fileID: 11400000, guid: eaa2ef8b5a7c5cb4691553a36556b6cf, type: 2}
+  - {fileID: 11400000, guid: 24cbb1bb3cb2d6147a113c84fbd5c0da, type: 2}
+  - {fileID: 11400000, guid: 53740804cd5185f49b367867ab204420, type: 2}
+  Erosions:
+  - {fileID: 11400000, guid: f1cd2c1c78fdeb1429d49176395a8e3b, type: 2}
+  ThermalErosions:
+  - {fileID: 11400000, guid: f5f141bad80c10f49b4fcd12a53a1733, type: 2}
+  Craters: []
+  PostProcessing: {fileID: 0}

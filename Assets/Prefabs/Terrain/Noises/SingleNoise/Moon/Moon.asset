@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b077a909b9f2a314a9b91a16ab6e1e2d, type: 3}
+  m_Name: Moon
+  m_EditorClassIdentifier: 
+  Name: Moon
+  Noises:
+  - {fileID: 11400000, guid: 0c7adb468e0647546a0831dd74dd43fb, type: 2}
+  - {fileID: 11400000, guid: 9e967aa949cd0964da3ae4bf32414a48, type: 2}
+  Erosions:
+  - {fileID: 11400000, guid: bb7e6f527eba515418e476d1193d8e4e, type: 2}
+  - {fileID: 11400000, guid: 3a00ffdb73f417f4e831eeafbe87927f, type: 2}
+  ThermalErosions:
+  - {fileID: 11400000, guid: e5ddf0d6d6b16294faecf43cc8a981bc, type: 2}
+  - {fileID: 11400000, guid: f5f141bad80c10f49b4fcd12a53a1733, type: 2}
+  Craters:
+  - {fileID: 11400000, guid: 0b62c48b1291bac4b9b15ff98692e354, type: 2}
+  - {fileID: 11400000, guid: 51f6d6ca7eabb0242b9bbdb30b7dbc3f, type: 2}
+  - {fileID: 11400000, guid: 1a25c788d0b502742beac6a54943bbfe, type: 2}
+  PostProcessing: {fileID: 0}

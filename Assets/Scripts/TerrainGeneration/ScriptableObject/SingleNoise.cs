@@ -31,6 +31,8 @@ public class SingleNoise : ScriptableObject
     [SerializeField] public Vector2Int TerracesCountLimits = new Vector2Int(0, 2);
     [SerializeField] public Vector2 TerracesOffsetLimits = new Vector2(0.2f, 0.7f);
     [SerializeField] public Vector2 TerracesSizeLimits = new Vector2(0.05f, 0.2f);
+    [SerializeField] public bool FixedTerraces = false;
+    [SerializeField] public List<Vector2> FixedTerracesDescription = new List<Vector2>();
 
     [SerializeField] public bool AddNoise;
     [SerializeField] public Vector2 NoiseFrequencyLimits;
