@@ -100,7 +100,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
             //RenderSettings.fogColor = new Color(189, 234, 255, 255.0f)/255f;
             RenderSettings.ambientLight = Color.white;
 
-            RenderSettings.ambientIntensity = atmosphere/ 3.0f + 1;
+            RenderSettings.ambientIntensity = 2*atmosphere/ 3.0f + 1;
 
 
         }
