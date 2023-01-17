@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class NoiseSettings
+[CreateAssetMenu(fileName = "NewNoise", menuName = "Scriptable objects/Planet/Noise", order = 0)]
+public class NoiseSettings : ScriptableObject
 {
+
+    public bool useFirstLayerAsMask = true;
     public enum FilterType { Simple, Rigid };
     public FilterType filterType;
     [Range(0, 1)]

@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class NoiseLayer
+[CreateAssetMenu(fileName = "NewNoiseLayers", menuName = "Scriptable objects/Planet/NoiseLayers", order = 0)]
+public class NoiseLayer : ScriptableObject
 {
-    public bool enabled = true;
-    public bool useFirstLayerAsMask;
-    public NoiseSettings noiseSettings;
+    public NoiseSettings[] noiseSettings;
+
+
+    
 }

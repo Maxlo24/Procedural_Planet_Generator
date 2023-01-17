@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class IcosahedronGenerator
 {
     private List<Polygon> polygons;
@@ -11,15 +12,15 @@ public class IcosahedronGenerator
     public List<Vector3> Vertices { get => vertices; private set => vertices = value; }
 
     INoiseFilter[] noiseFilters;
-    NoiseLayer[] noiseLayers;
+    NoiseSettings[] noiseSettings;
     // create constructor
-    public IcosahedronGenerator(NoiseLayer[] noiseLayers)
+    public IcosahedronGenerator(NoiseSettings[] noiseSettings)
     {
-        this.noiseLayers = noiseLayers;
-        noiseFilters = new INoiseFilter [noiseLayers.Length];
+        this.noiseSettings = noiseSettings;
+        noiseFilters = new INoiseFilter[noiseSettings.Length];
         for (int i = 0; i < noiseFilters.Length; i++)
         {
-            noiseFilters[i] = NoiseFilterFactory.CreateNoiseFilter(noiseLayers[i].noiseSettings);
+            noiseFilters[i] = NoiseFilterFactory.CreateNoiseFilter(noiseSettings[i]);
         }
     }
 
@@ -160,20 +161,19 @@ public class IcosahedronGenerator
         if (noiseFilters.Length > 0)
         {
             firstLayerValue = noiseFilters[0].Evaluate(point);
-            if (noiseLayers[0].enabled)
-            {
-                elevation = firstLayerValue;
-            }
+
+            elevation = firstLayerValue;
+
         }
 
         for (int i = 1; i < noiseFilters.Length; i++)
         {
-            if (noiseLayers[i].enabled)
-            {
-                float mask = (noiseLayers[i].useFirstLayerAsMask) ? firstLayerValue : 1;
-                elevation += noiseFilters[i].Evaluate(point) * mask;
-            }
+
+            float mask = (noiseSettings[i].useFirstLayerAsMask) ? firstLayerValue : 1;
+            elevation += noiseFilters[i].Evaluate(point) * mask;
+
         }
         return elevation;
     }
+
 }

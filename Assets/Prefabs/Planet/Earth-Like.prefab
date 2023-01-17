@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909045991503000414}
-  m_LocalRotation: {x: -0.03582492, y: -0.9563441, z: -0.28267032, w: -0.064961515}
+  m_LocalRotation: {x: -0.92443675, y: -0.24757686, z: -0.14537308, w: 0.25097644}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.05, y: 4.05, z: 4.05}
+  m_LocalScale: {x: 4.07, y: 4.07, z: 4.07}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5126331693044754109}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -32.412, y: 170.144, z: 7.162}
+  m_LocalEulerAnglesHint: {x: -32.412, y: 170.144, z: 152.886}
 --- !u!33 &7024804753504759878
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -123,16 +123,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5126331693044754081}
-  m_LocalRotation: {x: 0.43442592, y: 0.65925676, z: 0.06538283, w: 0.61022925}
+  m_LocalRotation: {x: 0.57998115, y: 0.26464024, z: 0.23978013, w: 0.7321837}
   m_LocalPosition: {x: 13.4, y: 19.25, z: 0.14}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5126331694321140478}
   - {fileID: 2411645723372340047}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 26.359, y: -7814.019, z: -313.255}
+  m_LocalEulerAnglesHint: {x: 46.253, y: -7845.705, z: -287.876}
 --- !u!114 &5126331693044754110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,25 +152,25 @@ MonoBehaviour:
     useFirstLayerAsMask: 1
     noiseSettings:
       filterType: 0
-      scale: 0.06
-      numLayers: 4
+      scale: 0.15
+      numLayers: 3
       baseRoughness: 1.01
-      roughness: 0.93
-      persistance: 0.7
+      roughness: 1.9
+      persistance: 0.53
       center: {x: -0.3, y: 0.35, z: -2.86}
-      seaThreshold: 1.18
+      seaThreshold: 0.6
   - enabled: 1
     useFirstLayerAsMask: 1
     noiseSettings:
       filterType: 0
-      scale: 0.46
+      scale: 0.48
       numLayers: 6
       baseRoughness: 1.64
       roughness: 2.54
       persistance: 0.6
       center: {x: 0.31, y: 0.48, z: 0}
       seaThreshold: 0.5
-  - enabled: 1
+  - enabled: 0
     useFirstLayerAsMask: 1
     noiseSettings:
       filterType: 1
@@ -251,7 +251,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5126331694321140478
 Transform:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ Transform:
   m_GameObject: {fileID: 5126331694321140450}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.51, y: 5.51, z: 5.51}
+  m_LocalScale: {x: 4.93, y: 4.93, z: 4.93}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5126331693044754109}

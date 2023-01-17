@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+
 public class Icosahedron : MonoBehaviour
 {
     [Header("Resolution")]
@@ -13,8 +15,7 @@ public class Icosahedron : MonoBehaviour
     [Range(1, 10)][SerializeField] private float scale = 1;
 
     [Header("Noise")]
-    public NoiseLayer[] noiseLayers;
-
+    public NoiseLayer noiseLayers;
 
 
     public Mesh sphereMesh;
@@ -22,6 +23,7 @@ public class Icosahedron : MonoBehaviour
 
     public IcosahedronGenerator icosahedron;
 
+    public bool liveUpdate = false;
 
 
     private void Start()
@@ -66,7 +68,7 @@ public class Icosahedron : MonoBehaviour
     {
 
 
-        icosahedron = new IcosahedronGenerator(noiseLayers);
+        icosahedron = new IcosahedronGenerator(noiseLayers.noiseSettings);
         icosahedron.Initialize();
         // créer sphere 
 
@@ -104,21 +106,6 @@ public class Icosahedron : MonoBehaviour
         // Shader planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
         Shader planetShader = Shader.Find("Shader Graphs/PlanetTerrain");
 
-/*        switch (planetType)
-        {
-            case PlanetType.Earth:
-                planetShader = Shader.Find("Shader Graphs/EarthLikeShader");
-                break;
-            case PlanetType.Desert:
-                planetShader = Shader.Find("Shader Graphs/DesertShader");
-                break;
-            case PlanetType.Volcanic:
-                planetShader = Shader.Find("Shader Graphs/VolcanicShader");
-                break;
-            case PlanetType.Ice:
-                planetShader = Shader.Find("Shader Graphs/IceShader");
-                break;
-        }*/
 
         /*Shader shader = Shader.Find("Shader Graphs/EarthLikeShader");*/
         Material material = new Material(planetShader);
@@ -162,6 +149,10 @@ public class Icosahedron : MonoBehaviour
                     lastScale = scale;
                     UpdateMesh();
                 }*/
-        // UpdateMesh();
+
+        if (liveUpdate)
+        {
+            UpdateMesh();
+        }
     }
 }
