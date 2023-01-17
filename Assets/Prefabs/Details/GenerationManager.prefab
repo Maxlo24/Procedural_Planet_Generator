@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnRoot: {fileID: 0}
   manualSpawn: 0
-  detailsCollectionGroup: {fileID: 11400000, guid: 5b7cf8b19688ca343bd1507dab8ff3e5,
+  detailsCollectionGroup: {fileID: 11400000, guid: 3b5419486b2df164b9a51a726f7ae34d,
     type: 2}
 --- !u!114 &2219545251708762431
 MonoBehaviour:
@@ -58,12 +58,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2219545251708762418}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6459f3c6305e3340bdbf8a182d4d1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optimize: 1
+  optimize: 0
   optimisationFactor: 75
   optimisationIntensity: 0
 --- !u!114 &2219545251708762430
@@ -80,9 +80,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrain: {fileID: 0}
   slopeAngleRange: {x: 0, y: 45}
-  altitudeRange: {x: -20, y: 100}
-  grassDensity: 50
-  nbrPerPatch: 2
+  altitudeRange: {x: 5, y: 100}
+  heightRange: {x: 0.24137935, y: 1.2413794}
+  widthRange: {x: 0.24137944, y: 2.034483}
+  grassDensity: 65
+  nbrPerPatch: 5
+  noiseScale: 0.1
+  grassAssets:
+  - {fileID: 11400000, guid: 07e262c6e4b14f340b81466cf3c54da9, type: 2}
+  - {fileID: 11400000, guid: 6d59409e107d4bd458b3e4d897aca8a6, type: 2}
+  - {fileID: 11400000, guid: f2e1a27cf55f0cb4faad7b5a3e14d1ee, type: 2}
 --- !u!114 &2219545251708762425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,10 +104,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrain: {fileID: 0}
   spawnRoot: {fileID: 0}
-  _detailsType: 02000000
-  _detailsSize: 1
-  slopeAngleRange: {x: 0, y: 25}
-  altitudeRange: {x: -20, y: 100}
-  rocksDensity: 50
-  _scaleRandomness: {x: 2, y: 2, z: 2}
+  _detailsType: 01000000
+  _detailsSize: 3
+  slopeAngleRange: {x: 0, y: 50}
+  altitudeRange: {x: -20, y: 200}
+  elementDensity: 100
+  _scaleRandomness: {x: 0.5, y: 3}
   _rotationRandomness: {x: 0, y: 1, z: 0}

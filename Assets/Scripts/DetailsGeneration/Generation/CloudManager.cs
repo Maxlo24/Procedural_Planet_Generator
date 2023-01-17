@@ -30,11 +30,15 @@ public class CloudManager : MonoBehaviour
 
         gameObject.SetActive(active);
 
-
-        for (int i = 0; i < clouds.Length; i++)
+        if (active)
         {
-            clouds[i].Simulate(400f);
-            clouds[i].Play();
+
+            for (int i = 0; i < clouds.Length; i++)
+            {
+                clouds[i].Simulate(400f);
+                clouds[i].Play();
+            }
+
         }
     }
 }

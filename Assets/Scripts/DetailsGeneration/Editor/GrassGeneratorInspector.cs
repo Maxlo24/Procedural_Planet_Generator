@@ -24,7 +24,7 @@ public class GrassGeneratorInspector : Editor
         GUILayout.Space(10);
         if (GUILayout.Button("Generate"))
         {
-            ((GrassGenerator)target).SpawnGrass();
+            ((GrassGenerator)target).SpawnGrass(500f);
         }
 
         if (GUILayout.Button("Update prototypes"))

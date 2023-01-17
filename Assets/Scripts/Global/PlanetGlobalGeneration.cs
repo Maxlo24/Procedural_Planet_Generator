@@ -136,7 +136,7 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
         //Sky.material.SetColor("_Color", new Color(156, 243, 253, 255 / (4 - atmosphere)));
 
-        cloudGenerator.UpdateClouds();
+        if (cloudGenerator != null) cloudGenerator.UpdateClouds();
         GetComponent<ColorStyle>().UpdateStyle();
 
 
