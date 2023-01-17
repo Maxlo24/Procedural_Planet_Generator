@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,7 @@ public class TerrainGenerationBase : MonoBehaviour
 
     [field: SerializeField] public String TerrainNameToSave { get; private set; } = "Terrain";
     [field: SerializeField] public String TerrainNameToAdd { get; private set; } = "Terrain";
+    [field: SerializeField] public String PresetName { get; private set; } = "Terrain";
 
     [field: SerializeField] public bool LiveUpdate { get; private set; }
 
@@ -37,13 +39,12 @@ public class TerrainGenerationBase : MonoBehaviour
 
     private void Update()
     {
-        if (RenderTexture == null)
-        {
-            RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
-        }
-
         if (LiveUpdate)
         {
+            if (RenderTexture == null)
+            {
+                RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
+            }
             GenerateTerrain();
         }
     }
@@ -158,9 +159,9 @@ public class TerrainGenerationBase : MonoBehaviour
         float[,] mesh = new float[Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution];
         mesh = this.Terrain.terrainData.GetHeights(0, 0, mesh.GetLength(0), mesh.GetLength(1));
 
-        float[,] terrainToAdd = ImageLib.LoadRawAsHeightmap("Assets/Scripts/TerrainGeneration/HeightMaps/" + TerrainNameToAdd + ".raw");
+        //float[,] terrainToAdd = ImageLib.LoadRawAsHeightmap("Assets/Scripts/TerrainGeneration/HeightMaps/" + TerrainNameToAdd + ".raw");
 
-        mesh = HeightMapsAddition.AddHeightMaps(mesh, terrainToAdd);
+        //mesh = HeightMapsAddition.AddHeightMaps(mesh, terrainToAdd);
         Terrain.terrainData.SetHeights(0, 0, mesh);
     }
 
@@ -179,7 +180,7 @@ public class TerrainGenerationBase : MonoBehaviour
 
     public void FillErosions()
     {
-        // Fill Noises with all enabled components of type Noise in NoisesGameObject
+        // Fill Erosions with all enabled components of type Noise in NoisesGameObject
         Erosions = new List<TerrainErosion>();
         foreach (TerrainErosion erosion in ErosionsGameObject.GetComponents<TerrainErosion>())
         {
@@ -189,4 +190,55 @@ public class TerrainGenerationBase : MonoBehaviour
             }
         }
     }
+
+    public void SaveNoises()
+    {
+        foreach (Noise noise in NoisesGameObject.GetComponents<Noise>())
+        {
+            if (noise.Enabled)
+            {
+                SaveNoise(noise);
+            }
+        }
+    }
+
+    public void SaveNoise(Noise noise)
+    {
+        SingleNoise asset = ScriptableObject.CreateInstance<SingleNoise>();
+
+        asset.Name = noise.Name;
+        asset.NoiseType = noise.NoiseType;
+        asset.Mode = noise.Mode;
+        asset.OctaveNumberLimits = new Vector2Int(noise.OctaveNumber, noise.OctaveNumber);
+        asset.RedistributionLimits = new Vector2(noise.Redistribution, noise.Redistribution);
+        asset.IslandRatioLimits = new Vector2(noise.IslandRatio, noise.IslandRatio);
+        asset.ScaleLimits = new Vector2(noise.Scale, noise.Scale);
+        asset.ScaleElevationLimits = new Vector2(noise.ScaleElevation, noise.ScaleElevation);
+        asset.XZOffsetLimits = new Vector2(noise.Offset.x, noise.Offset.x);
+        asset.YOffsetLimits = new Vector2(noise.Offset.y, noise.Offset.y);
+
+        asset.Ridge = noise.Ridge;
+        asset.OctaveDependentAmplitude = noise.OctaveDependentAmplitude;
+        
+        asset.ElevationLimit = noise.ElevationLimit;
+        asset.MinElevationLimits = new Vector2(noise.ElevationLimitHeights.x, noise.ElevationLimitHeights.x);
+        asset.MaxElevationLimits = new Vector2(noise.ElevationLimitHeights.y, noise.ElevationLimitHeights.y);
+
+        asset.CustomTerraces = noise.CustomTerraces;
+
+
+        string assetName = (noise.Name == "") ? RandomLib.GenerateRandomString(8) : noise.Name;
+        string path = "Assets/Prefabs/Terrain/Noises/SingleNoise/" + PresetName + "/";
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        AssetDatabase.CreateAsset(asset, path + assetName + ".asset");
+        AssetDatabase.SaveAssets();
+
+        EditorUtility.FocusProjectWindow();
+
+        Selection.activeObject = asset;
+    }
+
 }

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b077a909b9f2a314a9b91a16ab6e1e2d, type: 3}
+  m_Name: 1025Swamps
+  m_EditorClassIdentifier: 
+  Name: Swamps
+  Noises:
+  - {fileID: 11400000, guid: 01907b0a38975bb44b978c19923af409, type: 2}
+  - {fileID: 11400000, guid: 323f0b7cf80d8934c9147e792540aa88, type: 2}
+  Erosions:
+  - {fileID: 11400000, guid: bb7e6f527eba515418e476d1193d8e4e, type: 2}
+  - {fileID: 11400000, guid: f1cd2c1c78fdeb1429d49176395a8e3b, type: 2}
+  ThermalErosions:
+  - {fileID: 11400000, guid: f5f141bad80c10f49b4fcd12a53a1733, type: 2}
+  Craters:
+  - {fileID: 11400000, guid: 6240ef41043181744a7352cd73c9af75, type: 2}
+  PostProcessing: {fileID: 11400000, guid: 5047bf6c9e26e644c9106efbf6d52734, type: 2}

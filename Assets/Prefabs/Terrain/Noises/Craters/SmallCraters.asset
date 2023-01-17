@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CratersPreset
   Name: 
   CraterCount: {x: 30, y: 50}
+  InBounds: 0
   RadiusRange: {x: 20, y: 50}
   SecondaryRadiusOffsetLimits: {x: 10, y: 20}
   ThirdRadiusOffsetLimits: {x: 10, y: 20}
-  DepthRange: {x: 1.8, y: 2.2}
-  ElevationRange: {x: 0.4, y: 0.7}
+  DepthRange: {x: 0.7, y: 1.6}
+  ElevationRange: {x: 0.2, y: 0.4}

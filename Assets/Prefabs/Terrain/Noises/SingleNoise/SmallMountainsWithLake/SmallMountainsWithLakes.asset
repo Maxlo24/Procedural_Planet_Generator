@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b077a909b9f2a314a9b91a16ab6e1e2d, type: 3}
+  m_Name: SmallMountainsWithLakes
+  m_EditorClassIdentifier: 
+  Name: SmallMountainsWithLakes
+  Noises:
+  - {fileID: 11400000, guid: dd7846912816222418860f8ad640bc55, type: 2}
+  - {fileID: 11400000, guid: 6fcc9a9e79461bf429cd2aed9ebd65ec, type: 2}
+  Erosions:
+  - {fileID: 11400000, guid: bb7e6f527eba515418e476d1193d8e4e, type: 2}
+  - {fileID: 11400000, guid: f1cd2c1c78fdeb1429d49176395a8e3b, type: 2}
+  ThermalErosions:
+  - {fileID: 11400000, guid: f5f141bad80c10f49b4fcd12a53a1733, type: 2}
+  Craters: []
+  PostProcessing: {fileID: 0}

@@ -34,4 +34,4 @@ MonoBehaviour:
   TerracesSizeLimits: {x: 0.02, y: 0.05}
   AddNoise: 1
   NoiseFrequencyLimits: {x: 0.5, y: 0.8}
-  NoiseAmplitudeyLimits: {x: 0.3, y: 0.4}
+  NoiseAmplitudeyLimits: {x: 0.05, y: 0.1}

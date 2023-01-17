@@ -33,7 +33,14 @@ public class GPUTerrainInspector : Editor
         {
             terrain.Save();
         }
-        if (GUILayout.Button("Add Heightmap Test"))
+        //if (GUILayout.Button("Add Heightmap Test"))
+        //{
+        //    terrain.Add();
+        //}
+        if (GUILayout.Button("Save noise presets"))
+        {
+            terrain.SaveNoises();
+        }
         {
             terrain.Add();
         }

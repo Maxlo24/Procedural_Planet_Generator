@@ -53,7 +53,7 @@ public class Noise : MonoBehaviour
         Mode = single.Mode;
         DistanceType = single.DistanceType;
         NoiseType = single.NoiseType;
-        OctaveNumber = prng.Next(single.OctaveNumberLimits.x, single.OctaveNumberLimits.y);
+        OctaveNumber = RandomLib.NextInt(prng, single.OctaveNumberLimits.x, single.OctaveNumberLimits.y);
         Redistribution = RandomLib.NextFloat(prng, single.RedistributionLimits.x, single.RedistributionLimits.y);
         IslandRatio = RandomLib.NextFloat(prng, single.IslandRatioLimits.x, single.IslandRatioLimits.y);
         Scale = RandomLib.NextFloat(prng, single.ScaleLimits.x, single.ScaleLimits.y);
@@ -69,26 +69,33 @@ public class Noise : MonoBehaviour
 
         BasicTerraces = false;
         CustomTerraces = single.CustomTerraces;
-        
+
         if (CustomTerraces)
         {
-            CustomTerracesDescription = new List<Vector2>();
-            int CustomTerracesCount = prng.Next(single.TerracesCountLimits.x, single.TerracesCountLimits.y);
-            float height = 0;
-            for (int i = 0; i < CustomTerracesCount; i++)
+            if (single.FixedTerraces)
             {
-                height += RandomLib.NextFloat(prng, single.TerracesOffsetLimits.x, single.TerracesOffsetLimits.y);
-                float size = RandomLib.NextFloat(prng, single.TerracesSizeLimits.x, single.TerracesSizeLimits.y);
-                CustomTerracesDescription.Add(new Vector2(height, size));
-                height += size;
+                CustomTerracesDescription = single.FixedTerracesDescription;
             }
-
+            else
+            {
+                CustomTerracesDescription = new List<Vector2>();
+                int CustomTerracesCount = RandomLib.NextInt(prng, single.TerracesCountLimits.x, single.TerracesCountLimits.y);
+                float height = 0;
+                for (int i = 0; i < CustomTerracesCount; i++)
+                {
+                    height += RandomLib.NextFloat(prng, single.TerracesOffsetLimits.x, single.TerracesOffsetLimits.y);
+                    float size = RandomLib.NextFloat(prng, single.TerracesSizeLimits.x, single.TerracesSizeLimits.y);
+                    CustomTerracesDescription.Add(new Vector2(height, size));
+                    height += size;
+                }
+            }
             AddNoise = single.AddNoise;
             if (AddNoise)
             {
                 NoiseFrequency = RandomLib.NextFloat(prng, single.NoiseFrequencyLimits.x, single.NoiseFrequencyLimits.y);
                 NoiseAmplitude = RandomLib.NextFloat(prng, single.NoiseAmplitudeyLimits.x, single.NoiseAmplitudeyLimits.y);
             }
+            else { NoiseFrequency = 0; NoiseAmplitude = 0; }
         }
 
         Octaves = new List<Octave>();
@@ -260,6 +267,6 @@ public class Noise : MonoBehaviour
         Debug.Log("ElevationLimitHeights: " + ElevationLimitHeights);
         Debug.Log("BasicTerraces: " + BasicTerraces);
         Debug.Log("BasicTerracesHeight: " + BasicTerracesHeight);
-        
+
     }
 }
