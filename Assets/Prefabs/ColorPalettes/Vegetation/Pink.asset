@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e449906066a9afd4abd09a250db54975, type: 3}
+  m_Name: Pink
+  m_EditorClassIdentifier: 
+  healthy: {r: 0.91957575, g: 0.47450984, b: 1, a: 1}
+  dry: {r: 0.6537015, g: 0.5137255, b: 0.65882355, a: 1}
+  wood: {r: 0.29411766, g: 0.18431373, b: 0.10980392, a: 1}
+  flowers: []
