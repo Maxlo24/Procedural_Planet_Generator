@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class AutoTerrainGeneration : MonoBehaviour
 {
-    [field: SerializeField] public int Seed { get; private set; } = -1;
+    [field: SerializeField] public int Seed { get; set; } = -1;
     [field: SerializeField] public Terrain Terrain { get; private set; }
-    [field: SerializeField] public TerrainGen TerrainGeneration { get; private set; }
+    [field: SerializeField] public TerrainGen TerrainGeneration { get; set; }
 
     public RenderTexture RenderTexture;
     private RenderTexture RenderTextureCopy;

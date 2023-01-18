@@ -103,7 +103,7 @@ public class RocksGenerator : MonoBehaviour
 
                 RaycastHit hit;
 
-                if (Physics.Raycast(wpos + Vector3.up * 100, Vector3.down, out hit, 1000, 1 << 6))
+                if (Physics.Raycast(wpos + Vector3.up * 800, Vector3.down, out hit, 1000, 1 << 6))
                 {
                     spawnPosition = hit.point;
                 }

@@ -8,14 +8,18 @@ using StarterAssets;
 public class GlobalManager : MonoBehaviour
 {
 
+    [SerializeField] private PlanetAsset[] planetAssets;
 
+    
     [Header("Solar system")]
     public GameObject solarSystem;
     public PlanetGenerator planetGenerator;
+    public Icosahedron planetMesh;
 
     [Header("Map")]
     public GameObject map;
     public GameObject mapCamera;
+    public AutoTerrainGeneration mapTerrainGenerator;
 
 
     [Header("Exploration")]
@@ -29,6 +33,8 @@ public class GlobalManager : MonoBehaviour
     public PlanetGlobalGeneration planetGlobalGeneration;
     public ColorStyle colorStyle;
     public GenerationManager generationManager;
+    public RocksGenerator detailsGenerator;
+    public GrassGenerator grassGenerator;
 
 
 
@@ -50,6 +56,8 @@ public class GlobalManager : MonoBehaviour
     public TextMeshProUGUI vegetationText;
     public TextMeshProUGUI seedText;
 
+    
+    public PlanetAsset activeAsset;
 
 
     void Start()
@@ -112,19 +120,29 @@ public class GlobalManager : MonoBehaviour
     {
 
         seedText.text = "Seed : " + seed.ToString();
+        
+
+        
 
 
         if (menuState == 0)
         {
-            planetGlobalGeneration.GenerateRandomAttributes();
+
+            activeAsset = planetAssets[Random.Range(0, planetAssets.Length)];
+
+
+
+
+            planetGlobalGeneration.GenerateRandomAttributes(activeAsset.atmosphereRange, activeAsset.humidityRange, activeAsset.temperatureRange, activeAsset.vegetationRange, activeAsset.forceSnow);
 
             atmosphereText.text = "Atmosphere : " + (planetGlobalGeneration.atmosphere*100/3).ToString() + "%";
             temperatureText.text = "Temperature : " + planetGlobalGeneration.temperature.ToString() + "°C";
             humidityText.text = "Humidity : " + planetGlobalGeneration.humidity.ToString() + "%";
             vegetationText.text = "Vegetation : " + planetGlobalGeneration.vegetation.ToString() + "%";
-            planetGenerator.GeneratePlanet();
-
             
+            
+            planetMesh.noiseLayers = activeAsset.noiseLayers[Random.Range(0, activeAsset.noiseLayers.Length)];
+            planetGenerator.GeneratePlanet();
 
 
 
@@ -133,6 +151,10 @@ public class GlobalManager : MonoBehaviour
 
         if (menuState == 1)
         {
+
+
+            mapTerrainGenerator.TerrainGeneration = activeAsset.terrainGen[Random.Range(0, activeAsset.terrainGen.Length)];
+
             StartCoroutine(Generation());
 
         }
@@ -153,7 +175,7 @@ public class GlobalManager : MonoBehaviour
                 map.SetActive(false);
                 colorStyle.fog_ratio = 0;
                 colorStyle.grass = false;
-                // colorStyle.UpdateStyle();
+                 colorStyle.UpdateStyle();
 
                 starterAssetsInputs.cursorLocked = false;
 
@@ -212,11 +234,31 @@ public class GlobalManager : MonoBehaviour
 
         yield return (0.1f);
 
-        //planetGlobalGeneration.GeneratePlanet();
-        colorStyle.grass = true;
-        // colorStyle.UpdateStyle();
 
+        mapTerrainGenerator.Seed = seed;
+        mapTerrainGenerator.GenerateEntireMap();
+
+
+        //planetGlobalGeneration.GeneratePlanet();
+
+
+        detailsGenerator.generationSequence = activeAsset.detailsGenerationSequences[Random.Range(0, activeAsset.detailsGenerationSequences.Length)];
         generationManager.Generate();
+
+        //if (planetGlobalGeneration.raining)
+        //{
+        //    grassGenerator.SpawnGrass(planetGlobalGeneration.temperature * 5);
+        //}
+        //else
+        //{
+        //    grassGenerator.SpawnGrass(1000);
+        //}
+        colorStyle.grass = true;
+        colorStyle.UpdateStyle();
+
+
+
+
 
 
         goBackMenu.SetActive(true);

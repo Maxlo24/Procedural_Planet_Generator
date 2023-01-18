@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cee4f9609fe54498c844f40221bf72, type: 3}
+  m_Name: Moon
+  m_EditorClassIdentifier: 
+  atmosphereRange: {x: 0, y: 0}
+  humidityRange: {x: 0, y: 100}
+  temperatureRange: {x: -25, y: 80}
+  vegetationRange: {x: 0, y: 100}
+  forceSnow: 0
+  crustColorPalettes:
+  - {fileID: 11400000, guid: c9de9b56ea1a64b4199b9ab92eb0a362, type: 2}
+  - {fileID: 11400000, guid: b194e26988a3f5e44a24e09c7a92975a, type: 2}
+  - {fileID: 11400000, guid: 7eecc924f90e74b4c8b86288848dd0d6, type: 2}
+  - {fileID: 11400000, guid: 5f66373b759bfb047b9e9ab6dcc025b3, type: 2}
+  noiseLayers:
+  - {fileID: 11400000, guid: f31027c73e3d3064dad8ccbd74c2abc6, type: 2}
+  terrainGen:
+  - {fileID: 11400000, guid: a9b2e864462f721489bdd4424a2dfdc5, type: 2}
+  - {fileID: 11400000, guid: 71e7b010d1449654694cdb6c8f3bd98e, type: 2}
+  - {fileID: 11400000, guid: 21e102c85cd55774d8f2455abadafe4b, type: 2}
+  - {fileID: 11400000, guid: 5044f33efaf8d1842aec9dcb630b8fdd, type: 2}
+  - {fileID: 11400000, guid: 36cb965e0266cfd439ff50dd64a6ba09, type: 2}
+  detailsGenerationSequences:
+  - {fileID: 11400000, guid: 3510adaa843843e4591305e875f6db26, type: 2}

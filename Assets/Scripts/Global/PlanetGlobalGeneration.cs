@@ -67,6 +67,28 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
     }
 
+
+    public void GenerateRandomAttributes(Vector2 atmosphereRange, Vector2 humidityRange, Vector2 temperatureRange, Vector2 vegetationRange, bool forceRain = false)
+    {
+        atmosphere = Random.Range((int)atmosphereRange.x, (int)atmosphereRange.y);
+        humidity = Random.Range((int)humidityRange.x, (int)humidityRange.y);
+        temperature = Random.Range((int)temperatureRange.x, (int)temperatureRange.y);
+        vegetation = Random.Range((int)vegetationRange.x, (int)vegetationRange.y);
+        clouds = Random.Range(0, 4) != 0;
+
+        raining = Random.Range(0, 2) == 1;
+
+        if (forceRain) raining = true;
+
+
+
+        UpdateAttributes();
+        GetComponent<ColorStyle>().SetRandomPalette();
+    }
+
+
+
+
     public void UpdateAttributes()
     {
         //Debug.Log("UpdateAttributes");
