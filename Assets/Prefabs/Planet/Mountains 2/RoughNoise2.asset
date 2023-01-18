@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76f30fcd2cb0b134b8e222ba1eb092df, type: 3}
+  m_Name: RoughNoise2
+  m_EditorClassIdentifier: 
+  useFirstLayerAsMask: 1
+  filterType: 0
+  scale: 0.638
+  numLayers: 8
+  baseRoughness: 2.46
+  roughness: 2.43
+  persistance: 0.49
+  seaThreshold: 0.11
+  useMaxThreshold: 0
+  maxThreshold: 0.5

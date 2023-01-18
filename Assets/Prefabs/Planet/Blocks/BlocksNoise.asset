@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: BlocksNoise
   m_EditorClassIdentifier: 
   useFirstLayerAsMask: 1
-  filterType: 0
-  scale: 0.122
-  numLayers: 4
-  baseRoughness: 1.67
-  roughness: 1.7
-  persistance: 0.94
-  center: {x: 0, y: 0, z: 0}
-  seaThreshold: 1.29
+  filterType: 1
+  scale: 0.209
+  numLayers: 7
+  baseRoughness: 3.4
+  roughness: 1.47
+  persistance: 1.31
+  seaThreshold: 0.41
   useMaxThreshold: 1
-  maxThreshold: 0.49
+  maxThreshold: 0.37
