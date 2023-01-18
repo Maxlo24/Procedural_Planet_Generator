@@ -23,4 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f5f141bad80c10f49b4fcd12a53a1733, type: 2}
   Craters:
   - {fileID: 11400000, guid: 6240ef41043181744a7352cd73c9af75, type: 2}
-  PostProcessing: {fileID: 11400000, guid: 5047bf6c9e26e644c9106efbf6d52734, type: 2}
+  PostProcessing: {fileID: 0}

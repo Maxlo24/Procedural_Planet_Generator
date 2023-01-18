@@ -18,9 +18,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 66ecfbf2e8d740143bf426e397778006, type: 2}
   - {fileID: 11400000, guid: 12357864534e6734a9859082d552939a, type: 2}
   Erosions:
-  - {fileID: 11400000, guid: f1cd2c1c78fdeb1429d49176395a8e3b, type: 2}
+  - {fileID: 11400000, guid: 3a00ffdb73f417f4e831eeafbe87927f, type: 2}
+  - {fileID: 11400000, guid: 45f83359b7a16d64288180d6a14e4bf1, type: 2}
   ThermalErosions:
   - {fileID: 11400000, guid: e5ddf0d6d6b16294faecf43cc8a981bc, type: 2}
   - {fileID: 11400000, guid: f5f141bad80c10f49b4fcd12a53a1733, type: 2}
   Craters: []
-  PostProcessing: {fileID: 11400000, guid: 5047bf6c9e26e644c9106efbf6d52734, type: 2}
+  PostProcessing: {fileID: 0}
