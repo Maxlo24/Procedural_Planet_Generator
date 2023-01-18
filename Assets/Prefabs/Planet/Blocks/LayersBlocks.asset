@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noiseSettings:
   - {fileID: 11400000, guid: 07d728d39fdaf834b8dcfad57e45ffb2, type: 2}
-  - {fileID: 11400000, guid: 03ca616115a7b6840892d09b3fd4b395, type: 2}
-  setMaxThreshold: 0
-  maxThreshold: 0.546
+  - {fileID: 11400000, guid: dc88193d81d8eee40917d6294d003ca6, type: 2}
+  setMaxThreshold: 1
+  maxThreshold: 0.57

@@ -15,11 +15,10 @@ MonoBehaviour:
   useFirstLayerAsMask: 1
   filterType: 1
   scale: 0.322
-  numLayers: 6
+  numLayers: 7
   baseRoughness: 3.43
   roughness: 1.33
   persistance: 0.32
-  center: {x: -2.92, y: -1.02, z: 0}
   seaThreshold: 0
   useMaxThreshold: 1
   maxThreshold: 2.73

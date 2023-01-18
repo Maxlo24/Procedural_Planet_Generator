@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useFirstLayerAsMask: 1
   filterType: 0
-  scale: 0.083
-  numLayers: 3
+  scale: 0.191
+  numLayers: 7
   baseRoughness: 2.41
   roughness: 1.84
-  persistance: 1.49
-  center: {x: -2.92, y: -1.02, z: 0}
+  persistance: 0.53
   seaThreshold: 0.11
   useMaxThreshold: 0
   maxThreshold: 0.5

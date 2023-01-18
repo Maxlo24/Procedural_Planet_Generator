@@ -24,6 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f66373b759bfb047b9e9ab6dcc025b3, type: 2}
   noiseLayers:
   - {fileID: 11400000, guid: 1d04c03986d2e7d419326e0965bd5fd3, type: 2}
+  - {fileID: 11400000, guid: daa596afd27656c4597d8afccef1bc7b, type: 2}
   terrainGen:
   - {fileID: 11400000, guid: 4b10c3c729c05ec4691b4a313d728dd1, type: 2}
   - {fileID: 11400000, guid: 21e102c85cd55774d8f2455abadafe4b, type: 2}

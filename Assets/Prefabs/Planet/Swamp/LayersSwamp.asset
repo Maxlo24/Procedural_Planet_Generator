@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LayersSwamp
   m_EditorClassIdentifier: 
   noiseSettings:
+  - {fileID: 11400000, guid: 3de9922a8c39f5049a74acfa42d17de2, type: 2}
   - {fileID: 11400000, guid: 5e138e3af90f197458597cfbb0c9f3f8, type: 2}
-  setMaxThreshold: 0
-  maxThreshold: 0.5
+  setMaxThreshold: 1
+  maxThreshold: 0.515
