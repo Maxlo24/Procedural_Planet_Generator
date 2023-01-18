@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c1103075e364429426d16bc5eb45f, type: 3}
+  m_Name: 1025WaterGullies
+  m_EditorClassIdentifier: 
+  Name: 1025WaterGullies
+  RepetitionCount: 1
+  Resolution: 1024
+  IterationCount: 200000
+  DropletLifeTime: 500
+  Acceleration: 50
+  Drag: 0.5
+  InitialVelocity: 0.5
+  InitialWater: 0.5
+  SedimentCapacityFactor: 35.6
+  DepositRatio: 0.063
+  ErosionRatio: 0.021
+  EvaporationRatio: 0.05
+  Gravity: 100
+  ErodeEnabled: 1
+  GenerateErosionTexture: 0
+  SmoothResult: 0

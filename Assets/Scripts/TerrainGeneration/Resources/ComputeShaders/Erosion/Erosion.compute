@@ -201,7 +201,5 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 		speed = sqrt(max(0, speed * speed - hDiff * gravity));
 		water *= (1 - evaporationRatio);
-		erosion[int2(2000,2000)] = -0.4;
-
 	}
 }
