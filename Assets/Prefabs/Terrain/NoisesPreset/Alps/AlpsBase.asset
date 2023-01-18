@@ -19,8 +19,8 @@ MonoBehaviour:
   OctaveNumberLimits: {x: 5, y: 5}
   RedistributionLimits: {x: 2.3, y: 2.3}
   IslandRatioLimits: {x: 0.12, y: 0.12}
-  ScaleLimits: {x: 0.9, y: 0.9}
-  ScaleElevationLimits: {x: 0.72, y: 0.72}
+  ScaleLimits: {x: 0.9, y: 1.4}
+  ScaleElevationLimits: {x: 0.5, y: 0.62}
   XZOffsetLimits: {x: -9999, y: 9999}
   YOffsetLimits: {x: 0, y: 0}
   Ridge: 0
