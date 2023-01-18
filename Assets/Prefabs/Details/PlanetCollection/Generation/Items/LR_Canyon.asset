@@ -15,5 +15,5 @@ MonoBehaviour:
   type: 3
   size: 3
   density: 100
-  numberOfIterations: 2
+  numberOfIterations: 1
   sizeRange: {x: 0.5, y: 4}

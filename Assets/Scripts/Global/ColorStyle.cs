@@ -39,6 +39,8 @@ public class ColorStyle : MonoBehaviour
 
     private int previousActiveVegetationPalette = 0;
 
+    [HideInInspector] public Color AtmosphereColor;
+
 
     private void Update()
     {
@@ -106,7 +108,9 @@ public class ColorStyle : MonoBehaviour
 
         if (activeAtmosphere >= activeCrust.AtmospherColors.Length) activeAtmosphere = activeCrust.AtmospherColors.Length - 1;
 
-        RenderSettings.fogColor = activeCrust.AtmospherColors[activeAtmosphere];
+        AtmosphereColor = activeCrust.AtmospherColors[activeAtmosphere];
+
+        RenderSettings.fogColor = AtmosphereColor;
         
         if (grassGenerator != null)
         {
@@ -114,12 +118,12 @@ public class ColorStyle : MonoBehaviour
         }
         previousActiveVegetationPalette = activeVegetationPalette;
 
-        if (grass)
-        {
-            if (planetAttributs.atmosphere == 0) grassGenerator.ClearGrass();
-            else grassGenerator.SpawnGrass(planetAttributs.snowLevel-10);
+        //if (grass)
+        //{
+        //    if (planetAttributs.atmosphere == 0) grassGenerator.ClearGrass();
+        //    else grassGenerator.SpawnGrass(planetAttributs.snowLevel-10);
             
-        }
+        //}
 
 
         //grassGenerator.UpdateGrassPrototypes();

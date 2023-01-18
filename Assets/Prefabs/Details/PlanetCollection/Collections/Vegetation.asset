@@ -15,5 +15,4 @@ MonoBehaviour:
   small: []
   medium:
   - {fileID: 7488343770391138834, guid: d269f456157d06948a7ff3854fe78119, type: 3}
-  large:
-  - {fileID: 3419883363128097502, guid: ee761a3475b476040a2a6844b77eb15a, type: 3}
+  large: []

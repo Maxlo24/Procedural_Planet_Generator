@@ -24,6 +24,7 @@ public class GlobalManager : MonoBehaviour
 
     [Header("Exploration")]
     public GameObject player;
+    public CharacterController controller;
     public StarterAssetsInputs starterAssetsInputs;
 
     //public GameObject Loading;
@@ -175,7 +176,7 @@ public class GlobalManager : MonoBehaviour
                 map.SetActive(false);
                 colorStyle.fog_ratio = 0;
                 colorStyle.grass = false;
-                 colorStyle.UpdateStyle();
+                colorStyle.UpdateStyle();
 
                 starterAssetsInputs.cursorLocked = false;
 
@@ -184,6 +185,7 @@ public class GlobalManager : MonoBehaviour
             case 1:
                 goBackMenu.SetActive(true);
                 colorStyle.fog_ratio = 1.5f;
+                colorStyle.UpdateStyle();
 
 
                 solarSystem.SetActive(false);
@@ -204,13 +206,15 @@ public class GlobalManager : MonoBehaviour
                 mainMenu.SetActive(false);
                 player.SetActive(true);
 
-                starterAssetsInputs.cursorLocked = true;
+                //starterAssetsInputs.cursorLocked = true;
 
 
                 RaycastHit hit;
-                if (Physics.Raycast(new Vector3(0,800,0), Vector3.down, out hit, 1000, 1 << 6))
+                if (Physics.Raycast(new Vector3(0,1000,0), Vector3.down, out hit, 2000))
                 {
-                    player.transform.position = hit.point;
+                    player.transform.localPosition = hit.point;
+                    player.GetComponent<CharacterController>().velocity.Set(0, 0, 0);
+
                 }
 
 
@@ -245,15 +249,26 @@ public class GlobalManager : MonoBehaviour
         detailsGenerator.generationSequence = activeAsset.detailsGenerationSequences[Random.Range(0, activeAsset.detailsGenerationSequences.Length)];
         generationManager.Generate();
 
-        //if (planetGlobalGeneration.raining)
-        //{
-        //    grassGenerator.SpawnGrass(planetGlobalGeneration.temperature * 5);
-        //}
-        //else
-        //{
-        //    grassGenerator.SpawnGrass(1000);
-        //}
-        colorStyle.grass = true;
+
+
+        if (planetGlobalGeneration.atmosphere > 0)
+        {
+
+            if (planetGlobalGeneration.raining)
+            {
+                grassGenerator.SpawnGrass(planetGlobalGeneration.temperature * 5);
+            }
+            else
+            {
+                grassGenerator.SpawnGrass(1000);
+            }
+
+        }
+        else grassGenerator.ClearGrass();
+        
+        
+        
+        //colorStyle.grass = true;
         colorStyle.UpdateStyle();
 
 

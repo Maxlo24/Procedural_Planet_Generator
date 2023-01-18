@@ -92,7 +92,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Additional_power: 281.57
+    - _Additional_power: 2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -102,17 +102,17 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Displacement: -45.9
+    - _Displacement: 1.6
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Fresnel_power: 0.02
+    - _Fresnel_power: 2.55
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise_scale: 3
+    - _Noise_scale: 0.2
     - _OcclusionStrength: 1
-    - _Opacity: 0
+    - _Opacity: 0.33333334
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -130,7 +130,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Primary_color: {r: 0.7924528, g: 0.6122123, b: 0.41416872, a: 0}
-    - _Secondary_color: {r: 0.3767711, g: 0.5583382, b: 0.5754717, a: 1}
+    - _Primary_color: {r: 0, g: 0, b: 0, a: 0}
+    - _Secondary_color: {r: 0.9339623, g: 0.5066305, b: 0.51129496, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

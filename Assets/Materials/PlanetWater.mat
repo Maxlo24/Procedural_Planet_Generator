@@ -66,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Refraction_normal:
-        m_Texture: {fileID: 2800000, guid: e4f1bbef3d8bdea46bc23ba20c9ab18d, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_d774477d13de4fb8ba05e793f8c872bb_Texture_1:
@@ -109,12 +109,12 @@ Material:
     - _DecalMeshViewBias: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Distance: -3.14
+    - _Distance: 1
     - _DrawOrder: 0
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Foam_amount: 5
-    - _Foam_edge: 2
+    - _Foam_amount: 0
+    - _Foam_edge: 0.86
     - _Foam_speed: 0.1
     - _Fresnel: 50
     - _GlossMapScale: 0
@@ -124,16 +124,16 @@ Material:
     - _Ice_crack: 0
     - _Intensity: 10
     - _Metallic: 0
-    - _Normal_strength: 20.11
+    - _Normal_strength: 1
     - _OcclusionStrength: 1
     - _Offset: -0.5
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Refraction_speed: 0.01
-    - _Refraction_strength: -0.99
-    - _Smoothness: 0.918
+    - _Refraction_speed: 0
+    - _Refraction_strength: 1
+    - _Smoothness: 0.875
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 0.1
@@ -141,8 +141,8 @@ Material:
     - _Strength: 15
     - _Surface: 0
     - _Tile_speed: 0.05
-    - _Transparency: 0
-    - _Wave_amplitude: 0.0001
+    - _Transparency: 0.5
+    - _Wave_amplitude: 0
     - _Wave_speed: 5.64
     - _WorkflowMode: 1
     - _ZTest: 4
@@ -155,11 +155,11 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Deep_color: {r: 0, g: 0.038696826, b: 0.745283, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Foam_color: {r: 1, g: 1, b: 1, a: 0.12941177}
-    - _Foam_scale: {r: 1000, g: 1000, b: 0, a: 0}
-    - _Refraction_scale: {r: 10, g: 10, b: 0, a: 0}
+    - _Foam_color: {r: 1, g: 1, b: 1, a: 0.07058824}
+    - _Foam_scale: {r: 100, g: 100, b: 0, a: 0}
+    - _Refraction_scale: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Surface_color: {r: 0, g: 0.13709688, b: 1, a: 0.8627451}
+    - _Surface_color: {r: 0, g: 0.32197523, b: 1, a: 0.8627451}
     - _Tile_size: {r: 20, g: 20, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7635701927347016929

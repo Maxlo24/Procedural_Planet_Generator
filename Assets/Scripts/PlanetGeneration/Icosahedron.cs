@@ -9,7 +9,7 @@ using UnityEngine;
 public class Icosahedron : MonoBehaviour
 {
     [Header("Resolution")]
-    [Range(0, 7)][SerializeField] private int subdivisions = 1;
+    [Range(0, 8)][SerializeField] private int subdivisions = 1;
     // scale of the icosahedron (default 1)
     [Header("Scale")]
     [Range(1, 10)][SerializeField] public float scale = 1;
