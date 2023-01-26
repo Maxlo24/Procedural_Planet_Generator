@@ -27,6 +27,10 @@ int2 lowestNeighbour(int2 coord)
 	int2 coordx_1 = coord + int2(-1, 0);
 	int2 coordy1 = coord + int2(0, 1);
 	int2 coordy_1 = coord + int2(0, -1);
+	int2 coordx1y1 = coord + int2(1, 1);
+	int2 coordx_1y1 = coord + int2(-1, 1);
+	int2 coordx1y_1 = coord + int2(1, -1);
+	int2 coordx_1y_1 = coord + int2(-1, -1);
 
 	if (inBounds(coordx1.x, coordx1.y) && heights[coordx1] < lowestHeight)
 	{
@@ -47,6 +51,26 @@ int2 lowestNeighbour(int2 coord)
 	{
 		lowestCoord = coordy_1;
 		lowestHeight = heights[coordy_1];
+	}
+	if (inBounds(coordx1y1.x, coordx1y1.y) && heights[coordx1y1] < lowestHeight)
+	{
+		lowestCoord = coordx1y1;
+		lowestHeight = heights[coordx1y1];
+	}
+	if (inBounds(coordx_1y1.x, coordx_1y1.y) && heights[coordx_1y1] < lowestHeight)
+	{
+		lowestCoord = coordx_1y1;
+		lowestHeight = heights[coordx_1y1];
+	}
+	if (inBounds(coordx1y_1.x, coordx1y_1.y) && heights[coordx1y_1] < lowestHeight)
+	{
+		lowestCoord = coordx1y_1;
+		lowestHeight = heights[coordx1y_1];
+	}
+	if (inBounds(coordx_1y_1.x, coordx_1y_1.y) && heights[coordx_1y_1] < lowestHeight)
+	{
+		lowestCoord = coordx_1y_1;
+		lowestHeight = heights[coordx_1y_1];
 	}
 	return lowestCoord;
 }

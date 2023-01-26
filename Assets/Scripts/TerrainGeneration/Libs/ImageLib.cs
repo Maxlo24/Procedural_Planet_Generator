@@ -16,6 +16,28 @@ public class ImageLib : MonoBehaviour
         File.WriteAllBytes(completePath, tex.EncodeToPNG());
         Debug.Log("Saved file to: " + completePath);
     }
+
+    public static void SavePNG_Red_Channel(RenderTexture renderTexture, string path = "Assets/", string filename = "test")
+    {
+        
+        var tex = new Texture2D(renderTexture.width, renderTexture.height);
+        RenderTexture.active = renderTexture;
+        tex.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        tex.Apply();
+
+        var completePath = path + filename + ".png";
+        // save only the red channel of the render texture
+        var pixels = tex.GetPixels();
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i].g = 0;
+            pixels[i].b = 0;
+        }
+        tex.SetPixels(pixels);
+        File.WriteAllBytes(completePath, tex.EncodeToPNG());
+        Debug.Log("Saved file to: " + completePath);
+    }
+
     public static void SavePNG(float[,] array, string path = "Assets/", string filename = "test")
     {
 
@@ -45,6 +67,24 @@ public class ImageLib : MonoBehaviour
                     short value = (short)(heights[x, y] * 65535);
                     writer.Write(value);
                 }
+            }
+        }
+    }
+
+    public static void SaveRaw_Red_Channel(RenderTexture heights, string path = "Assets/", string filename = "test")
+    {
+        var completePath = path + filename + ".raw";
+        using (BinaryWriter writer = new BinaryWriter(File.Open(completePath, FileMode.Create)))
+        {
+            var tex = new Texture2D(heights.width, heights.height);
+            RenderTexture.active = heights;
+            tex.ReadPixels(new Rect(0, 0, heights.width, heights.height), 0, 0);
+            tex.Apply();
+            var pixels = tex.GetPixels();
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                short value = (short)(pixels[i].r * 65535);
+                writer.Write(value);
             }
         }
     }

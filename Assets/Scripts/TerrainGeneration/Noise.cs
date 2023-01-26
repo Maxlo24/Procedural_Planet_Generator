@@ -198,7 +198,6 @@ public class Noise : MonoBehaviour
         if (this.Octaves.Count == 0)
         {
             this.FillOctaves();
-            Debug.Log("Octaves were not filled, filling them now");
         }
 
         ComputeBuffer octaveBuffer = new ComputeBuffer(this.Octaves.Count, 8);

@@ -139,7 +139,8 @@ public class ColorStyle : MonoBehaviour
             //mat.SetColor("_Beach_color", activeCrust.sand);
 
         }
-        planetGenerator.UpdateColors(activeCrust, activeVegetation);
+
+        planetGenerator?.UpdateColors(activeCrust, activeVegetation);
     }
 
     public Vector3 GetGrassColor()

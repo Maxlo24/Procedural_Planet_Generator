@@ -22,33 +22,14 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
     [SerializeField] private PlanetGenerator planetGenerator;
 
-
-
     public float fogIntensity;
 
     [HideInInspector] public float snowLevel;
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnValidate()
     {
         UpdateAttributes();
-        
-
     }
-
 
     public void GenerateRandomAttributes()
     {
@@ -59,14 +40,9 @@ public class PlanetGlobalGeneration : MonoBehaviour
         clouds = Random.Range(0, 4) != 0;
         raining = Random.Range(0, 2) == 1;
         
-
-        
         UpdateAttributes();
         GetComponent< ColorStyle > ().SetRandomPalette();
-        
-
     }
-
 
     public void GenerateRandomAttributes(Vector2 atmosphereRange, Vector2 humidityRange, Vector2 temperatureRange, Vector2 vegetationRange, bool forceRain = false)
     {
@@ -80,14 +56,9 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
         if (forceRain) raining = true;
 
-
-
         UpdateAttributes();
         GetComponent<ColorStyle>().SetRandomPalette();
     }
-
-
-
 
     public void UpdateAttributes()
     {
@@ -115,9 +86,6 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
             RenderSettings.ambientLight = Color.black;
             RenderSettings.ambientIntensity = 0.0f;
-
-
-
         }
         else
         {
@@ -127,8 +95,6 @@ public class PlanetGlobalGeneration : MonoBehaviour
             RenderSettings.ambientLight = Color.white;
 
             RenderSettings.ambientIntensity = 2*atmosphere/ 3.0f + 1;
-
-
         }
 
 
@@ -164,7 +130,5 @@ public class PlanetGlobalGeneration : MonoBehaviour
 
         if (cloudGenerator != null) cloudGenerator.UpdateClouds();
         GetComponent<ColorStyle>().UpdateStyle();
-
-
     }
 }
