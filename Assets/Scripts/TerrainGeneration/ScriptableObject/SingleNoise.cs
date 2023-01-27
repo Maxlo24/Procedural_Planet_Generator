@@ -15,7 +15,8 @@ public class SingleNoise : ScriptableObject
     [SerializeField] public Vector2 IslandRatioLimits = new Vector2(0.0f, 0.2f);
     [SerializeField] public Vector2 ScaleLimits = new Vector2(2f, 4f);
     [SerializeField] public Vector2 ScaleElevationLimits = new Vector2(0.2f, 0.7f);
-    [SerializeField] public Vector2 XZOffsetLimits = new Vector2(-9999f, 9999f);
+    // WARNING : Limit the offset to avoid chunky noise problem
+    [SerializeField] public Vector2 XZOffsetLimits = new Vector2(-4000f, 4000f);
     [SerializeField] public Vector2 YOffsetLimits = new Vector2(-0.4f, 0.2f);
     
     [SerializeField] public bool Ridge = false;

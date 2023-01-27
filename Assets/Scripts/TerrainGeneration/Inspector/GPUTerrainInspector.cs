@@ -41,8 +41,5 @@ public class GPUTerrainInspector : Editor
         {
             terrain.SaveNoises();
         }
-        {
-            terrain.Add();
-        }
     }
 }

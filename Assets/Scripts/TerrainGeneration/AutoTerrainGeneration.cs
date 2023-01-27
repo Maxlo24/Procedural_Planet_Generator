@@ -29,10 +29,9 @@ public class AutoTerrainGeneration : MonoBehaviour
     {
         int seed = (Seed < 0) ? UnityEngine.Random.Range(0, int.MaxValue) : Seed;
 
-        if (RenderTexture != null)
-            RenderTexture.Release();
+        RenderTexture?.Release();
         RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
-        
+
         foreach (SingleNoise noisePreset in TerrainGeneration.Noises)
         {
             if (noisePreset == null) continue;
