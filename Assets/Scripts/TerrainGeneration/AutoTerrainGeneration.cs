@@ -1,13 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
+
+public enum TerrainResolution
+{
+    _65 = 65,
+    _129 = 129,
+    _257 = 257,
+    _513 = 513,
+    _1025 = 1025,
+    _2049 = 2049,
+    _4097 = 4097,
+}
 
 public class AutoTerrainGeneration : MonoBehaviour
 {
     [field: SerializeField] public int Seed { get; set; } = -1;
     [field: SerializeField] public Terrain Terrain { get; private set; }
+    [field: SerializeField] public TerrainResolution TerrainResolution { get; private set; } = TerrainResolution._1025;
+    [field: SerializeField] public int TerrainWidth { get; private set; } = 250;
+    [field: SerializeField] public int TerrainHeight { get; private set; } = 500;
     [field: SerializeField] public TerrainGen TerrainGeneration { get; set; }
 
     public RenderTexture RenderTexture;
@@ -28,6 +38,10 @@ public class AutoTerrainGeneration : MonoBehaviour
     public void GenerateTerrain()
     {
         int seed = (Seed < 0) ? UnityEngine.Random.Range(0, int.MaxValue) : Seed;
+
+        // Set terrain resolution
+        Terrain.terrainData.heightmapResolution = (int) TerrainResolution;
+        Terrain.terrainData.size = new Vector3(TerrainWidth, TerrainHeight, TerrainWidth);
 
         RenderTexture?.Release();
         RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
