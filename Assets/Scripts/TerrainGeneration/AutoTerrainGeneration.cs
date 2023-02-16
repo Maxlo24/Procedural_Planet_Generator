@@ -1,8 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
+
+public enum TerrainResolution
+{
+    _65 = 65,
+    _129 = 129,
+    _257 = 257,
+    _513 = 513,
+    _1025 = 1025,
+    _2049 = 2049,
+    _4097 = 4097,
+}
 
 public class AutoTerrainGeneration : MonoBehaviour
 {
