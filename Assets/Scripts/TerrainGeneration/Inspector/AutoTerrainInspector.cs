@@ -11,7 +11,7 @@ public class AutoTerrainInspector : Editor
         if (GUILayout.Button("Generate Terrain"))
         {
             terrain.GenerateTerrain();
-            terrain.RedrawTerrain();
+            //terrain.RedrawTerrain();
         }
         if (GUILayout.Button("Generate Craters"))
         {
@@ -36,6 +36,11 @@ public class AutoTerrainInspector : Editor
         if (GUILayout.Button("Generate Entire Map"))
         {
             terrain.GenerateEntireMap();
+        }
+        if (GUILayout.Button("Clear Terrains"))
+        {
+            terrain.ClearRenderTextures();
+            terrain.RemoveTerrainParentChilds();
         }
     }
 }

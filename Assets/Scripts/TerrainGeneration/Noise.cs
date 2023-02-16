@@ -100,7 +100,7 @@ public class Noise : MonoBehaviour
 
         Octaves = new List<Octave>();
     }
-
+    
     public void FillOctaves(int octaveNumber = 10)
     {
         Octaves = new List<Octave>();
@@ -157,7 +157,7 @@ public class Noise : MonoBehaviour
         return new List<Vector2>() { Vector2.zero };
     }
 
-    public void ApplyNoise(ref RenderTexture renderTexture, Terrain Terrain)
+    public void ApplyNoise(ref RenderTexture renderTexture, Terrain Terrain, Vector2 terrainIndex)
     {
         ComputeShader noiseShader = Resources.Load<ComputeShader>(ShaderLib.NoiseShader);
         ComputeShader terraceShader = Resources.Load<ComputeShader>(ShaderLib.TerraceShader);
@@ -181,6 +181,7 @@ public class Noise : MonoBehaviour
         noiseShader.SetInt("octaveCount", this.OctaveNumber);
         noiseShader.SetFloat("xOffset", this.Offset.x);
         noiseShader.SetFloat("yOffset", this.Offset.z);
+        noiseShader.SetVector("terrainIndex", terrainIndex);
         noiseShader.SetFloat("elevationOffset", this.Offset.y);
         noiseShader.SetFloat("scale", this.Scale);
         noiseShader.SetFloat("scaleElevation", this.ScaleElevation);
@@ -245,6 +246,11 @@ public class Noise : MonoBehaviour
         }
 
         renderTexture = rt;
+    }
+
+    public void ApplyNoise(ref RenderTexture renderTexture, Terrain Terrain)
+    {
+        this.ApplyNoise(ref renderTexture, Terrain, Vector2.zero);
     }
 
     public void SummarizeAttributes()
