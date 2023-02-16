@@ -14,12 +14,20 @@ public enum TerrainResolution
 public class AutoTerrainGeneration : MonoBehaviour
 {
     [field: SerializeField] public int Seed { get; set; } = -1;
-    [field: SerializeField] public Terrain Terrain { get; private set; }
+
+    [field: SerializeField] public Terrain TerrainRef { get; private set; }
+    //[field: SerializeField] public Terrain Terrain { get; private set; }
     [field: SerializeField] public TerrainResolution TerrainResolution { get; private set; } = TerrainResolution._1025;
     [field: SerializeField] public int TerrainWidth { get; private set; } = 250;
     [field: SerializeField] public int TerrainHeight { get; private set; } = 500;
+    [field: SerializeField] public int TerrainCountSquareRoot { get; private set; } = 9;
     [field: SerializeField] public TerrainGen TerrainGeneration { get; set; }
+    [field: SerializeField] public GameObject TerrainParent { get; set; }
+    [field: SerializeField] public Material TerrainMaterial { get; set; }
 
+    private Terrain Terrain;
+    private Terrain[,] Terrains;
+    public RenderTexture[,] RenderTextures;
     public RenderTexture RenderTexture;
     private RenderTexture RenderTextureCopy;
     public RenderTexture ErosionTexture;
@@ -35,38 +43,97 @@ public class AutoTerrainGeneration : MonoBehaviour
         RenderTexture.active = null;
     }
 
+    public void RedrawTerrain(Terrain terrain, RenderTexture rt)
+    {
+        RenderTexture.active = rt;
+        terrain.terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution),
+            Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
+        RenderTexture.active = null;
+    }
+
+
     public void GenerateTerrain()
     {
+        ClearRenderTextures();
+        RemoveTerrainParentChilds();
+
         int seed = (Seed < 0) ? UnityEngine.Random.Range(0, int.MaxValue) : Seed;
+        
+        Terrains = new Terrain[TerrainCountSquareRoot, TerrainCountSquareRoot];
+        RenderTextures = new RenderTexture[TerrainCountSquareRoot, TerrainCountSquareRoot];
 
-        // Set terrain resolution
-        Terrain.terrainData.heightmapResolution = (int) TerrainResolution;
-        Terrain.terrainData.size = new Vector3(TerrainWidth, TerrainHeight, TerrainWidth);
-
-        RenderTexture?.Release();
-        RenderTexture = ImageLib.CreateRenderTexture(Terrain.terrainData.heightmapResolution, Terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
-
-        foreach (SingleNoise noisePreset in TerrainGeneration.Noises)
+        Noise[] noises = new Noise[TerrainGeneration.Noises.Count];
+        for (int n = 0; n < TerrainGeneration.Noises.Count; n++)
         {
+            SingleNoise noisePreset = TerrainGeneration.Noises[n];
             if (noisePreset == null) continue;
             Noise noise = new Noise(noisePreset, seed);
-            noise.ApplyNoise(ref RenderTexture, Terrain);
-            seed++;
+            noises[n] = noise;
         }
 
-        if (RenderTextureCopy != null) RenderTextureCopy.Release();
-        RenderTextureCopy = ImageLib.CopyRenderTexture(RenderTexture);
+        for (int i = 0; i < TerrainCountSquareRoot; i++)
+        {
+            for (int j = 0; j < TerrainCountSquareRoot; j++)
+            {
+                TerrainData terrainData = new TerrainData();
+                terrainData.heightmapResolution = (int)TerrainResolution;
+                terrainData.size = new Vector3(TerrainWidth, TerrainHeight, TerrainWidth);
+                Terrain terrain = Terrain.CreateTerrainGameObject(terrainData).GetComponent<Terrain>();
+                terrain.transform.SetParent(TerrainParent.transform);
+                terrain.transform.position = new Vector3(i * TerrainWidth, 0, j * TerrainWidth);
 
-        RenderTexture nulltexture = ImageLib.CreateRenderTexture(ErosionTexture.width, ErosionTexture.height, RenderTextureFormat.RFloat);
-        Graphics.Blit(nulltexture, ErosionTexture);
-        Graphics.Blit(nulltexture, DepositTexture);
+                RenderTexture renderTexture = ImageLib.CreateRenderTexture(terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution, RenderTextureFormat.RFloat);
+                
+                foreach (Noise noise in noises)
+                {
+                    noise.ApplyNoise(ref renderTexture, terrain, new Vector2(i, j));
+                }
 
-        if (ErosionTextureCopy != null) ErosionTextureCopy.Release();
-        if (DepositTextureCopy != null) DepositTextureCopy.Release();
-        ErosionTextureCopy = ImageLib.CopyRenderTexture(ErosionTexture);
-        DepositTextureCopy = ImageLib.CopyRenderTexture(DepositTexture);
+                if (TerrainMaterial != null)
+                {
+                    terrain.materialTemplate = TerrainMaterial;
+                }
 
-        nulltexture.Release();
+                Terrains[i, j] = terrain;
+                RenderTextures[i, j] = renderTexture;
+                RedrawTerrain(terrain, renderTexture);
+            }
+        }
+        SetTerrainsNeighbors();
+    }
+    
+    private void SetTerrainsNeighbors()
+    {
+        for (int i = 0; i < TerrainCountSquareRoot; i++)
+        {
+            for (int j = 0; j < TerrainCountSquareRoot; j++)
+            {
+                Terrain terrain = Terrains[i, j];
+                Terrain terrainX = i > 0 ? Terrains[i - 1, j] : null;
+                Terrain terrainZ = j > 0 ? Terrains[i, j - 1] : null;
+                Terrain terrain_X = i < TerrainCountSquareRoot - 1 ? Terrains[i + 1, j] : null;
+                Terrain terrain_Z = j < TerrainCountSquareRoot - 1 ? Terrains[i, j + 1] : null;
+
+                terrain.SetNeighbors(terrainX, terrain_Z, terrain_X, terrainZ);
+            }
+        }
+    }
+
+    public void ClearRenderTextures()
+    {
+        if (RenderTextures == null) return;
+        foreach (RenderTexture rt in RenderTextures)
+        {
+            rt?.Release();
+        }
+    }   
+
+    public void RemoveTerrainParentChilds()
+    {
+        for (int i = TerrainParent.transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(TerrainParent.transform.GetChild(i).gameObject);
+        }
     }
 
     public void ThermalErosion()
@@ -129,6 +196,6 @@ public class AutoTerrainGeneration : MonoBehaviour
         ErodeTerrain();
         ThermalErosion();
         PostProcessing();
-        RedrawTerrain();
+        //RedrawTerrain();
     }
 }
