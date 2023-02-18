@@ -6,6 +6,7 @@ RWTexture2D<float> heights;
 StructuredBuffer<float2> initialPositions;
 
 int width, height;
+int borderSize;
 float cellSize;
 float terrainHeight;
 int erosionLifeTime;;
@@ -15,7 +16,14 @@ float maxTanAngle;
 
 bool inBounds(int x, int y)
 {
-	return x >= 0 && x < width&& y >= 0 && y < height;
+	return x >= borderSize && x < width - borderSize && y >= borderSize && y < height - borderSize;
+}
+
+float distanceToBorders(int x, int y)
+{
+	int xDist = min(x, width - 1 - x);
+	int yDist = min(y, height - 1 - y);
+	return (float) min(xDist, yDist) * 2 .0 / (float)width;
 }
 
 int2 lowestNeighbour(int2 coord)
@@ -89,6 +97,8 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 		if (lowestCoord.x == coord.x && lowestCoord.y == coord.y)
 			return;
+		//if (!inBounds(lowestCoord.x, lowestCoord.y))
+		//	return;
 
 		float lowestHeight = heights[lowestCoord];
 
@@ -97,6 +107,9 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		if (tanAngle > minTanAngle && tanAngle < maxTanAngle)
 		{
 			float sediment = strength * diff * min(1, tanAngle);
+			//float borderInfluence = pow(distanceToBorders(coord.x, coord.y), 1.0 / 3.0);
+			//if (borderInfluence < 1)
+			//	sediment *= borderInfluence;
 			heights[coord] -= sediment;
 			heights[lowestCoord] += sediment;
 		}

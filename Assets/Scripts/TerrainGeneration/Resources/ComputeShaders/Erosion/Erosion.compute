@@ -156,15 +156,15 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 				if (generateErosionTexture)
 				{
-					int2 preciseCoord = int2(posX * textureRes / (float)sizeX + 0.5, posY * textureRes / (float)sizeY + 0.5);
-					if (amount > 0)
-					{
-						deposit[preciseCoord] += amount;
-					}
-					else
-					{
-						erosion[preciseCoord] -= amount;
-					}
+					//int2 preciseCoord = int2(posX * textureRes / (float)sizeX + 0.5, posY * textureRes / (float)sizeY + 0.5);
+					//if (amount > 0)
+					//{
+					//	deposit[preciseCoord] += amount;
+					//}
+					//else
+					//{
+					//	erosion[preciseCoord] -= amount;
+					//}
 				}
 			}
 			else
@@ -182,14 +182,14 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 							//float weight = brushWeights[(xp - x + brushSize) * (brushSize * 2 + 1) + (yp - y + brushSize)];
 							heights[int2(xp, yp)] += amount * brushWeights[(int)bxp * (2 * brushSize + 3) + (int)byp]/*brushAmount*/;
 
-							if (amount > 0)
-							{
-								deposit[int2(xp, yp)] -= amount * brushWeights[(int)bxp * (2 * brushSize + 3) + (int)byp];
-							}
-							else
-							{
-								erosion[int2(xp, yp)] += amount * brushWeights[(int)bxp * (2 * brushSize + 3) + (int)byp];
-							}
+							//if (amount > 0)
+							//{
+							//	deposit[int2(xp, yp)] -= amount * brushWeights[(int)bxp * (2 * brushSize + 3) + (int)byp];
+							//}
+							//else
+							//{
+							//	erosion[int2(xp, yp)] += amount * brushWeights[(int)bxp * (2 * brushSize + 3) + (int)byp];
+							//}
 						}
 					}
 				}

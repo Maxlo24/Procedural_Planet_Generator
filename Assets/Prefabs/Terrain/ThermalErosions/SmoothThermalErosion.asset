@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: SmoothThermalTerrainErosion
   RepetitionCount: 4
+  BorderSize: 2
   LifeTime: 500
   Strength: 0.122
   MinTanAngle: 0

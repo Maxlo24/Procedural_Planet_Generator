@@ -214,6 +214,8 @@ public class ImageLib : MonoBehaviour
     }
     public static RenderTexture CopyRenderTexture(RenderTexture rt)
     {
+        if (rt == null)
+            return null;
         RenderTexture rtCopy = new RenderTexture(rt.width, rt.height, 0, rt.format);
         rtCopy.enableRandomWrite = true;
         Graphics.Blit(rt, rtCopy);

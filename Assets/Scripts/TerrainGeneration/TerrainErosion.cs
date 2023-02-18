@@ -57,6 +57,7 @@ public class TerrainErosion : MonoBehaviour
         Seed = seed;
         BorderSize = 0;
         IterationNumber = erosionPreset.IterationCount;
+        BorderSize = erosionPreset.BorderSize;
         DropletLifeTime = erosionPreset.DropletLifeTime;
         Acceleration = erosionPreset.Acceleration;
         Drag = erosionPreset.Drag;
@@ -130,8 +131,8 @@ public class TerrainErosion : MonoBehaviour
         }
 
         erosionShader.SetTexture(kernel, "heights", lowRes);
-        erosionShader.SetTexture(kernel, "erosion", erosionTexture);
-        erosionShader.SetTexture(kernel, "deposit", depositTexture);
+        //erosionShader.SetTexture(kernel, "erosion", erosionTexture);
+        //erosionShader.SetTexture(kernel, "deposit", depositTexture);
 
         // Send brush data to compute shader
         ComputeBuffer brushWeightBuffer = new ComputeBuffer(brushWeightsArray.Length, sizeof(int));
@@ -155,7 +156,7 @@ public class TerrainErosion : MonoBehaviour
         erosionShader.SetInt("borderSize", BorderSize);
         erosionShader.SetInt("sizeX", sizeX);
         erosionShader.SetInt("sizeY", sizeY);
-        erosionShader.SetInt("textureRes", erosionText.width);
+        //erosionShader.SetInt("textureRes", erosionText.width);
         erosionShader.SetInt("lifetime", DropletLifeTime);
         erosionShader.SetInt("brushSize", BrushSize);
         erosionShader.SetFloat("initialVelocity", InitialVelocity);

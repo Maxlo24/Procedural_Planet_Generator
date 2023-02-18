@@ -5000,6 +5000,7 @@ MonoBehaviour:
   raining: 0
   liquid: {fileID: 8907588404404511672}
   cloudGenerator: {fileID: 8907588404470575421}
+  planetGenerator: {fileID: 0}
   fogIntensity: 0.555
   snowLevel: 1000
 --- !u!114 &8907588404721271226
@@ -5037,4 +5038,6 @@ MonoBehaviour:
   grass: 0
   grassGenerator: {fileID: 0}
   materialsToUpdate: []
+  planetGenerator: {fileID: 0}
   fog_ratio: 0
+  AtmosphereColor: {r: 0.65882355, g: 0.91891795, b: 1, a: 0}

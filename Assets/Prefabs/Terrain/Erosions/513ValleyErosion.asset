@@ -16,6 +16,7 @@ MonoBehaviour:
   RepetitionCount: 1
   Resolution: 512
   IterationCount: 232000
+  BorderSize: 2
   DropletLifeTime: 500
   Acceleration: 11
   Drag: 0.2

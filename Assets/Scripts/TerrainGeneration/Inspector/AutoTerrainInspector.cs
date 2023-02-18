@@ -16,22 +16,22 @@ public class AutoTerrainInspector : Editor
         if (GUILayout.Button("Generate Craters"))
         {
             terrain.GenerateCraters();
-            terrain.RedrawTerrain();
+            terrain.RedrawTerrains();
         }
         if (GUILayout.Button("Thermal Erosion"))
         {
-            terrain.ThermalErosion();
-            terrain.RedrawTerrain();
+            terrain.ThermalErosionCoroutine();
+            terrain.RedrawTerrains();
         }
-        if (GUILayout.Button("Erode Terrain"))
+        if (GUILayout.Button("Hydraulic Erosion"))
         {
-            terrain.ErodeTerrain();
-            terrain.RedrawTerrain();
+            terrain.HydraulicErosionCoroutine();
+            terrain.RedrawTerrains();
         }
         if (GUILayout.Button("PostProcessing"))
         {
             terrain.PostProcessing();
-            terrain.RedrawTerrain();
+            terrain.RedrawTerrains();
         }
         if (GUILayout.Button("Generate Entire Map"))
         {

@@ -9,6 +9,7 @@ public class ErosionPreset : ScriptableObject
     [SerializeField, Range(1, 10)] public int RepetitionCount = 1;
     [SerializeField] public Resolution Resolution = Resolution._1024;
     [SerializeField, Range(0, 1000000)] public int IterationCount = 100000;
+    [SerializeField, Range(0, 20)] public int BorderSize = 0;
     [SerializeField, Range(0, 800)] public int DropletLifeTime = 800;
     [SerializeField] public float Acceleration = 20f;
     [SerializeField] public float Drag = 0.2f;
